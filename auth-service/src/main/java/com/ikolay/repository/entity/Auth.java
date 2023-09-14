@@ -23,15 +23,15 @@ public class Auth extends BaseEntity{
     @Column(unique = true)
     private String email;
     private String password;
+    private String firstname;
+    private String lastname;
     private String activationCode;
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private ERole role=ERole.USER;
+    private ERole role=ERole.VISITOR;
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private EStatus status=EStatus.PENDING;
-    @Builder.Default
-    private Long companyId=null;
 
 
 }
