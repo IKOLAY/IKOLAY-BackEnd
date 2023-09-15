@@ -16,7 +16,9 @@ import com.ikolay.repository.enums.EStatus;
 import com.ikolay.utility.CodeGenerator;
 import com.ikolay.utility.JwtTokenManager;
 import com.ikolay.utility.ServiceManager;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -36,6 +38,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         this.companyManager = companyManager;
     }
 //YORUMDAKİ COMPANY-MANAGER VE USER-MANAGER SATIRLARI HAZIRLANDIĞI ZAMAN YORUMDAN ÇIKARTILACAKTIR
+    @Transactional
     public RegisterResponseDto register(RegisterRequestDto dto){
         if (authRepository.existsByEmail(dto.getEmail())){
             throw new AuthManagerException(ErrorType.EMAIL_EXIST);
@@ -45,7 +48,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
             Auth auth = save(IAuthMapper.INSTANCE.toAuth(dto));
             String token = "Bearer " + jwtTokenManager.createToken(auth.getId()).get();
             //MAIL YOLLANACAK BURADA
-//            userManager.register(dto,token);
+            userManager.register(dto,token);
             return RegisterResponseDto.builder()
                     .message("Email Onay Kodunuz Yollanmıştır")
                     .build();
@@ -53,12 +56,12 @@ public class AuthService extends ServiceManager<Auth,Long> {
             if (dto.getTaxNo() == null || dto.getCompanyName() == null) throw new AuthManagerException(ErrorType.COMPANY_NOT_CREATED);
             dto.setStatus(EStatus.PENDING);
             Auth auth = save(IAuthMapper.INSTANCE.toAuth(dto));
+            dto.setAuthId(auth.getId());
             String token = "Bearer " + jwtTokenManager.createToken(auth.getId()).get();
-//            ResponseEntity<Long> companyId = companyManager.register(dto, token);
-//            dto.setCompanyId(companyId.getBody());
+            ResponseEntity<Long> companyId = companyManager.register(dto, token);
+            dto.setCompanyId(companyId.getBody());
+            userManager.register(dto,token);
             //MAIL YOLLANACAK BURADA
-//            companyManager.register(dto,token);
-            System.out.println("manager " + token);
             return RegisterResponseDto.builder()
                     .message("Kayıdınız Admin Onayına Yollanmıştır")
                     .build();
@@ -70,7 +73,6 @@ public class AuthService extends ServiceManager<Auth,Long> {
             dto.setPassword(employeeGeneratedPassword);
 //            dto.setEmail(generateEmailAddressForEmployee(dto));
             Auth auth = save(IAuthMapper.INSTANCE.toAuth(dto));
-
             return RegisterResponseDto.builder()
                     .message("Personel Başarıyla Kaydedildi")
                     .build();

@@ -1,11 +1,11 @@
 server:
-  port: 7071
+  port: 7073
 
 spring:
-#  security:
-#    user:
-#      name: doruk
-#      password: 123
+  security:
+    user:
+      name: doruk
+      password: 123
 #  rabbitmq:
 #    host: localhost
 #    port: 5672
@@ -15,17 +15,16 @@ spring:
 #    enabled: true
 #    base-url: http://localhost:9411
 #    service:
-#      name: auth-service
+#      name: user-service
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: root
-    url: jdbc:postgresql://localhost:5432/ikolayAuthDb
+    url: jdbc:postgresql://localhost:5432/ikolayCompanyDb
   jpa:
     hibernate:
       ddl-auto: create
     show-sql: true
-
 
 
 jwt:
@@ -34,7 +33,7 @@ jwt:
   audience: ${java9audience}
 
 rabbitmq:
-  auth-exchange: authExchange
+  user-exchange: companyExchange
   register-queue: registerQueue
   register-bindingKey: registerBindingKey
   activation-bindingKey: activation
