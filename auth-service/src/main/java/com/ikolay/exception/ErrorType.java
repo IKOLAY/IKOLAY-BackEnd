@@ -14,6 +14,7 @@ public enum ErrorType {
     USER_NOT_CREATED(4111, "Kullanıcı oluşturulamadı!", HttpStatus.BAD_REQUEST),
     COMPANY_NOT_CREATED(4121, "Şirket İsmi Ve Vergi Numarası Boş Bırakılamaz", HttpStatus.BAD_REQUEST),
     LOGIN_ERROR(4112, "Kullanıcı adı veya şifre hatalı!", HttpStatus.NOT_FOUND),
+    DOLOGIN_EMAILORPASSWORD_NOTEXISTS(1006,"Email adı veya şifre hatalı.",HttpStatus.BAD_REQUEST),
     ACCOUNT_NOT_ACTIVE(4113, "Aktive edilmemiş hesap. Lütfen hesabınızı aktive ettikten sonra tekrar deneyin.", HttpStatus.FORBIDDEN),
     USER_NOT_FOUND(4114, "Böyle bir kullanıcı bulunamadı!", HttpStatus.NOT_FOUND),
     ACTIVATION_CODE_MISMATCH(4115, "Aktivasyon kodu hatalı!", HttpStatus.BAD_REQUEST),

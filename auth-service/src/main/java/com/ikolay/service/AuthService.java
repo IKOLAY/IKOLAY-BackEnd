@@ -1,6 +1,8 @@
 package com.ikolay.service;
 
+import com.ikolay.dto.requests.DoLoginRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.response.DoLoginResponseDto;
 import com.ikolay.dto.response.RegisterResponseDto;
 import com.ikolay.exception.AuthManagerException;
 import com.ikolay.exception.ErrorType;
@@ -15,6 +17,8 @@ import com.ikolay.utility.CodeGenerator;
 import com.ikolay.utility.JwtTokenManager;
 import com.ikolay.utility.ServiceManager;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService extends ServiceManager<Auth,Long> {
@@ -80,4 +84,10 @@ public class AuthService extends ServiceManager<Auth,Long> {
         return dto.getFirstname() + dto.getLastname() + "@" + companyName + ".com";
     }
 
+    public DoLoginResponseDto doLogin(DoLoginRequestDto dto) {
+        Optional<Auth> auth = authRepository.findOptionalByEmailAndPassword(dto.getEmail(), dto.getPassword());
+        if (auth.isEmpty()) throw new AuthManagerException(ErrorType.DOLOGIN_EMAILORPASSWORD_NOTEXISTS);
+        String token = jwtTokenManager.createToken(auth.get().getId()).get();
+        return DoLoginResponseDto.builder().token(token).role(auth.get().getRole().name()).build();
+    }
 }
