@@ -26,4 +26,9 @@ public class AuthController {
     public ResponseEntity<DoLoginResponseDto> login(@RequestBody DoLoginRequestDto dto){
         return ResponseEntity.ok(authService.doLogin(dto));
     }
+
+    @GetMapping(ACTIVATION)
+    public ResponseEntity<RegisterResponseDto> activation(String token){
+    return ResponseEntity.ok(authService.activation(token));
+    }
 }
