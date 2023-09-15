@@ -11,6 +11,7 @@ public enum ErrorType {
     INTERNAL_ERROR_SERVER(5100, "Sunucu Hatası", HttpStatus.INTERNAL_SERVER_ERROR),
     BAD_REQUEST(4100, "Parametre hatası", HttpStatus.BAD_REQUEST),
     COMPANY_NOT_CREATED(4121, "Şirket İsmi Ve Vergi Numarası Boş Bırakılamaz", HttpStatus.BAD_REQUEST),
+    TAX_NO_ERROR(4121, "Bu Vergi Numarası Başka Bir Şirkete Ait", HttpStatus.BAD_REQUEST),
     EMAIL_EXIST(4110, "Email Adresi Zaten Mevcut.", HttpStatus.BAD_REQUEST),
     USER_NOT_FOUND(4114, "Böyle bir kullanıcı bulunamadı!", HttpStatus.NOT_FOUND),
     USER_NOT_CREATED(4111, "Kullanıcı oluşturulamadı!", HttpStatus.BAD_REQUEST),
