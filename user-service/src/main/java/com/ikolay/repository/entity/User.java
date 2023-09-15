@@ -30,8 +30,11 @@ public class User extends BaseEntity{
     private String lastname;
     private String phone;
     private String address;
+    @Enumerated(EnumType.STRING)
     private ERole role;
+
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     private EStatus status= EStatus.PENDING;
 
 }
