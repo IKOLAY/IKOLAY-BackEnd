@@ -1,3 +1,4 @@
 rootProject.name = 'IKolayHrManagement'
 include 'auth-service'
+include 'mail-service'
 

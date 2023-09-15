@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import com.ikolay.dto.requests.ActivationRequestDto;
 import com.ikolay.exception.AuthManagerException;
 import com.ikolay.exception.ErrorType;
 import com.ikolay.repository.enums.ERole;
@@ -87,6 +88,41 @@ public class JwtTokenManager {
                 throw new AuthManagerException(ErrorType.INVALID_TOKEN);
             String role = decodedJWT.getClaim("role").asString();
             return Optional.of(role);
+        } catch (Exception e){
+            System.out.println(e.toString());
+            throw new AuthManagerException(ErrorType.INVALID_TOKEN);
+        }
+
+    }
+
+    public Optional<String> createMailToken(Long id,String activationCode) {
+
+        String token = null;
+        try {
+            token = JWT.create()
+                    .withAudience(audience)
+                    .withIssuer(issuer)
+                    .withClaim("id", id)
+                    .withClaim("code",activationCode)
+                    .withIssuedAt(new Date())
+                    .sign(Algorithm.HMAC512(secretKey));
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return Optional.ofNullable(token);
+    }
+
+    public Optional<ActivationRequestDto> getIdAndCodeFromToken(String token){
+        try{
+            Algorithm algorithm = Algorithm.HMAC512(secretKey);
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
+            DecodedJWT decodedJWT = verifier.verify(token);
+            if(decodedJWT==null)
+                throw new AuthManagerException(ErrorType.INVALID_TOKEN);
+            Long id = decodedJWT.getClaim("id").asLong();
+            String code = decodedJWT.getClaim("code").asString();
+            return Optional.of(ActivationRequestDto.builder().id(id).activationCode(code).build());
         } catch (Exception e){
             System.out.println(e.toString());
             throw new AuthManagerException(ErrorType.INVALID_TOKEN);
