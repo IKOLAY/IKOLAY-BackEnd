@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(url = "http://localhost:7072/api/v1/company",decode404 = true,name = "auth-company")
+@FeignClient(url = "http://localhost:7073/api/v1/company",decode404 = true,name = "auth-company")
 public interface ICompanyManager {
 
     @PostMapping(REGISTER)
