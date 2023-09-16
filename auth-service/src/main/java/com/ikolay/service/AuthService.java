@@ -91,7 +91,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
         String token = "Bearer " + jwtTokenManager.createToken(auth.getId()).get(); //security için eklendi ve kullanılacak.
         String mailToken = jwtTokenManager.createMailToken(auth.getId(), activationCode).get();
         userManager.register(dto, token);
-        System.out.println(dto.getRole());
         mailProducer.sendMail(MailModel.builder().email(dto.getEmail()).token(mailToken).role(dto.getRole()).build());
         return RegisterResponseDto.builder()
                 .message("Email Onay Kodunuz Yollanmıştır")
@@ -103,10 +102,12 @@ public class AuthService extends ServiceManager<Auth, Long> {
         dto.setStatus(EStatus.ACTIVE);
         String employeeEmail = dto.getEmail();
         String employeeGeneratedPassword = CodeGenerator.genarateCode();
-        //MAIL YOLLANACAK BURADA
         dto.setPassword(employeeGeneratedPassword);
         dto.setCompanyEmail(generateEmailAddressForEmployee(dto));
         Auth auth = save(IAuthMapper.INSTANCE.toAuth(dto));
+        String token = "Bearer " + jwtTokenManager.createToken(auth.getId()).get();
+        dto.setAuthId(auth.getId());
+        userManager.register(dto,token);
         mailProducer.sendMail(MailModel.builder().role(dto.getRole()).companyMail(dto.getCompanyEmail()).email(dto.getEmail()).password(employeeGeneratedPassword).build());
         return RegisterResponseDto.builder()
                 .message("Personel Başarıyla Kaydedildi")
@@ -116,7 +117,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private String generateEmailAddressForEmployee(RegisterRequestDto dto) {
         String companyName = companyManager.findByCompanyName(dto.getCompanyId()).getBody();
         List<Auth> auths = authRepository.findByFirstnameAndLastname(dto.getFirstname(), dto.getLastname());
-        return auths.isEmpty() ? dto.getFirstname() + dto.getLastname() + "@" + companyName + ".com" : dto.getFirstname() + dto.getLastname() + auths.size() + "@" + companyName + ".com";
+        return auths.isEmpty() ? dto.getFirstname()+"."+ dto.getLastname() + "@" + companyName + ".com" : dto.getFirstname() +"."+ dto.getLastname() + auths.size() + "@" + companyName + ".com";
 
     }
 
