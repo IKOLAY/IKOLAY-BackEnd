@@ -22,15 +22,16 @@ public class RegisterRequestDto {
     //VISITOR VE MANAGER'DA ISTENECEK EMPLOYEE'DE ISTENMICEK DEFAULT BIR DEĞER YOLLANACAK FRONTEND'DEN
     @NotBlank(message = "Password Boş Geçilemez")
     private String password;
-    //FRONTEND'DEN OTOMATIK DOLUCAK
-    private ERole role;
+
     @NotBlank(message = "Isim Boş Geçilemez")
     private String firstname;
     @NotBlank(message = "Soyisim Boş Geçilemez")
     private String lastname;
+
     //OTOMATIK DOLUCAK FRONTEND'DE
     @Builder.Default
     private EStatus status=EStatus.PENDING;
+    private ERole role;
 
     //VISITOR VE EMPLOYEE'DEN ISTENMICEK SADECE MANAGER'DAN ISTENECEK
     private String companyName;
@@ -38,5 +39,8 @@ public class RegisterRequestDto {
 
     //DIŞARDAN ISTENMEYECEK BACKENDDE EKLENECEK
     private Long authId;
+    private String companyEmail;
+
+    // EMPLOYEE KAYDI YAPARKEN MANAGER'IN COMPANY ID'SI KULLANILACAK.
     private Long companyId;
 }

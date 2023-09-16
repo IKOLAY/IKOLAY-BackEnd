@@ -20,6 +20,12 @@ public class CompanyController {
     }
     @PostMapping(FINDCOMPANY)
     public ResponseEntity<String> findByCompanyName(@RequestParam Long id){
-        return ResponseEntity.ok(companyService.findByCompanyName(id));
+        return ResponseEntity.ok(companyService.findCompanyNameById(id));
+    }
+
+    @DeleteMapping("/delete") //düzenlenecek test için yazıldı.
+    public ResponseEntity<Boolean> deleteById(@RequestParam Long id){
+        companyService.deleteById(id);
+        return ResponseEntity.ok(true);
     }
 }

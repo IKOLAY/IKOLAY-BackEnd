@@ -9,6 +9,8 @@ import com.ikolay.repository.entity.Company;
 import com.ikolay.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CompanyService extends ServiceManager<Company,Long> {
     private final ICompanyRepository companyRepository;
@@ -18,8 +20,11 @@ public class CompanyService extends ServiceManager<Company,Long> {
         this.companyRepository = companyRepository;
     }
 
-    public String findByCompanyName(Long id) {
-        return companyRepository.findByCompanyName(id);
+    public String findCompanyNameById(Long id) {
+        Optional<Company> company = findById(id);
+        if (company.isEmpty())
+            throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND);
+        return company.get().getCompanyName();
     }
 
     public Long register(RegisterRequestDto dto) {

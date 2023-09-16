@@ -31,4 +31,9 @@ public class AuthController {
     public ResponseEntity<RegisterResponseDto> activation(String token){
     return ResponseEntity.ok(authService.activation(token));
     }
+
+    @GetMapping("/testconfirm") //Admin onayını test için yazıldı düzenlenecek.
+    public ResponseEntity<String> managerConfirmation(Boolean isAccepted,String content,String email,Long companyId){
+        return ResponseEntity.ok(authService.confirmation(isAccepted,content,email,companyId));
+    }
 }
