@@ -5,10 +5,7 @@ import static com.ikolay.constant.EndPoints.*;
 import com.ikolay.dto.requests.RegisterRequestDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(url = "http://localhost:7073/api/v1/company",decode404 = true,name = "auth-company")
 public interface ICompanyManager {
@@ -18,4 +15,7 @@ public interface ICompanyManager {
 
     @PostMapping(FINDCOMPANY)
      ResponseEntity<String> findByCompanyName(@RequestParam Long id);
+
+    @DeleteMapping("/delete") //düzenlenecek test için yazıldı.
+    ResponseEntity<Boolean> deleteById(@RequestParam Long id);
 }

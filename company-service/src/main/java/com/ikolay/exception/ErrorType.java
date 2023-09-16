@@ -13,7 +13,7 @@ public enum ErrorType {
     COMPANY_NOT_CREATED(4121, "Şirket İsmi Ve Vergi Numarası Boş Bırakılamaz", HttpStatus.BAD_REQUEST),
     TAX_NO_ERROR(4121, "Bu Vergi Numarası Başka Bir Şirkete Ait", HttpStatus.BAD_REQUEST),
     EMAIL_EXIST(4110, "Email Adresi Zaten Mevcut.", HttpStatus.BAD_REQUEST),
-    USER_NOT_FOUND(4114, "Böyle bir kullanıcı bulunamadı!", HttpStatus.NOT_FOUND),
+    COMPANY_NOT_FOUND(4114, "Böyle bir firma bulunamadı!", HttpStatus.NOT_FOUND),
     USER_NOT_CREATED(4111, "Kullanıcı oluşturulamadı!", HttpStatus.BAD_REQUEST),
     ACCOUNT_NOT_ACTIVE(4113, "Aktive edilmemiş hesap. Lütfen hesabınızı aktive ettikten sonra tekrar deneyin.", HttpStatus.FORBIDDEN),
     DOLOGIN_EMAILORPASSWORD_NOTEXISTS(1006,"Email adı veya şifre hatalı.",HttpStatus.BAD_REQUEST),

@@ -18,6 +18,7 @@ import javax.validation.constraints.NotBlank;
 public class RegisterRequestDto {
     @Email(message = "Uygun Bir Mail Adresi Giriniz !!")
     private String email;
+    private String companyEmail;
     @NotBlank(message = "Password Boş Geçilemez")
     private String password;
     private ERole role;
