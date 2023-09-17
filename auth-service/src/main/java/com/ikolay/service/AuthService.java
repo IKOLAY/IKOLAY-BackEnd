@@ -1,6 +1,7 @@
 package com.ikolay.service;
 
 import com.ikolay.dto.requests.ActivationRequestDto;
+import com.ikolay.dto.requests.AdminApproveRequestDto;
 import com.ikolay.dto.requests.DoLoginRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
 import com.ikolay.dto.response.DoLoginResponseDto;
@@ -163,26 +164,25 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return RegisterResponseDto.builder().message("Hesabınız aktive edildi!").build();
     }
 
-    public String confirmation(Boolean isAccepted, String content, String email, Long companyId) {
-        String message = null;
-        Optional<Auth> auth = authRepository.findByEmail(email);
+    public RegisterResponseDto confirmation(AdminApproveRequestDto dto){
+        RegisterResponseDto message = null;
+        Optional<Auth> auth = authRepository.findByEmail(dto.getEmail());
         if (auth.isEmpty())
             throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
         if(!auth.get().getStatus().equals(EStatus.PENDING))
             throw new AuthManagerException(ErrorType.MANAGER_ALREADY_CONFIRMED);
-
-        if (isAccepted) {
+        if(dto.getIsAccepted()){
             auth.get().setStatus(EStatus.ACTIVE);
             userManager.confirmation(auth.get().getId());
             update(auth.get());
-            message = "Olumlu";
+            message = RegisterResponseDto.builder().message("Olumlu").build();
         } else {
             deleteById(auth.get().getId());
-            companyManager.deleteById(companyId);
+            companyManager.deleteById(dto.getCompanyId());
             userManager.deleteFromConfirmation(auth.get().getId());
-            message = "Olumsuz";
+            message = RegisterResponseDto.builder().message("Olumsuz").build();
         }
-        mailProducer.sendMail(MailModel.builder().isAccepted(isAccepted).content(content).email(email).role(ERole.MANAGER).build());
+        mailProducer.sendMail(MailModel.builder().isAccepted(dto.getIsAccepted()).content(dto.getContent()).email(dto.getEmail()).role(ERole.MANAGER).build());
         return message;
     }
 }
