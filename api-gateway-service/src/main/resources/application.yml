@@ -53,6 +53,6 @@ spring:
             - name: CircuitBreaker
               args:
                 enabled: true
-                fallbackUri: forward:/fallback/userservice
+                fallbackUri: forward:/fallback/companyservice
       default-filters:
         - RewritePath= /(?<segment>.*),/api/v1/$\{segment}
