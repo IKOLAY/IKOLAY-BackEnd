@@ -19,7 +19,7 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.register(dto));
     }
     @PostMapping(FINDCOMPANY)
-    public ResponseEntity<String> findByCompanyName(@RequestParam Long id){
+    public ResponseEntity<String> findCompanyNameById(@RequestParam Long id){
         return ResponseEntity.ok(companyService.findCompanyNameById(id));
     }
 

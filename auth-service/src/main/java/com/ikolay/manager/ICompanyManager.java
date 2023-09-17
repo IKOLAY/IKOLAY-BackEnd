@@ -14,7 +14,7 @@ public interface ICompanyManager {
     ResponseEntity<Long> register(@RequestBody RegisterRequestDto dto, @RequestHeader("Authorization") String token);
 
     @PostMapping(FINDCOMPANY)
-     ResponseEntity<String> findByCompanyName(@RequestParam Long id);
+     ResponseEntity<String> findCompanyNameById(@RequestParam Long id);
 
     @DeleteMapping("/delete") //düzenlenecek test için yazıldı.
     ResponseEntity<Boolean> deleteById(@RequestParam Long id);
