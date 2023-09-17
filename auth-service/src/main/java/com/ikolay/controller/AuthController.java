@@ -6,6 +6,7 @@ import com.ikolay.dto.requests.DoLoginRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
 import com.ikolay.dto.response.DoLoginResponseDto;
 import com.ikolay.dto.response.RegisterResponseDto;
+import com.ikolay.repository.entity.Auth;
 import com.ikolay.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

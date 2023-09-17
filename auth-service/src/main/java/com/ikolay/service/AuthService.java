@@ -23,8 +23,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService extends ServiceManager<Auth, Long> {
@@ -100,14 +102,13 @@ public class AuthService extends ServiceManager<Auth, Long> {
     @Transactional
     private RegisterResponseDto saveEmployee(RegisterRequestDto dto) {
         dto.setStatus(EStatus.ACTIVE);
-        String employeeEmail = dto.getEmail();
         String employeeGeneratedPassword = CodeGenerator.genarateCode();
         dto.setPassword(employeeGeneratedPassword);
         dto.setCompanyEmail(generateEmailAddressForEmployee(dto));
         Auth auth = save(IAuthMapper.INSTANCE.toAuth(dto));
         String token = "Bearer " + jwtTokenManager.createToken(auth.getId()).get();
         dto.setAuthId(auth.getId());
-        userManager.register(dto,token);
+        userManager.register(dto, token);
         mailProducer.sendMail(MailModel.builder().role(dto.getRole()).companyMail(dto.getCompanyEmail()).email(dto.getEmail()).password(employeeGeneratedPassword).build());
         return RegisterResponseDto.builder()
                 .message("Personel Başarıyla Kaydedildi")
@@ -115,10 +116,15 @@ public class AuthService extends ServiceManager<Auth, Long> {
     }
 
     private String generateEmailAddressForEmployee(RegisterRequestDto dto) {
-        String companyName = companyManager.findByCompanyName(dto.getCompanyId()).getBody();
-        List<Auth> auths = authRepository.findByFirstnameAndLastname(dto.getFirstname(), dto.getLastname());
-        return auths.isEmpty() ? dto.getFirstname()+"."+ dto.getLastname() + "@" + companyName + ".com" : dto.getFirstname() +"."+ dto.getLastname() + auths.size() + "@" + companyName + ".com";
 
+        String multiName = Arrays.stream(dto.getFirstname().toLowerCase().split(" ")).collect(Collectors.joining("."));
+        String companyName = companyManager.findCompanyNameById(dto.getCompanyId()).getBody();
+        if (companyName == null)
+            throw new AuthManagerException(ErrorType.INTERNAL_ERROR_SERVER, "Database Firma-Yönetim tutarsızlığı");
+        companyName = companyName.split(" ")[0].toLowerCase();
+        List<Auth> auths = authRepository.findByFirstnameIgnoreCaseAndLastnameIgnoreCase(dto.getFirstname(), dto.getLastname());
+        return auths.isEmpty() ? multiName + "." + dto.getLastname().toLowerCase() + "@" + companyName + ".com" : multiName + "." + dto.getLastname().toLowerCase() + auths.size() + "@" + companyName + ".com";
+       // return auths.isEmpty() ? dto.getFirstname().toLowerCase() + "." + dto.getLastname().toLowerCase() + "@ikolay.com" : dto.getFirstname().toLowerCase() + "." + dto.getLastname().toLowerCase() + auths.size() + "@ikolay.com";
     }
 
     public DoLoginResponseDto doLogin(DoLoginRequestDto dto) {
@@ -129,14 +135,14 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return DoLoginResponseDto.builder().token(token).role(auth.get().getRole().name()).build();
     }
 
-    private void statusCheck(EStatus status){
-        switch (status){
+    private void statusCheck(EStatus status) {
+        switch (status) {
             case PENDING:
                 throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE);
             case INACTIVE:
-                throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE,"Hesabınız dondurulmuş lütfen firma yöneticiniz ile görüşün.");
+                throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE, "Hesabınız dondurulmuş lütfen firma yöneticiniz ile görüşün.");
             case BANNED:
-                throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE,"Hesabınız kalıcı olarak kapatılmıştır.");
+                throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE, "Hesabınız kalıcı olarak kapatılmıştır.");
             default:
                 break;
         }
@@ -154,21 +160,22 @@ public class AuthService extends ServiceManager<Auth, Long> {
         auth.get().setStatus(EStatus.ACTIVE);
         userManager.confirmation(auth.get().getId());
         update(auth.get());
-        //User service bağlantısı ile user service'inde güncellemesi yapılmalı.
         return RegisterResponseDto.builder().message("Hesabınız aktive edildi!").build();
     }
 
-    public String confirmation(Boolean isAccepted,String content,String email,Long companyId){
+    public String confirmation(Boolean isAccepted, String content, String email, Long companyId) {
         String message = null;
         Optional<Auth> auth = authRepository.findByEmail(email);
         if (auth.isEmpty())
             throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
+        if(auth.get().setStatus())
+            throw new AuthManagerException(ErrorType.MANAGER_ALREADY_CONFIRMED);
 
-        if(isAccepted){
+        if (isAccepted) {
             auth.get().setStatus(EStatus.ACTIVE);
             userManager.confirmation(auth.get().getId());
             update(auth.get());
-            message= "Olumlu";
+            message = "Olumlu";
         } else {
             deleteById(auth.get().getId());
             companyManager.deleteById(companyId);

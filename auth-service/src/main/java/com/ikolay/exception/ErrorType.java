@@ -16,6 +16,7 @@ public enum ErrorType {
     USER_NOT_CREATED(4111, "Kullanıcı oluşturulamadı!", HttpStatus.BAD_REQUEST),
     ACCOUNT_NOT_ACTIVE(4113, "Aktive edilmemiş hesap. Lütfen hesabınızı aktive ettikten sonra tekrar deneyin.", HttpStatus.FORBIDDEN),
     DOLOGIN_EMAILORPASSWORD_NOTEXISTS(1006,"Email adı veya şifre hatalı.",HttpStatus.BAD_REQUEST),
+    MANAGER_ALREADY_CONFIRMED(1007,"Firma yetkilisinin hesabı zaten onaylanmış.",HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(4116, "Geçersiz token!", HttpStatus.BAD_REQUEST),
     TOKEN_NOT_CREATED(4117, "Token oluşturulamadı", HttpStatus.BAD_REQUEST),
     ACTIVATION_CODE_MISMATCH(4115, "Aktivasyon kodu hatalı!", HttpStatus.BAD_REQUEST),
