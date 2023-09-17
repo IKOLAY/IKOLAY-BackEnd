@@ -2,11 +2,11 @@ package com.ikolay.controller;
 
 import static com.ikolay.constant.EndPoints.*;
 
+import com.ikolay.dto.requests.AdminApproveRequestDto;
 import com.ikolay.dto.requests.DoLoginRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
 import com.ikolay.dto.response.DoLoginResponseDto;
 import com.ikolay.dto.response.RegisterResponseDto;
-import com.ikolay.repository.entity.Auth;
 import com.ikolay.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +33,8 @@ public class AuthController {
     return ResponseEntity.ok(authService.activation(token));
     }
 
-    @GetMapping("/testconfirm") //Admin onayını test için yazıldı düzenlenecek.
-    public ResponseEntity<String> managerConfirmation(Boolean isAccepted,String content,String email,Long companyId){
-        return ResponseEntity.ok(authService.confirmation(isAccepted,content,email,companyId));
+    @PostMapping(APPROVE) //Admin onayını test için yazıldı düzenlenecek.
+    public ResponseEntity<RegisterResponseDto> decideRegisterRequest(@RequestBody  AdminApproveRequestDto dto){
+        return ResponseEntity.ok(authService.confirmation(dto));
     }
 }

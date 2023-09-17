@@ -13,5 +13,7 @@ public class EndPoints {
     public static final String FINDALL = "/findall";
     public static final String ACTIVATION = "/activation";
 
+    public static final String APPROVE = "/approve";
+
 
 }
