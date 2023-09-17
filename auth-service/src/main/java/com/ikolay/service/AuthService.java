@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -184,5 +185,15 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
         mailProducer.sendMail(MailModel.builder().isAccepted(dto.getIsAccepted()).content(dto.getContent()).email(dto.getEmail()).role(ERole.MANAGER).build());
         return message;
+    }
+    @PostConstruct
+    private void addDefaultAdmin(){
+        if (!authRepository.existsByEmail("admin@admin.com")){
+            save(Auth.builder()
+                    .email("admin@admin.com")
+                    .password("admin")
+                    .role(ERole.ADMIN)
+                    .build());
+        }
     }
 }

@@ -6,10 +6,12 @@ import com.ikolay.exception.UserManagerException;
 import com.ikolay.mapper.IUserMapper;
 import com.ikolay.repository.IUserRepository;
 import com.ikolay.repository.entity.User;
+import com.ikolay.repository.enums.ERole;
 import com.ikolay.repository.enums.EStatus;
 import com.ikolay.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Service
@@ -40,5 +42,16 @@ public class UserService extends ServiceManager<User,Long> {
             throw new UserManagerException(ErrorType.USER_NOT_FOUND);
         user.get().setStatus(EStatus.ACTIVE);
         update(user.get());
+    }
+
+    @PostConstruct
+    private void addDefaultAdmin(){
+        if (!userRepository.existsByEmail("admin@admin.com")){
+            save(User.builder()
+                    .email("admin@admin.com")
+                    .password("admin")
+                    .role(ERole.ADMIN)
+                    .build());
+        }
     }
 }
