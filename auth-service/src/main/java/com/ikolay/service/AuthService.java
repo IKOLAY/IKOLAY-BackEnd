@@ -168,7 +168,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         Optional<Auth> auth = authRepository.findByEmail(email);
         if (auth.isEmpty())
             throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
-        if(auth.get().setStatus())
+        if(!auth.get().getStatus().equals(EStatus.PENDING))
             throw new AuthManagerException(ErrorType.MANAGER_ALREADY_CONFIRMED);
 
         if (isAccepted) {
