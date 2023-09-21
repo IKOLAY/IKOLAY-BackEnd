@@ -1,6 +1,7 @@
 package com.ikolay.mapper;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.response.UserInformationResponseDto;
 import com.ikolay.repository.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -10,4 +11,6 @@ import org.mapstruct.factory.Mappers;
 public interface IUserMapper {
     IUserMapper INSTANCE = Mappers.getMapper(IUserMapper.class);
     User toUser(final RegisterRequestDto dto);
+
+    UserInformationResponseDto toUserInformationResponseDto(final User user);
 }
