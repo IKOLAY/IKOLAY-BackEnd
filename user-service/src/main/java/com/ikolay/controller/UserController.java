@@ -3,11 +3,14 @@ package com.ikolay.controller;
 import static com.ikolay.constant.EndPoints.*;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.response.FindAllCompanyEmployeesResponseDto;
 import com.ikolay.dto.response.UserInformationResponseDto;
 import com.ikolay.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,8 +35,13 @@ public class UserController {
         return ResponseEntity.ok(true);
     }
 
-    @PostMapping("/loggeduser")
+    @GetMapping("/loggeduser")
     ResponseEntity<UserInformationResponseDto> getUserInformation(String token){
         return ResponseEntity.ok(userService.getUserInformation(token));
+    }
+
+    @GetMapping("/getallpersonelwithcompanyid")
+    ResponseEntity<List<FindAllCompanyEmployeesResponseDto>> personelList(Long companyId){
+        return ResponseEntity.ok(userService.personelList(companyId));
     }
 }
