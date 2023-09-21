@@ -33,7 +33,7 @@ jwt:
   audience: ${java9audience}
 
 rabbitmq:
-  user-exchange: companyExchange
+  company-exchange: companyExchange
   register-queue: registerQueue
   register-bindingKey: registerBindingKey
   activation-bindingKey: activation

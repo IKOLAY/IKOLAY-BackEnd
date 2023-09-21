@@ -54,4 +54,62 @@ public class UserService extends ServiceManager<User,Long> {
                     .build());
         }
     }
-}
+    @PostConstruct
+    private void testDefaultEmployees(){
+        save(User.builder()
+                .email("doruk@gmail.com")
+                .firstname("drk")
+                .lastname("drk")
+                .phone("4124241")
+                .role(ERole.EMPLOYEE)
+                .status(EStatus.ACTIVE)
+                .companyId(1L)
+                .build());
+        save(User.builder()
+                .email("frkn@gmail.com")
+                .firstname("frk")
+                .lastname("frk")
+                .phone("412224241")
+                .role(ERole.EMPLOYEE)
+                .status(EStatus.ACTIVE)
+                .companyId(1L)
+                .build());
+        save(User.builder()
+                .email("slm@gmail.com")
+                .firstname("slm")
+                .lastname("slm")
+                .phone("412423341")
+                .role(ERole.EMPLOYEE)
+                .status(EStatus.ACTIVE)
+                .companyId(1L)
+                .build());
+        save(User.builder()
+                .email("hly@gmail.com")
+                .firstname("hly")
+                .lastname("hly")
+                .phone("4124241")
+                .role(ERole.EMPLOYEE)
+                .status(EStatus.ACTIVE)
+                .companyId(1L)
+                .build());
+        save(User.builder()
+                .email("aktas@gmail.com")
+                .firstname("akt")
+                .lastname("akt")
+                .phone("4124241")
+                .role(ERole.MANAGER)
+                .companyId(1L)
+                .status(EStatus.ACTIVE)
+                .build());
+        save(User.builder()
+                .email("emrsfa@gmail.com")
+                .firstname("emr")
+                .lastname("emr")
+                .phone("4124241")
+                .role(ERole.VISITOR)
+                .status(EStatus.ACTIVE)
+                .build());
+    }
+
+
+    }
