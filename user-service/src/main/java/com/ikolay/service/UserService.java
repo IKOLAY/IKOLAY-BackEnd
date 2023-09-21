@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService extends ServiceManager<User,Long> {
+public class UserService extends ServiceManager<User, Long> {
 
     private final IUserRepository userRepository;
     private final JwtTokenManager tokenManager;
@@ -37,7 +37,7 @@ public class UserService extends ServiceManager<User,Long> {
         return true;
     }
 
-    public void deleteByAuthId(Long authId){
+    public void deleteByAuthId(Long authId) {
         Optional<User> user = userRepository.findByAuthId(authId);
         deleteById(user.get().getId());
     }
@@ -51,8 +51,8 @@ public class UserService extends ServiceManager<User,Long> {
     }
 
     @PostConstruct
-    private void addDefaultAdmin(){
-        if (!userRepository.existsByEmail("admin@admin.com")){
+    private void addDefaultAdmin() {
+        if (!userRepository.existsByEmail("admin@admin.com")) {
             save(User.builder()
                     .email("admin@admin.com")
                     .companyEmail("admin@admin.com")
@@ -65,10 +65,10 @@ public class UserService extends ServiceManager<User,Long> {
     }
 
     public UserInformationResponseDto getUserInformation(String token) {
-         Long authId = tokenManager.getIdFromToken(token).get();
+        Long authId = tokenManager.getIdFromToken(token).get();
         Optional<User> user = userRepository.findByAuthId(authId);
         if (user.isEmpty())
-            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Database'de User-Auth uyumsuzluğu mevcut.");
+            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER, "Database'de User-Auth uyumsuzluğu mevcut.");
         return IUserMapper.INSTANCE.toUserInformationResponseDto(user.get());
     }
     @PostConstruct
@@ -80,10 +80,8 @@ public class UserService extends ServiceManager<User,Long> {
         save(User.builder().authId(6L).email("aktas@gmail.com").firstname("akt").lastname("akt").password("123").companyEmail("akt.akt@ikolay.com").phone("4124241").role(ERole.MANAGER).companyId(1L).status(EStatus.ACTIVE).build());
         save(User.builder().authId(7L).email("emrsfa@gmail.com").firstname("emr").lastname("emr").password("123").companyEmail("emrsfa@gmail.com").phone("4124241").role(ERole.VISITOR).status(EStatus.ACTIVE).build());
     }
-
     public List<FindAllCompanyEmployeesResponseDto> personelList(Long companyId) {
-
         return IUserMapper.INSTANCE.toListFindAllCompanyEmployeesResponseDto(userRepository.findByCompanyIdAndRole(companyId,ERole.EMPLOYEE));
-
     }
 }
+
