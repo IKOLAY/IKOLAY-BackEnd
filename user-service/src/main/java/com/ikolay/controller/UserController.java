@@ -3,6 +3,7 @@ package com.ikolay.controller;
 import static com.ikolay.constant.EndPoints.*;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.response.UserInformationResponseDto;
 import com.ikolay.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,10 @@ public class UserController {
     ResponseEntity<Boolean> confirmation(@RequestParam Long authId){
         userService.confirmUser(authId);
         return ResponseEntity.ok(true);
+    }
+
+    @PostMapping("/loggeduser")
+    ResponseEntity<UserInformationResponseDto> getUserInformation(String token){
+        return ResponseEntity.ok(userService.getUserInformation(token));
     }
 }

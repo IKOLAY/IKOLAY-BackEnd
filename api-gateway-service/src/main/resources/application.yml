@@ -53,6 +53,16 @@ spring:
             - name: CircuitBreaker
               args:
                 enabled: true
-                fallbackUri: forward:/fallback/companyservice
+                fallbackUri: forward:/fallback/companyandtransactionservice
+        - id: transaction-service
+          predicates:
+            - Path=/transaction/**
+          uri: http://localhost:7073
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback/companyandtransactionservice
       default-filters:
         - RewritePath= /(?<segment>.*),/api/v1/$\{segment}

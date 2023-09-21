@@ -193,6 +193,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
                     .email("admin@admin.com")
                     .password("admin")
                     .role(ERole.ADMIN)
+                    .status(EStatus.ACTIVE)
                     .build());
         }
     }
