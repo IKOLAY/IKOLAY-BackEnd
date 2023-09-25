@@ -90,5 +90,6 @@ public class UserService extends ServiceManager<User, Long> {
             throw new UserManagerException(ErrorType.USER_NOT_FOUND);
         return user.get().getId();
     }
+
 }
 
