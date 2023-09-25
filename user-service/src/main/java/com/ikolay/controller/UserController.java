@@ -49,4 +49,5 @@ public class UserController {
     ResponseEntity<Long> findIdByEmail(@PathVariable String email){
         return ResponseEntity.ok(userService.findIdByEmail(email));
     }
+
 }

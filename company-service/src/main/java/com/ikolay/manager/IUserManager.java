@@ -11,4 +11,6 @@ public interface IUserManager {
 
     @GetMapping("/finduseridbyemail/{email}")
     ResponseEntity<Long> findIdByEmail(@PathVariable String email);
+
+
 }
