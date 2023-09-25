@@ -44,4 +44,9 @@ public class UserController {
     ResponseEntity<List<FindAllCompanyEmployeesResponseDto>> personelList(Long companyId){
         return ResponseEntity.ok(userService.personelList(companyId));
     }
+
+    @GetMapping("/finduseridbyemail/{email}")
+    ResponseEntity<Long> findIdByEmail(@PathVariable String email){
+        return ResponseEntity.ok(userService.findIdByEmail(email));
+    }
 }
