@@ -3,10 +3,14 @@ package com.ikolay.controller;
 import static com.ikolay.constant.EndPoints.*;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.response.ConfirmationInfoResponseDto;
+import com.ikolay.repository.entity.Company;
 import com.ikolay.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +31,22 @@ public class CompanyController {
     public ResponseEntity<Boolean> deleteById(@RequestParam Long id){
         companyService.deleteById(id);
         return ResponseEntity.ok(true);
+    }
+
+
+    @GetMapping("/companyinformation")
+    public ResponseEntity<Company> getCompanyInformation(Long id) {
+        return ResponseEntity.ok(companyService.getCompanyInformation(id));
+
+    }
+
+    @PutMapping(UPDATE)
+    public ResponseEntity<Company> updateCompany(Company company) {
+        return ResponseEntity.ok(companyService.updateCompany(company));
+    }
+
+    @PostMapping("/getcompanynameandtaxno")
+    public ResponseEntity<List<ConfirmationInfoResponseDto>> companyInfoForConfirmation(@RequestBody List<Long> companyIds){
+        return ResponseEntity.ok(companyService.companyInfoForConfirmation(companyIds));
     }
 }

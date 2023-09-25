@@ -43,4 +43,6 @@ public class RegisterRequestDto {
 
     // EMPLOYEE KAYDI YAPARKEN MANAGER'IN COMPANY ID'SI KULLANILACAK.
     private Long companyId;
+    // EMPLOYEE KAYDI SIRASINDA ALINACAK
+    private Long salary;
 }
