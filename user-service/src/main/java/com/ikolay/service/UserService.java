@@ -83,5 +83,12 @@ public class UserService extends ServiceManager<User, Long> {
     public List<FindAllCompanyEmployeesResponseDto> personelList(Long companyId) {
         return IUserMapper.INSTANCE.toListFindAllCompanyEmployeesResponseDto(userRepository.findByCompanyIdAndRole(companyId,ERole.EMPLOYEE));
     }
+
+    public Long findIdByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isEmpty())
+            throw new UserManagerException(ErrorType.USER_NOT_FOUND);
+        return user.get().getId();
+    }
 }
 

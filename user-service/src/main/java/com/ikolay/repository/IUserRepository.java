@@ -18,4 +18,6 @@ public interface IUserRepository extends JpaRepository<User,Long> {
     Optional<User> findByAuthId(Long authId); //test için eklendi düzenlenmeli.
 
     List<User> findByCompanyIdAndRole(Long companyId, ERole eRole);
+
+    Optional<User> findByEmail(String email);
 }
