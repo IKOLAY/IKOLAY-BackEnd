@@ -15,6 +15,7 @@ public enum ErrorType {
     EMAIL_EXIST(4110, "Email Adresi Zaten Mevcut.", HttpStatus.BAD_REQUEST),
     COMPANY_NOT_FOUND(4114, "Böyle bir firma bulunamadı!", HttpStatus.NOT_FOUND),
     USER_NOT_CREATED(4111, "Kullanıcı oluşturulamadı!", HttpStatus.BAD_REQUEST),
+    COMMENT_NOT_CREATED(4112, "Yorum oluşturulamadı!", HttpStatus.BAD_REQUEST),
     ACCOUNT_NOT_ACTIVE(4113, "Aktive edilmemiş hesap. Lütfen hesabınızı aktive ettikten sonra tekrar deneyin.", HttpStatus.FORBIDDEN),
     DOLOGIN_EMAILORPASSWORD_NOTEXISTS(1006,"Email adı veya şifre hatalı.",HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(4116, "Geçersiz token!", HttpStatus.BAD_REQUEST),

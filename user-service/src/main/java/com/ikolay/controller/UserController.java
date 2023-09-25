@@ -55,4 +55,5 @@ public class UserController {
     ResponseEntity<List<AllConfirmationInfoResponseDto>> findAllPendingManagers(){
         return ResponseEntity.ok(userService.findAllPendingManagers());
     }
+
 }
