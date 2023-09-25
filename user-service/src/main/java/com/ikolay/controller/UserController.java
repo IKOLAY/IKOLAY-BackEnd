@@ -3,6 +3,7 @@ package com.ikolay.controller;
 import static com.ikolay.constant.EndPoints.*;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.response.AllConfirmationInfoResponseDto;
 import com.ikolay.dto.response.FindAllCompanyEmployeesResponseDto;
 import com.ikolay.dto.response.UserInformationResponseDto;
 import com.ikolay.service.UserService;
@@ -48,5 +49,10 @@ public class UserController {
     @GetMapping("/finduseridbyemail/{email}")
     ResponseEntity<Long> findIdByEmail(@PathVariable String email){
         return ResponseEntity.ok(userService.findIdByEmail(email));
+    }
+
+    @GetMapping("/pendingmanagers")
+    ResponseEntity<List<AllConfirmationInfoResponseDto>> findAllPendingManagers(){
+        return ResponseEntity.ok(userService.findAllPendingManagers());
     }
 }

@@ -1,10 +1,13 @@
 package com.ikolay.service;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.response.AllConfirmationInfoResponseDto;
+import com.ikolay.dto.response.ConfirmationInfoResponseDto;
 import com.ikolay.dto.response.FindAllCompanyEmployeesResponseDto;
 import com.ikolay.dto.response.UserInformationResponseDto;
 import com.ikolay.exception.ErrorType;
 import com.ikolay.exception.UserManagerException;
+import com.ikolay.manager.ICompanyManager;
 import com.ikolay.mapper.IUserMapper;
 import com.ikolay.repository.IUserRepository;
 import com.ikolay.repository.entity.User;
@@ -23,11 +26,13 @@ public class UserService extends ServiceManager<User, Long> {
 
     private final IUserRepository userRepository;
     private final JwtTokenManager tokenManager;
+    private final ICompanyManager companyManager;
 
-    public UserService(IUserRepository userRepository, JwtTokenManager tokenManager) {
+    public UserService(IUserRepository userRepository, JwtTokenManager tokenManager, ICompanyManager companyManager) {
         super(userRepository);
         this.userRepository = userRepository;
         this.tokenManager = tokenManager;
+        this.companyManager = companyManager;
     }
 
     public Boolean register(RegisterRequestDto dto) {
@@ -89,6 +94,21 @@ public class UserService extends ServiceManager<User, Long> {
         if (user.isEmpty())
             throw new UserManagerException(ErrorType.USER_NOT_FOUND);
         return user.get().getId();
+    }
+
+    public List<AllConfirmationInfoResponseDto> findAllPendingManagers() {
+        List<User> pendingManagers = userRepository.findAllByStatusAndRole(EStatus.PENDING, ERole.MANAGER);
+        List<Long> compIds = pendingManagers.stream().map(x -> x.getCompanyId()).toList();
+        List<ConfirmationInfoResponseDto> list = companyManager.companyInfoForConfirmation(compIds).getBody();
+        List<AllConfirmationInfoResponseDto> neededInfo = pendingManagers.stream().map(manager -> {
+            AllConfirmationInfoResponseDto returnInfo = IUserMapper.INSTANCE.toAllConfirmationResponseDto(manager);
+            ConfirmationInfoResponseDto first = list.stream().filter(company -> company.getId() == manager.getCompanyId()).findFirst().get();
+            returnInfo.setCompanyName(first.getCompanyName());
+            returnInfo.setTaxNo(first.getTaxNo());
+            return returnInfo;
+        }).toList();
+
+        return neededInfo;
     }
 }
 
