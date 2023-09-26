@@ -1,21 +1,18 @@
 package com.ikolay.dto.response;
 
-import com.ikolay.repository.enums.ERole;
-import com.ikolay.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data //@Getter @Setter @ToString hepsini kapsıyor.
+@Data
 @Builder
 public class UserInformationResponseDto {
+    private Long id;
+    private Long authId;
     private Long companyId;
     private String email;
     private String companyEmail;
@@ -23,4 +20,7 @@ public class UserInformationResponseDto {
     private String lastname;
     private String phone;
     private String address;
+    private String photoUrl;
+    private String salary;
+    private Long shiftId;
 }

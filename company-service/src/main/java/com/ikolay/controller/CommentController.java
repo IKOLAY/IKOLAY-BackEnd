@@ -23,19 +23,19 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-    @PostMapping(ADDCOMMENT)
+    @PostMapping(ADDCOMMENT) //Comment eklemek için hazırlandı. Eklenen commentler pending olarak eklenip admin sayfasında kontrol ediliyor.
     public ResponseEntity<CommentAddResponse> addCommment(CommentAddDto dto){
         commentService.commentAddForAdmin(dto);
         return ResponseEntity.ok(CommentAddResponse.builder()
                         .message("Yorumunuz IKOLAY admin kontrolüne gönderilmiştir!!")
                 .build());
     }
-    @GetMapping(FINDALLCOMMENTFORADMIN)
+    @GetMapping(FINDALLCOMMENTFORADMIN) //Admin sayfasındaki commentlerin görüntülenmesinde kullanılan metod.
     public ResponseEntity<List<Comment>> findall(Long companyId){
         return ResponseEntity.ok(commentService.findCommentByCompanyId(companyId));
     }
 
-    @GetMapping(FINDALLCOMMENTFORGUEST)
+    @GetMapping(FINDALLCOMMENTFORGUEST) //Guest sayfasındaki commentlerin görüntülenmesinde kullanılan metod.
     public ResponseEntity<List<GetAllCommentsResponseDto>> findAllForGuest(Long companyId){
         return ResponseEntity.ok(commentService.getAllCommentsForGuest(companyId));
     }

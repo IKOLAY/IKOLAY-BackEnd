@@ -17,14 +17,7 @@ import static com.ikolay.constant.EndPoints.*;
 public class LeaveController {
     private final LeaveService leaveService;
 
-
-    @GetMapping("/test")
-    ResponseEntity<String> deneme(){
-        return ResponseEntity.ok("Selam!");
-    }
-
-
-    @PostMapping("/test")
+    @PostMapping("/create") //Manager sayfasındaki tatil ekleme işlemleri için hazırlandı.
     ResponseEntity<Leave> createLeave(@RequestBody @Valid CreateLeaveRequestDto dto){
         return ResponseEntity.ok(leaveService.createLeave(dto));
     }

@@ -5,6 +5,7 @@ import static com.ikolay.constant.EndPoints.*;
 import com.ikolay.dto.requests.AdminApproveRequestDto;
 import com.ikolay.dto.requests.DoLoginRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.requests.UpdateUserRequestDto;
 import com.ikolay.dto.response.DoLoginResponseDto;
 import com.ikolay.dto.response.RegisterResponseDto;
 import com.ikolay.service.AuthService;
@@ -19,22 +20,27 @@ import javax.validation.Valid;
 @RequestMapping(AUTH)
 public class AuthController {
     private final AuthService authService;
-    @PostMapping(REGISTER)
+    @PostMapping(REGISTER) // Kayıt olma işlemleri için hazırlandı. auth>user>company zincirinin ilk parçası.
     ResponseEntity<RegisterResponseDto> register(@RequestBody @Valid RegisterRequestDto dto){
         return ResponseEntity.ok(authService.register(dto));
     }
-    @PostMapping(LOGIN)
+    @PostMapping(LOGIN) // Giriş işlemleri için hazırlandı.
     public ResponseEntity<DoLoginResponseDto> login(@RequestBody DoLoginRequestDto dto){
         return ResponseEntity.ok(authService.doLogin(dto));
     }
 
-    @GetMapping(ACTIVATION)
+    @GetMapping(ACTIVATION) //Atılan mail üzeirnden giden aktivasyon kodunu kullanarak accountu aktive etmek için hazırlandı.
     public ResponseEntity<RegisterResponseDto> activation(String token){
     return ResponseEntity.ok(authService.activation(token));
     }
 
-    @PostMapping(APPROVE) //Admin onayını test için yazıldı düzenlenecek.
+    @PostMapping(APPROVE) //Admin sayfasından gelen hazır bilgiye göre onay/red işlemleri için hazırlandı.
     public ResponseEntity<RegisterResponseDto> decideRegisterRequest(@RequestBody  AdminApproveRequestDto dto){
         return ResponseEntity.ok(authService.confirmation(dto));
+    }
+
+    @PostMapping(UPDATE) //user-service içindeki "user" güncellemelerinin buraya da taşınması için kullanıldı. (FEIGN)
+    public ResponseEntity<Boolean> updateAuthInfo(@RequestBody UpdateUserRequestDto dto){
+        return ResponseEntity.ok(authService.updateAuthInfo(dto));
     }
 }
