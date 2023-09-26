@@ -4,9 +4,11 @@ import static com.ikolay.constant.EndPoints.*;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
 import com.ikolay.dto.response.ConfirmationInfoResponseDto;
+import com.ikolay.dto.response.GetTop5ForCompanyResponseDto;
 import com.ikolay.repository.entity.Company;
 import com.ikolay.service.CompanyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +39,6 @@ public class CompanyController {
     @GetMapping("/companyinformation")
     public ResponseEntity<Company> getCompanyInformation(Long id) {
         return ResponseEntity.ok(companyService.getCompanyInformation(id));
-
     }
 
     @PutMapping(UPDATE)
@@ -49,4 +50,10 @@ public class CompanyController {
     public ResponseEntity<List<ConfirmationInfoResponseDto>> companyInfoForConfirmation(@RequestBody List<Long> companyIds){
         return ResponseEntity.ok(companyService.companyInfoForConfirmation(companyIds));
     }
+
+    @GetMapping("/findbycompanynametopfive")
+    public ResponseEntity<List<GetTop5ForCompanyResponseDto>> findByCompanyNameTop5(){
+        return ResponseEntity.ok(companyService.findByCompanyNameTop5());
+    }
+
 }

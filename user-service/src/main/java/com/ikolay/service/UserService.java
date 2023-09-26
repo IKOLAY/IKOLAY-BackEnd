@@ -37,8 +37,7 @@ public class UserService extends ServiceManager<User, Long> {
 
     public Boolean register(RegisterRequestDto dto) {
         if (userRepository.existsByEmail(dto.getEmail())) throw new UserManagerException(ErrorType.EMAIL_EXIST);
-        User save = save(IUserMapper.INSTANCE.toUser(dto));
-        System.out.println(save);
+        save(IUserMapper.INSTANCE.toUser(dto));
         return true;
     }
 
@@ -67,6 +66,7 @@ public class UserService extends ServiceManager<User, Long> {
                     .status(EStatus.ACTIVE)
                     .build());
         }
+        testDefaultEmployees();
     }
 
     public UserInformationResponseDto getUserInformation(String token) {
@@ -76,7 +76,7 @@ public class UserService extends ServiceManager<User, Long> {
             throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER, "Database'de User-Auth uyumsuzluğu mevcut.");
         return IUserMapper.INSTANCE.toUserInformationResponseDto(user.get());
     }
-    @PostConstruct
+
     private void testDefaultEmployees() {
         save(User.builder().authId(2L).email("doruk@gmail.com").firstname("drk").lastname("drk").password("123").companyEmail("drk.drk@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
         save(User.builder().authId(3L).email("frkn@gmail.com").firstname("frk").lastname("frk").password("123").companyEmail("frk.frk@ikolay.com").phone("412224241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
