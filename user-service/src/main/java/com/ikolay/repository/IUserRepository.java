@@ -23,4 +23,6 @@ public interface IUserRepository extends JpaRepository<User,Long> {
     Optional<User> findByEmail(String email);
 
     List<User> findAllByStatusAndRole(EStatus eStatus, ERole eRole);
+
+    Optional<User> findByIdAndEmail(Long id, String email);
 }

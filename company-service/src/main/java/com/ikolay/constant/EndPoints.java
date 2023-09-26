@@ -18,6 +18,7 @@ public class EndPoints {
     public static final String FINDALL = "/findall";
     public static final String INCOMINGPAYMENTS = "/payments";
     public static final String PROFITLOSS = "/annualprofitloss";
+    public static final String ALLEXPENSES = "/allexpenses";
     public static final String FINDALLCOMMENTFORADMIN = "/findallcommentforadmin";
     public static final String FINDALLCOMMENTFORGUEST = "/findallcommentforguest";
 

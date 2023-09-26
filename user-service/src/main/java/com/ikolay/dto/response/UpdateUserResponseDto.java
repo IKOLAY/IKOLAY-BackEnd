@@ -1,5 +1,4 @@
-package com.ikolay.repository.entity;
-
+package com.ikolay.dto.response;
 
 import com.ikolay.repository.enums.ERole;
 import com.ikolay.repository.enums.EStatus;
@@ -7,22 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-@Entity
-@Table(name = "tbl_user")
-public class User extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long companyId;
-    private Long authId;
+@NoArgsConstructor
+@Data //@Getter @Setter @ToString hepsini kapsıyor.
+@Builder
+public class UpdateUserResponseDto {
+
+
     private Long shiftId;
     @Column(unique = true)
     private String email;
@@ -41,5 +36,4 @@ public class User extends BaseEntity{
     private EStatus status= EStatus.PENDING;
 
     private Long salary;
-
 }

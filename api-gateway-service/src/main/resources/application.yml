@@ -44,6 +44,16 @@ spring:
               args:
                 enabled: true
                 fallbackUri: forward:/fallback/userservice
+        - id: shift-service
+          predicates:
+            - Path=/shift/**
+          uri: http://localhost:7072
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback/userservice
         - id: company-service
           predicates:
             - Path=/company/**

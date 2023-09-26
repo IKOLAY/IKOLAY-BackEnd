@@ -20,33 +20,35 @@ import java.util.List;
 public class CompanyController {
     private final CompanyService companyService;
 
-    @PostMapping(REGISTER)
+    @PostMapping(REGISTER) //auth>user>company kaydı yapılırken kullanılan metod.
     public ResponseEntity<Long> register(@RequestBody RegisterRequestDto dto, @RequestHeader("Authorization") String token){
         return ResponseEntity.ok(companyService.register(dto));
     }
-    @PostMapping(FINDCOMPANY)
+
+    @PostMapping(FINDCOMPANY) // employee kaydı yapılırken mail adresi üretmekmek için kullanılan metod.
     public ResponseEntity<String> findCompanyNameById(@RequestParam Long id){
         return ResponseEntity.ok(companyService.findCompanyNameById(id));
     }
 
-    @DeleteMapping("/delete") //düzenlenecek test için yazıldı.
+    @DeleteMapping("/delete") //Admin onay metodu red durumunda çalışması için yazıldı.
     public ResponseEntity<Boolean> deleteById(@RequestParam Long id){
         companyService.deleteById(id);
         return ResponseEntity.ok(true);
     }
 
 
-    @GetMapping("/companyinformation")
+    @GetMapping("/companyinformation") // Manager için şirket sayfasındaki şirket bilgilerini düzenle isteği için hazırlandı.
+    //Dönüş tipi Dto'ya çevrilebilir Personel sayfasındaki firma bilgileri ile ortak kullanım için. Login işleminde istek atılabilir.
     public ResponseEntity<Company> getCompanyInformation(Long id) {
         return ResponseEntity.ok(companyService.getCompanyInformation(id));
     }
 
-    @PutMapping(UPDATE)
+    @PutMapping(UPDATE) // Manager tarafından güncellenen bilgileri database aktarmak için yapıldı.
     public ResponseEntity<Company> updateCompany(Company company) {
         return ResponseEntity.ok(companyService.updateCompany(company));
     }
 
-    @PostMapping("/getcompanynameandtaxno")
+    @PostMapping("/getcompanynameandtaxno") //Admin sayfası manager onayı için hazırlandı. Firmanın tax ve name'ini döndürüyor.
     public ResponseEntity<List<ConfirmationInfoResponseDto>> companyInfoForConfirmation(@RequestBody List<Long> companyIds){
         return ResponseEntity.ok(companyService.companyInfoForConfirmation(companyIds));
     }

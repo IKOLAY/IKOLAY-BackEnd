@@ -1,9 +1,6 @@
 package com.ikolay.service;
 
-import com.ikolay.dto.requests.ActivationRequestDto;
-import com.ikolay.dto.requests.AdminApproveRequestDto;
-import com.ikolay.dto.requests.DoLoginRequestDto;
-import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.requests.*;
 import com.ikolay.dto.response.DoLoginResponseDto;
 import com.ikolay.dto.response.RegisterResponseDto;
 import com.ikolay.exception.AuthManagerException;
@@ -200,7 +197,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
         testDefaultEmployees();
     }
 
-
     private void testDefaultEmployees() {
         save(Auth.builder().email("doruk@gmail.com").firstname("drk").lastname("drk").password("123").companyEmail("drk.drk@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
         save(Auth.builder().email("frkn@gmail.com").firstname("frk").lastname("frk").password("123").companyEmail("frk.frk@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
@@ -208,5 +204,18 @@ public class AuthService extends ServiceManager<Auth, Long> {
         save(Auth.builder().email("hly@gmail.com").firstname("hly").lastname("hly").password("123").companyEmail("hly.hly@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
         save(Auth.builder().email("aktas@gmail.com").firstname("akt").lastname("akt").password("123").companyEmail("akt.akt@ikolay.com").role(ERole.MANAGER).status(EStatus.ACTIVE).build());
         save(Auth.builder().email("emrsfa@gmail.com").firstname("emr").lastname("emr").password("123").companyEmail("emrsfa@gmail.com").role(ERole.VISITOR).status(EStatus.ACTIVE).build());
+    }
+
+    public Boolean updateAuthInfo(UpdateUserRequestDto dto) {
+
+        Optional<Auth> auth = findById(dto.getAuthId());
+        if (auth.isEmpty())
+            throw new AuthManagerException(ErrorType.INTERNAL_ERROR_SERVER, "User-Auth serviceler arası uyumsuzluk mevcut.");
+        auth.get().setEmail(dto.getEmail());
+        auth.get().setFirstname(dto.getFirstname());
+        auth.get().setLastname(dto.getLastname());
+        update(auth.get());
+        return true;
+
     }
 }

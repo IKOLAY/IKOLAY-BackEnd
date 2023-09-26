@@ -23,28 +23,28 @@ import static com.ikolay.constant.EndPoints.*;
 public class TransactionController {
     private final TransactionService transactionService;
 
-   @GetMapping(ADD)
+   @GetMapping(ADD) //Manager sayfasındaki işlem ekleme için hazırlandı.
     public ResponseEntity<FinancialTransaction> addTransaction(AddTransactionRequestDto dto){
        return ResponseEntity.ok(transactionService.add(dto));
    }
 
-   @GetMapping(FINDALL)
+   @GetMapping(FINDALL) //Test için yazıldı kaldırılacak.
     public ResponseEntity<List<FinancialTransaction>> findAll(){
        return ResponseEntity.ok(transactionService.findAll());
    }
 
-   @GetMapping(INCOMINGPAYMENTS)
+   @GetMapping(INCOMINGPAYMENTS) //Manager sayfasındaki "Yaklaşan harcamaları getir" componenti için hazırlandı.
     public ResponseEntity<List<FinancialTransaction>>  getIncomingPayments(Long companyId){
        return ResponseEntity.ok(transactionService.incomingPayments(companyId));
    }
 
-   @PostMapping(PROFITLOSS)
+   @PostMapping(PROFITLOSS) // Manager sayfasındaki "Yıllık kar zarar bilgisi"  componenti için hazırlandı.
     public  ResponseEntity<List<AnnualProfitLossResponseDto>> annualProfitLoss(@RequestBody AnnualProfitLossRequestDto dto){
        return ResponseEntity.ok(transactionService.annualProfitLoss(dto));
    }
 
-   @GetMapping("/test")
-    public ResponseEntity<List<AllExpensesResponseDto>> test(Long companyId){
+   @GetMapping(ALLEXPENSES) //Manager sayfasındaki "Tüm harcamalar" componenti için hazırlandı.
+    public ResponseEntity<List<AllExpensesResponseDto>> findAllExpenses(Long companyId){
        return ResponseEntity.ok(transactionService.findAllExpenses(companyId));
    }
 
