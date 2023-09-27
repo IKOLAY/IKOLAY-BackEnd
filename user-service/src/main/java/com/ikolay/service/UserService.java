@@ -156,5 +156,12 @@ public class UserService extends ServiceManager<User, Long> {
             return IUserMapper.INSTANCE.toUpdateUserResponseDto(update(optionalUser.get()));
         }
     }
+
+    public GetUserFirstnameAndLastnameResponseDto getFirstAndLastnameWithId(Long id) {
+        Optional<User> user = findById(id);
+        if (user.isEmpty())
+            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Önyüzden gelen veride problem mevcut.");
+        return IUserMapper.INSTANCE.toGetUserFirstnameAndLastnameResponseDto(user.get());
+    }
 }
 

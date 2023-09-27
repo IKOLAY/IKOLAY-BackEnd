@@ -37,7 +37,7 @@ public class CompanyController {
     }
 
 
-    @GetMapping("/companyinformation") // Manager için şirket sayfasındaki şirket bilgilerini düzenle isteği için hazırlandı.
+    @GetMapping("/companyinformation") // Manager için şirket sayfasındaki şirket bilgilerini düzenle isteği için hazırlandı. Gizli bir bilgi içeriyorsa DTO'ya çevrilmeli.
     //Dönüş tipi Dto'ya çevrilebilir Personel sayfasındaki firma bilgileri ile ortak kullanım için. Login işleminde istek atılabilir.
     public ResponseEntity<Company> getCompanyInformation(Long id) {
         return ResponseEntity.ok(companyService.getCompanyInformation(id));

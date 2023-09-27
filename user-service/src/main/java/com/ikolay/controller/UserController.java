@@ -5,10 +5,7 @@ import static com.ikolay.constant.EndPoints.*;
 import com.ikolay.dto.requests.AddShiftToEmployeeRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
 import com.ikolay.dto.requests.UpdateUserRequestDto;
-import com.ikolay.dto.response.AllConfirmationInfoResponseDto;
-import com.ikolay.dto.response.FindAllCompanyEmployeesResponseDto;
-import com.ikolay.dto.response.UpdateUserResponseDto;
-import com.ikolay.dto.response.UserInformationResponseDto;
+import com.ikolay.dto.response.*;
 import com.ikolay.repository.entity.User;
 import com.ikolay.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -68,6 +65,11 @@ public class UserController {
     @PutMapping(UPDATE) //kullanıcı bilgileri güncellerken gerekli. Auth service ile bağlatısı da var (FEIGN)
     ResponseEntity<UpdateUserResponseDto> updateUser(UpdateUserRequestDto dto){
         return ResponseEntity.ok(userService.updateUser(dto));
+    }
+
+    @GetMapping("/getusersfirstandlastname/{id}")
+    ResponseEntity<GetUserFirstnameAndLastnameResponseDto> getFirstAndLastnameWithId(@PathVariable Long id){
+        return ResponseEntity.ok(userService.getFirstAndLastnameWithId(id));
     }
 
 }

@@ -21,4 +21,5 @@ public interface ICommentRepository extends JpaRepository<Comment,Long> {
     List<Comment> findCommentByCompany(Long companyId);
 
 
+    List<Comment> findByCommentType(ECommentType eCommentType);
 }

@@ -10,10 +10,7 @@ import com.ikolay.repository.entity.Comment;
 import com.ikolay.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,12 +28,22 @@ public class CommentController {
                 .build());
     }
     @GetMapping(FINDALLCOMMENTFORADMIN) //Admin sayfasındaki commentlerin görüntülenmesinde kullanılan metod.
-    public ResponseEntity<List<Comment>> findall(Long companyId){
-        return ResponseEntity.ok(commentService.findCommentByCompanyId(companyId));
+    public ResponseEntity<List<Comment>> findAllPendingComments(){
+        return ResponseEntity.ok(commentService.findAllPendingComments());
     }
 
     @GetMapping(FINDALLCOMMENTFORGUEST) //Guest sayfasındaki commentlerin görüntülenmesinde kullanılan metod.
     public ResponseEntity<List<GetAllCommentsResponseDto>> findAllForGuest(Long companyId){
         return ResponseEntity.ok(commentService.getAllCommentsForGuest(companyId));
+    }
+
+    @GetMapping("/acceptcomment/{id}") //Admin sayfasındaki yorum onaylama işlemi için yapıldı.
+    ResponseEntity<Boolean> acceptComment(@PathVariable Long id){
+        return ResponseEntity.ok(commentService.acceptComment(id));
+    }
+
+    @GetMapping("/rejectcomment/{id}") //Admin sayfasındaki yorum reddetme işlemi için yapıldı.
+    ResponseEntity<Boolean> rejectComment(@PathVariable Long id){
+        return ResponseEntity.ok(commentService.rejectComment(id));
     }
 }
