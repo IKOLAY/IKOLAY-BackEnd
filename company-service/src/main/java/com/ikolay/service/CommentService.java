@@ -10,7 +10,13 @@ import com.ikolay.repository.ICommentRepository;
 import com.ikolay.repository.entity.Comment;
 import com.ikolay.repository.enums.ECommentType;
 import com.ikolay.utility.ServiceManager;
+import lombok.Builder;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,16 +44,41 @@ public class CommentService extends ServiceManager<Comment,Long> {
         return save(ICommentMapper.INSTANCE.toComment(dto));
     }
 
-    public List<Comment> findCommentByCompanyId(Long companyId){
-        if (commentRepository.findCommentByCompanyId(companyId).isEmpty()) throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND);
-        return commentRepository.findCommentByCompanyId(companyId);
+    public List<Comment> findAllPendingComments(){
+        return commentRepository.findByCommentType(ECommentType.PENDING);
     }
 
     public List<GetAllCommentsResponseDto> getAllCommentsForGuest(Long companyId){
-        if (commentRepository.findCommentByCompany(companyId).isEmpty()) throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND);
-        List<Comment> commentByCompany = commentRepository.findCommentByCompany(companyId);
-        return ICommentMapper.INSTANCE.toGetAllCommentsResponseDto(commentByCompany);
+        List<Comment> comments = commentRepository.findCommentByCompany(companyId);
+        if (comments.isEmpty()) throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND);
+        return ICommentMapper.INSTANCE.toGetAllCommentsResponseDto(comments);
+    }
+
+    @PostConstruct
+    public void defaultComments(){
+
+        save(Comment.builder().companyId(1l).commentType(ECommentType.PENDING).content("PENDING COMMENT").userId(2l).build());
+        save(Comment.builder().companyId(1l).commentType(ECommentType.PENDING).content("PENDING COMMENT2").userId(3l).build());
+        save(Comment.builder().companyId(1l).commentType(ECommentType.ACCEPTED).content("ACCEPTED COMMENT").userId(4l).build());
+        save(Comment.builder().companyId(1l).commentType(ECommentType.REJECTED).content("REJECTED COMMENT").userId(5l).build());
 
     }
 
+    public Boolean acceptComment(Long id) {
+        Optional<Comment> comment = findById(id);
+        if(comment.isEmpty())
+            throw new CompanyManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Önyüzden gelen bilgide hata var.");
+        comment.get().setCommentType(ECommentType.ACCEPTED);
+        update(comment.get());
+        return true;
+    }
+
+    public Boolean rejectComment(Long id) {
+        Optional<Comment> comment = findById(id);
+        if(comment.isEmpty())
+            throw new CompanyManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Önyüzden gelen bilgide hata var.");
+        comment.get().setCommentType(ECommentType.REJECTED);
+        update(comment.get());
+        return true;
+    }
 }

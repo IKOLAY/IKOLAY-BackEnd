@@ -8,6 +8,7 @@ import com.ikolay.dto.response.UserInformationResponseDto;
 import com.ikolay.repository.entity.Shift;
 import com.ikolay.service.ShiftService;
 import com.ikolay.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,10 @@ public class ShiftController {
     }
 
     @GetMapping("/findshift/{id}") // Personel sayfasındaki vardiya bilgileri ihtiyacı için gerekli.
+    @Operation(summary = "Personel sayfası için.")
     ResponseEntity<Shift> findShiftById(@PathVariable Long id){
         return ResponseEntity.ok(shiftService.findShiftById(id));
     }
+
 
 }

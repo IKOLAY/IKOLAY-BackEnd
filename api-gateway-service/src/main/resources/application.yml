@@ -74,6 +74,16 @@ spring:
               args:
                 enabled: true
                 fallbackUri: forward:/fallback/companyworksservice
+        - id: comment-service
+          predicates:
+            - Path=/comment/**
+          uri: http://localhost:7073
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - name: CircuitBreaker
+              args:
+                enabled: true
+                fallbackUri: forward:/fallback/companyworksservice
         - id: leave-service
           predicates:
             - Path=/leave/**

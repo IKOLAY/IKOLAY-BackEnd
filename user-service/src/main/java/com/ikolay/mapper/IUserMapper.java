@@ -1,10 +1,7 @@
 package com.ikolay.mapper;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
-import com.ikolay.dto.response.AllConfirmationInfoResponseDto;
-import com.ikolay.dto.response.FindAllCompanyEmployeesResponseDto;
-import com.ikolay.dto.response.UpdateUserResponseDto;
-import com.ikolay.dto.response.UserInformationResponseDto;
+import com.ikolay.dto.response.*;
 import com.ikolay.repository.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -25,4 +22,5 @@ public interface IUserMapper {
 
     UpdateUserResponseDto toUpdateUserResponseDto(final User user);
 
+    GetUserFirstnameAndLastnameResponseDto toGetUserFirstnameAndLastnameResponseDto(final User user);
 }
