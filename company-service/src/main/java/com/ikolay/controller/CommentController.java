@@ -46,4 +46,9 @@ public class CommentController {
     ResponseEntity<Boolean> rejectComment(@PathVariable Long id){
         return ResponseEntity.ok(commentService.rejectComment(id));
     }
+
+    @GetMapping("/finduserscomment/{userId}") //Personel sayfasındaki yorum yazma özelliği için hazırlandı.
+    ResponseEntity<Comment> getUsersComment(@PathVariable Long userId){
+        return ResponseEntity.ok(commentService.findByUserId(userId));
+    }
 }

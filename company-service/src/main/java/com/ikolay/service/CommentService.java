@@ -81,4 +81,11 @@ public class CommentService extends ServiceManager<Comment,Long> {
         update(comment.get());
         return true;
     }
+
+    public Comment findByUserId(Long userId) {
+        Optional<Comment> comment = commentRepository.findByUserId(userId);
+        if(comment.isEmpty())
+            return new Comment();
+        return comment.get();
+    }
 }

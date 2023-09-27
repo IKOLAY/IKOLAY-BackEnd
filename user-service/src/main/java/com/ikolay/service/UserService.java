@@ -82,11 +82,11 @@ public class UserService extends ServiceManager<User, Long> {
         return IUserMapper.INSTANCE.toUserInformationResponseDto(user.get());
     }
     private void testDefaultEmployees() {
-        save(User.builder().authId(2L).email("doruk@gmail.com").firstname("drk").lastname("drk").password("123").companyEmail("drk.drk@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(3L).email("frkn@gmail.com").firstname("frk").lastname("frk").password("123").companyEmail("frk.frk@ikolay.com").phone("412224241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(4L).email("slm@gmail.com").firstname("slm").lastname("slm").password("123").companyEmail("slm.slm@ikolay.com").phone("412423341").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(5L).email("hly@gmail.com").firstname("hly").lastname("hly").password("123").companyEmail("hly.hly@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(6L).email("aktas@gmail.com").firstname("akt").lastname("akt").password("123").companyEmail("akt.akt@ikolay.com").phone("4124241").role(ERole.MANAGER).companyId(1L).status(EStatus.ACTIVE).build());
+        save(User.builder().authId(2L).email("doruk@gmail.com").shiftId(1L).firstname("drk").lastname("drk").password("123").companyEmail("drk.drk@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
+        save(User.builder().authId(3L).email("frkn@gmail.com").shiftId(2L).firstname("frk").lastname("frk").password("123").companyEmail("frk.frk@ikolay.com").phone("412224241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
+        save(User.builder().authId(4L).email("slm@gmail.com").shiftId(3L).firstname("slm").lastname("slm").password("123").companyEmail("slm.slm@ikolay.com").phone("412423341").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
+        save(User.builder().authId(5L).email("hly@gmail.com").shiftId(1L).firstname("hly").lastname("hly").password("123").companyEmail("hly.hly@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
+        save(User.builder().authId(6L).email("aktas@gmail.com").shiftId(1L).firstname("akt").lastname("akt").password("123").companyEmail("akt.akt@ikolay.com").phone("4124241").role(ERole.MANAGER).companyId(1L).status(EStatus.ACTIVE).build());
         save(User.builder().authId(7L).email("emrsfa@gmail.com").firstname("emr").lastname("emr").password("123").companyEmail("emrsfa@gmail.com").phone("4124241").role(ERole.VISITOR).status(EStatus.ACTIVE).build());
     }
 
