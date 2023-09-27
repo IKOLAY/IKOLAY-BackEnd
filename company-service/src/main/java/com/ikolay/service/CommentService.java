@@ -50,7 +50,7 @@ public class CommentService extends ServiceManager<Comment,Long> {
 
     public List<GetAllCommentsResponseDto> getAllCommentsForGuest(Long companyId){
         List<Comment> comments = commentRepository.findCommentByCompany(companyId);
-        if (comments.isEmpty()) throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND);
+       // if (comments.isEmpty()) throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND);
         return ICommentMapper.INSTANCE.toGetAllCommentsResponseDto(comments);
     }
 

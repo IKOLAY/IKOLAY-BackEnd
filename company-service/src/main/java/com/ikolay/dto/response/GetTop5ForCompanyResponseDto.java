@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetTop5ForCompanyResponseDto {
+    private Long id;
     private String logo;
     private String address;
     private String companyName;
+    private String about;
 }
