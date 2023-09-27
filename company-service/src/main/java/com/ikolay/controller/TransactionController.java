@@ -23,8 +23,8 @@ import static com.ikolay.constant.EndPoints.*;
 public class TransactionController {
     private final TransactionService transactionService;
 
-   @GetMapping(ADD) //Manager sayfasındaki işlem ekleme için hazırlandı.
-    public ResponseEntity<FinancialTransaction> addTransaction(AddTransactionRequestDto dto){
+   @PostMapping(ADD) //Manager sayfasındaki işlem ekleme için hazırlandı.
+    public ResponseEntity<FinancialTransaction> addTransaction(@RequestBody AddTransactionRequestDto dto){
        return ResponseEntity.ok(transactionService.add(dto));
    }
 

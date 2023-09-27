@@ -11,6 +11,8 @@ import com.ikolay.utility.JwtTokenManager;
 import com.ikolay.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.time.LocalTime;
 import java.util.Optional;
 
 
@@ -50,6 +52,12 @@ public class ShiftService extends ServiceManager<Shift, Long> {
     }
 
 
+    @PostConstruct
+    public void defaultShift(){
+        save(Shift.builder().shiftName("Sabah Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("09:00")).endTime(LocalTime.parse("17:00")).build());
+        save(Shift.builder().shiftName("Akşam Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("17:00")).endTime(LocalTime.parse("01:00")).build());
+        save(Shift.builder().shiftName("Gece Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("01:00")).endTime(LocalTime.parse("09:00")).build());
+    }
 
 }
 
