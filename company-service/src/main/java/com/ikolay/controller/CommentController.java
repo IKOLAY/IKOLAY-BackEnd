@@ -20,33 +20,30 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-    @PostMapping(ADDCOMMENT) //Comment eklemek için hazırlandı. Eklenen commentler pending olarak eklenip admin sayfasında kontrol ediliyor.
-    public ResponseEntity<CommentAddResponse> addCommment(CommentAddDto dto){
+
+    @PostMapping(ADDCOMMENT) //Comment eklemek için hazırlandı.Eklenen commentler pending olarak eklenip admin sayfasında kontrol ediliyor.
+    public ResponseEntity<CommentAddResponse> addCommment(@RequestBody CommentAddDto dto) {
         commentService.commentAddForAdmin(dto);
-        return ResponseEntity.ok(CommentAddResponse.builder()
-                        .message("Yorumunuz IKOLAY admin kontrolüne gönderilmiştir!!")
-                .build());
+        return ResponseEntity.ok(CommentAddResponse.builder().message("Yorumunuz IKOLAY admin kontrolüne gönderilmiştir!!").build());
     }
+
     @GetMapping(FINDALLCOMMENTFORADMIN) //Admin sayfasındaki commentlerin görüntülenmesinde kullanılan metod.
-    public ResponseEntity<List<Comment>> findAllPendingComments(){
+    public ResponseEntity<List<Comment>> findAllPendingComments() {
         return ResponseEntity.ok(commentService.findAllPendingComments());
     }
 
     @GetMapping(FINDALLCOMMENTFORGUEST) //Guest sayfasındaki commentlerin görüntülenmesinde kullanılan metod.
-    public ResponseEntity<List<GetAllCommentsResponseDto>> findAllForGuest(Long companyId){
+    public ResponseEntity<List<GetAllCommentsResponseDto>> findAllForGuest(Long companyId) {
         return ResponseEntity.ok(commentService.getAllCommentsForGuest(companyId));
     }
-
     @GetMapping(ACCEPTCOMMENT) //Admin sayfasındaki yorum onaylama işlemi için yapıldı.
     ResponseEntity<Boolean> acceptComment(@PathVariable Long id){
         return ResponseEntity.ok(commentService.acceptComment(id));
     }
-
     @GetMapping(REJECTCOMMENT) //Admin sayfasındaki yorum reddetme işlemi için yapıldı.
     ResponseEntity<Boolean> rejectComment(@PathVariable Long id){
         return ResponseEntity.ok(commentService.rejectComment(id));
     }
-
     @GetMapping(GETUSERSCOMMENT) //Personel sayfasındaki yorum yazma özelliği için hazırlandı.
     ResponseEntity<Comment> getUsersComment(@PathVariable Long userId){
         return ResponseEntity.ok(commentService.findByUserId(userId));

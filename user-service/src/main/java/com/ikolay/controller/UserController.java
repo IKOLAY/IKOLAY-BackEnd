@@ -63,7 +63,7 @@ public class UserController {
     }
 
     @PutMapping(UPDATE) //kullanıcı bilgileri güncellerken gerekli. Auth service ile bağlatısı da var (FEIGN)
-    ResponseEntity<UpdateUserResponseDto> updateUser(UpdateUserRequestDto dto){
+    ResponseEntity<UserInformationResponseDto> updateUser(@RequestBody UpdateUserRequestDto dto){
         return ResponseEntity.ok(userService.updateUser(dto));
     }
 
