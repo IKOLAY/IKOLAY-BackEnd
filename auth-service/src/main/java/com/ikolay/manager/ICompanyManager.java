@@ -16,6 +16,6 @@ public interface ICompanyManager {
     @PostMapping(FINDCOMPANY)
      ResponseEntity<String> findCompanyNameById(@RequestParam Long id);
 
-    @DeleteMapping("/delete") //düzenlenecek test için yazıldı.
+    @DeleteMapping(DELETE)
     ResponseEntity<Boolean> deleteById(@RequestParam Long id);
 }

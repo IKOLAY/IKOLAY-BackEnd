@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.ikolay.constant.EndPoints.COMPANYINFOFORCONFIRMATION;
+
 @FeignClient(url = "http://localhost:7073/api/v1/company",decode404 = true,name = "user-company")
 public interface ICompanyManager {
 
-    @PostMapping("/getcompanynameandtaxno")
+    @PostMapping(COMPANYINFOFORCONFIRMATION)
     public ResponseEntity<List<ConfirmationInfoResponseDto>> companyInfoForConfirmation(@RequestBody List<Long> companyIds);
 
 }

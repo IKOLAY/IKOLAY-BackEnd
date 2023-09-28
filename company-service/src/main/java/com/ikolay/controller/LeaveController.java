@@ -20,13 +20,13 @@ import static com.ikolay.constant.EndPoints.*;
 public class LeaveController {
     private final LeaveService leaveService;
 
-    @PostMapping("/create")
+    @PostMapping(CREATE)
         //Manager sayfasındaki tatil ekleme işlemleri için hazırlandı.
     ResponseEntity<Leave> createLeave(@RequestBody @Valid CreateLeaveRequestDto dto) {
         return ResponseEntity.ok(leaveService.createLeave(dto));
     }
 
-    @GetMapping("/getcompanyleaves")
+    @GetMapping(FINDCOMPANYLEAVES)
     ResponseEntity<List<GetCompanyLeavesResponseDto>> findCompanyLeaves(Long companyId) {
 
 

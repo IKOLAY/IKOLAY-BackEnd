@@ -30,14 +30,14 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.findCompanyNameById(id));
     }
 
-    @DeleteMapping("/delete") //Admin onay metodu red durumunda çalışması için yazıldı.
+    @DeleteMapping(DELETE) //Admin onay metodu red durumunda çalışması için yazıldı.
     public ResponseEntity<Boolean> deleteById(@RequestParam Long id){
         companyService.deleteById(id);
         return ResponseEntity.ok(true);
     }
 
 
-    @GetMapping("/companyinformation") // Manager için şirket sayfasındaki şirket bilgilerini düzenle isteği için hazırlandı. Gizli bir bilgi içeriyorsa DTO'ya çevrilmeli.
+    @GetMapping(GETCOMPANYINFORMATION) // Manager için şirket sayfasındaki şirket bilgilerini düzenle isteği için hazırlandı. Gizli bir bilgi içeriyorsa DTO'ya çevrilmeli.
     //Dönüş tipi Dto'ya çevrilebilir Personel sayfasındaki firma bilgileri ile ortak kullanım için. Login işleminde istek atılabilir.
     public ResponseEntity<Company> getCompanyInformation(Long id) {
         return ResponseEntity.ok(companyService.getCompanyInformation(id));
@@ -48,12 +48,12 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.updateCompany(company));
     }
 
-    @PostMapping("/getcompanynameandtaxno") //Admin sayfası manager onayı için hazırlandı. Firmanın tax ve name'ini döndürüyor.
+    @PostMapping(COMPANYINFOFORCONFIRMATION) //Admin sayfası manager onayı için hazırlandı. Firmanın tax ve name'ini döndürüyor.
     public ResponseEntity<List<ConfirmationInfoResponseDto>> companyInfoForConfirmation(@RequestBody List<Long> companyIds){
         return ResponseEntity.ok(companyService.companyInfoForConfirmation(companyIds));
     }
 
-    @GetMapping("/findbycompanynametopfive")
+    @GetMapping(FINDBYCOMPANYNAMETOP5)
     public ResponseEntity<List<GetTop5ForCompanyResponseDto>> findByCompanyNameTop5(){
         return ResponseEntity.ok(companyService.findByCompanyNameTop5());
     }
