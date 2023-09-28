@@ -1,6 +1,7 @@
 package com.ikolay.mapper;
 
 import com.ikolay.dto.requests.CreateShiftRequestDto;
+import com.ikolay.dto.response.FindShiftByCompanyIdResponseDto;
 import com.ikolay.repository.entity.Shift;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -13,4 +14,7 @@ public interface IShiftMapper {
     IShiftMapper INSTANCE = Mappers.getMapper(IShiftMapper.class);
 
     Shift toShift(final CreateShiftRequestDto dto);
+
+    List<FindShiftByCompanyIdResponseDto> toFindShiftsByCompanyId(final List<Shift> shifts);
+
 }
