@@ -28,9 +28,6 @@ public class LeaveController {
 
     @GetMapping(FINDCOMPANYLEAVES)
     ResponseEntity<List<GetCompanyLeavesResponseDto>> findCompanyLeaves(Long companyId) {
-
-
         return ResponseEntity.ok(leaveService.findCompanyLeaves(companyId));
-
     }
 }

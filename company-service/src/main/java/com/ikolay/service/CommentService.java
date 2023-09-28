@@ -85,7 +85,7 @@ public class CommentService extends ServiceManager<Comment,Long> {
     public Comment findByUserId(Long userId) {
         Optional<Comment> comment = commentRepository.findByUserId(userId);
         if(comment.isEmpty())
-            return new Comment();
+            throw new CompanyManagerException(ErrorType.COMMENT_NOT_EXIST,"Henüz yorum yapmadınız!");
         return comment.get();
     }
 }
