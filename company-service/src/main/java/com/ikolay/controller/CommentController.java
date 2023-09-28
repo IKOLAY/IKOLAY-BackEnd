@@ -36,19 +36,16 @@ public class CommentController {
     public ResponseEntity<List<GetAllCommentsResponseDto>> findAllForGuest(Long companyId) {
         return ResponseEntity.ok(commentService.getAllCommentsForGuest(companyId));
     }
-
-    @GetMapping("/acceptcomment/{id}") //Admin sayfasındaki yorum onaylama işlemi için yapıldı.
-    ResponseEntity<Boolean> acceptComment(@PathVariable Long id) {
+    @GetMapping(ACCEPTCOMMENT) //Admin sayfasındaki yorum onaylama işlemi için yapıldı.
+    ResponseEntity<Boolean> acceptComment(@PathVariable Long id){
         return ResponseEntity.ok(commentService.acceptComment(id));
     }
-
-    @GetMapping("/rejectcomment/{id}")  //Admin sayfasındaki yorum reddetme işlemi için yapıldı.
-    ResponseEntity<Boolean> rejectComment(@PathVariable Long id) {
+    @GetMapping(REJECTCOMMENT) //Admin sayfasındaki yorum reddetme işlemi için yapıldı.
+    ResponseEntity<Boolean> rejectComment(@PathVariable Long id){
         return ResponseEntity.ok(commentService.rejectComment(id));
     }
-
-    @GetMapping("/finduserscomment/{userId}")//Personel sayfasındaki yorum yazma özelliği için hazırlandı.
-    ResponseEntity<Comment> getUsersComment(@PathVariable Long userId) {
+    @GetMapping(GETUSERSCOMMENT) //Personel sayfasındaki yorum yazma özelliği için hazırlandı.
+    ResponseEntity<Comment> getUsersComment(@PathVariable Long userId){
         return ResponseEntity.ok(commentService.findByUserId(userId));
     }
 }

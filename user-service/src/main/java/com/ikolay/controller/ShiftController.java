@@ -29,7 +29,7 @@ public class ShiftController {
         return ResponseEntity.ok(shiftService.createShift(dto));
     }
 
-    @GetMapping("/findshift/{id}") // Personel sayfasındaki vardiya bilgileri ihtiyacı için gerekli.
+    @GetMapping(FINDSHIFTBYID) // Personel sayfasındaki vardiya bilgileri ihtiyacı için gerekli.
     @Operation(summary = "Personel sayfası için.")
     ResponseEntity<Shift> findShiftById(@PathVariable Long id){
         return ResponseEntity.ok(shiftService.findShiftById(id));

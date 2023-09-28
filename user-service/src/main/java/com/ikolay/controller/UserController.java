@@ -25,39 +25,39 @@ public class UserController {
         return ResponseEntity.ok(userService.register(dto));
     }
 
-    @DeleteMapping("/deletewithauthid") // Admin onay sayfasındaki red ihtimali için hazırlandı. Red durumunda user siliniyor. Istek auth serviceden geliyor (FEIGN)
+    @DeleteMapping(DELETEFROMCONFIRMATION) // Admin onay sayfasındaki red ihtimali için hazırlandı. Red durumunda user siliniyor. Istek auth serviceden geliyor (FEIGN)
     ResponseEntity<Boolean> deleteFromConfirmation(@RequestParam Long authId){
         userService.deleteByAuthId(authId);
         return ResponseEntity.ok(true);
     }
 
-    @PostMapping("/confirmuser")  // Admin onay sayfasındaki onay ihtimali için hazırlandı. Istek auth serviceden geliyor (FEIGN)
+    @PostMapping(CONFIRMATION)  // Admin onay sayfasındaki onay ihtimali için hazırlandı. Istek auth serviceden geliyor (FEIGN)
     ResponseEntity<Boolean> confirmation(@RequestParam Long authId){
         userService.confirmUser(authId);
         return ResponseEntity.ok(true);
     }
 
-    @GetMapping("/loggeduser") //Önyüzde login sayfasından olumlu dönüş sonrası gelen token alıp, giriş yapan kullanıcı hakkındaki gerekli bilgileri döndürmek için hazırlandı.
+    @GetMapping(GETUSERINFORMATION) //Önyüzde login sayfasından olumlu dönüş sonrası gelen token alıp, giriş yapan kullanıcı hakkındaki gerekli bilgileri döndürmek için hazırlandı.
     ResponseEntity<UserInformationResponseDto> getUserInformation(String token){
         return ResponseEntity.ok(userService.getUserInformation(token));
     }
 
-    @GetMapping("/getallpersonelwithcompanyid") // Manager sayfasındaki şirket çalışanlarını getirmek için hazırlandı.
+    @GetMapping(PERSONELLIST) // Manager sayfasındaki şirket çalışanlarını getirmek için hazırlandı.
     ResponseEntity<List<FindAllCompanyEmployeesResponseDto>> personelList(Long companyId){
         return ResponseEntity.ok(userService.personelList(companyId));
     }
 
-    @GetMapping("/finduseridbyemail/{email}") // createLeave metodu için hazırlandı. Eğer mail var ise mail'e ait kullanıcı id'sini döndürüyor.
+    @GetMapping(FINDIDBYEMAIL) // createLeave metodu için hazırlandı. Eğer mail var ise mail'e ait kullanıcı id'sini döndürüyor.
     ResponseEntity<Long> findIdByEmail(@PathVariable String email){
         return ResponseEntity.ok(userService.findIdByEmail(email));
     }
 
-    @GetMapping("/pendingmanagers") //Admin sayfasındaki status pending ve role manager olan tüm kullanıcıları döndürmek için yazıldı.
+    @GetMapping(FINDALLPENDINGMANAGERS) //Admin sayfasındaki status pending ve role manager olan tüm kullanıcıları döndürmek için yazıldı.
     ResponseEntity<List<AllConfirmationInfoResponseDto>> findAllPendingManagers(){
         return ResponseEntity.ok(userService.findAllPendingManagers());
     }
 
-    @PostMapping("/setshift") //user'a shift eklemek için gerekli (Muhtemelen Manager sayfasına eklenecek)
+    @PostMapping(SETSHIFTTOUSER) //user'a shift eklemek için gerekli (Muhtemelen Manager sayfasına eklenecek)
     ResponseEntity<Boolean> setShiftToUser(@RequestBody AddShiftToEmployeeRequestDto dto){
         return ResponseEntity.ok(userService.setShift(dto));
     }
@@ -67,7 +67,7 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(dto));
     }
 
-    @GetMapping("/getusersfirstandlastname/{id}")
+    @GetMapping(GETFIRSTANDLASTNAMEWITHID)
     ResponseEntity<GetUserFirstnameAndLastnameResponseDto> getFirstAndLastnameWithId(@PathVariable Long id){
         return ResponseEntity.ok(userService.getFirstAndLastnameWithId(id));
     }
