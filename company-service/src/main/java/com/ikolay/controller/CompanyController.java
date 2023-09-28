@@ -3,6 +3,7 @@ package com.ikolay.controller;
 import static com.ikolay.constant.EndPoints.*;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.requests.UpdateCompanyRequestDto;
 import com.ikolay.dto.response.ConfirmationInfoResponseDto;
 import com.ikolay.dto.response.GetTop5ForCompanyResponseDto;
 import com.ikolay.repository.entity.Company;
@@ -44,8 +45,8 @@ public class CompanyController {
     }
 
     @PutMapping(UPDATE) // Manager tarafından güncellenen bilgileri database aktarmak için yapıldı.
-    public ResponseEntity<Company> updateCompany(Company company) {
-        return ResponseEntity.ok(companyService.updateCompany(company));
+    public ResponseEntity<Company> updateCompany(UpdateCompanyRequestDto dto) {
+        return ResponseEntity.ok(companyService.updateCompany(dto));
     }
 
     @PostMapping(COMPANYINFOFORCONFIRMATION) //Admin sayfası manager onayı için hazırlandı. Firmanın tax ve name'ini döndürüyor.

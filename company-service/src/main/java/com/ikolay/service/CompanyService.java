@@ -1,6 +1,7 @@
 package com.ikolay.service;
 
 import com.ikolay.dto.requests.RegisterRequestDto;
+import com.ikolay.dto.requests.UpdateCompanyRequestDto;
 import com.ikolay.dto.response.ConfirmationInfoResponseDto;
 import com.ikolay.dto.response.GetTop5ForCompanyResponseDto;
 import com.ikolay.exception.CompanyManagerException;
@@ -59,11 +60,15 @@ public class CompanyService extends ServiceManager<Company, Long> {
         return company.get();
     }
 
-    public Company updateCompany(Company company) {
-        Optional<Company> optionalCompany = findById(company.getId());
+    public Company updateCompany(UpdateCompanyRequestDto dto) {
+        Optional<Company> optionalCompany = findById(dto.getId());
         if (optionalCompany.isEmpty())
             throw new CompanyManagerException(ErrorType.INTERNAL_ERROR_SERVER, "Ön yüzden gelen company id'sinde hata mevcut.");
-        return update(company);
+        optionalCompany.get().setAbout(dto.getAbout());
+        optionalCompany.get().setCompanyName(dto.getCompanyName());
+        optionalCompany.get().setAddress(dto.getAddress());
+        optionalCompany.get().setPhone(dto.getPhone());
+        return update(optionalCompany.get());
     }
 
     public List<ConfirmationInfoResponseDto> companyInfoForConfirmation(List<Long> companyIds) {
