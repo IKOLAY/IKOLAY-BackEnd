@@ -44,12 +44,12 @@ public class CompanyService extends ServiceManager<Company, Long> {
 
     @PostConstruct
     private void addDefaultCompany() {
-        save(Company.builder().companyName("dummyCorp").logo("3.jpg").address("somewhereonearth").about("weworkin").taxNo("123123").build());
-        save(Company.builder().companyName("ikolay").logo("2.jpg").address("somewhereonearth").about("kalpsizler").taxNo("3333").build());
-        save(Company.builder().companyName("tokinan a.ş").logo("4.jpg").address("letsgo").about("basliyoruuz").taxNo("44444").build());
-        save(Company.builder().companyName("gülnihal a.ş").logo("5.jpg").address("hi").about("seskes").taxNo("55555").build());
-        save(Company.builder().companyName("martlı a.ş").logo("6.jpg").address("guerillamountain").about("armed").taxNo("66666").build());
-        save(Company.builder().companyName("adanedhel a.ş").logo("7.jpg").address("middle-earth").about("rivendale").taxNo("88888").build());
+        save(Company.builder().companyName("dummyCorp").logo("3.jpg").phone("4440444").address("somewhereonearth").about("weworkin").taxNo("123123").build());
+        save(Company.builder().companyName("ikolay").logo("2.jpg").phone("4441444").address("somewhereonearth").about("kalpsizler").taxNo("3333").build());
+        save(Company.builder().companyName("tokinan a.ş").logo("4.jpg").phone("4442444").address("letsgo").about("basliyoruuz").taxNo("44444").build());
+        save(Company.builder().companyName("gülnihal a.ş").logo("5.jpg").phone("4443444").address("hi").about("seskes").taxNo("55555").build());
+        save(Company.builder().companyName("martlı a.ş").logo("6.jpg").phone("4444444").address("guerillamountain").about("armed").taxNo("66666").build());
+        save(Company.builder().companyName("adanedhel a.ş").logo("7.jpg").phone("4445444").address("middle-earth").about("rivendale").taxNo("88888").build());
     }
 
     public Company getCompanyInformation(Long id) {

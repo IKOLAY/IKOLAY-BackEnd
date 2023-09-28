@@ -82,11 +82,11 @@ public class UserService extends ServiceManager<User, Long> {
         return IUserMapper.INSTANCE.toUserInformationResponseDto(user.get());
     }
     private void testDefaultEmployees() {
-        save(User.builder().authId(2L).email("doruk@gmail.com").shiftId(1L).firstname("drk").lastname("drk").password("123").companyEmail("drk.drk@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(3L).email("frkn@gmail.com").shiftId(2L).firstname("frk").lastname("frk").password("123").companyEmail("frk.frk@ikolay.com").phone("412224241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(4L).email("slm@gmail.com").shiftId(3L).firstname("slm").lastname("slm").password("123").companyEmail("slm.slm@ikolay.com").phone("412423341").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(5L).email("hly@gmail.com").shiftId(1L).firstname("hly").lastname("hly").password("123").companyEmail("hly.hly@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(6L).email("aktas@gmail.com").shiftId(1L).firstname("akt").lastname("akt").password("123").companyEmail("akt.akt@ikolay.com").phone("4124241").role(ERole.MANAGER).companyId(1L).status(EStatus.ACTIVE).build());
+        save(User.builder().authId(2L).salary(30000L).email("doruk@gmail.com").shiftId(1L).firstname("drk").lastname("drk").address("ANKARA").password("123").companyEmail("drk.drk@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
+        save(User.builder().authId(3L).salary(40000L).email("frkn@gmail.com").shiftId(2L).firstname("frk").lastname("frk").address("ISTANBUL").password("123").companyEmail("frk.frk@ikolay.com").phone("412224241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
+        save(User.builder().authId(4L).salary(50000L).email("slm@gmail.com").shiftId(3L).firstname("slm").lastname("slm").address("HAWAI").password("123").companyEmail("slm.slm@ikolay.com").phone("412423341").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
+        save(User.builder().authId(5L).salary(60000L).email("hly@gmail.com").shiftId(1L).firstname("hly").lastname("hly").address("TOKYO").password("123").companyEmail("hly.hly@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
+        save(User.builder().authId(6L).salary(20000L).email("aktas@gmail.com").shiftId(1L).firstname("akt").lastname("akt").address("ISTANBUL").password("123").companyEmail("akt.akt@ikolay.com").phone("4124241").role(ERole.MANAGER).companyId(1L).status(EStatus.ACTIVE).build());
         save(User.builder().authId(7L).email("emrsfa@gmail.com").firstname("emr").lastname("emr").password("123").companyEmail("emrsfa@gmail.com").phone("4124241").role(ERole.VISITOR).status(EStatus.ACTIVE).build());
     }
 
@@ -129,7 +129,7 @@ public class UserService extends ServiceManager<User, Long> {
 
     }
 
-    public UpdateUserResponseDto updateUser(UpdateUserRequestDto dto) {
+    public UserInformationResponseDto updateUser(UpdateUserRequestDto dto) {
         Optional<User> optionalUser = userRepository.findByIdAndEmail(dto.getId(), dto.getEmail());
         if(optionalUser.isEmpty() && userRepository.existsByEmail(dto.getEmail()))
             throw new UserManagerException(ErrorType.BAD_REQUEST,"Email adresi zaten mevcut.");
@@ -143,7 +143,7 @@ public class UserService extends ServiceManager<User, Long> {
             user.get().setAddress(dto.getAddress());
             user.get().setPhotoUrl(dto.getPhotoUrl());
             authManager.updateAuthInfo(dto);
-            return IUserMapper.INSTANCE.toUpdateUserResponseDto(update(user.get()));
+            return IUserMapper.INSTANCE.toUserInformationResponseDto(update(user.get()));
         }
         else {
             dto.setAuthId(optionalUser.get().getAuthId());
@@ -153,7 +153,7 @@ public class UserService extends ServiceManager<User, Long> {
             optionalUser.get().setAddress(dto.getAddress());
             optionalUser.get().setPhotoUrl(dto.getPhotoUrl());
             authManager.updateAuthInfo(dto);
-            return IUserMapper.INSTANCE.toUpdateUserResponseDto(update(optionalUser.get()));
+            return IUserMapper.INSTANCE.toUserInformationResponseDto(update(optionalUser.get()));
         }
     }
 

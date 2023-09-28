@@ -15,8 +15,8 @@ import javax.persistence.Enumerated;
 @NoArgsConstructor
 @Data //@Getter @Setter @ToString hepsini kapsıyor.
 @Builder
+@Deprecated(since = "update metodu için loginde de kullanılan UserInformationResponseDto'ya geçiş yapıldı. 28.09.2023")
 public class UpdateUserResponseDto {
-
 
     private Long shiftId;
     @Column(unique = true)

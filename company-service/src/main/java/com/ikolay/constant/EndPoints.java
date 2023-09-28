@@ -7,7 +7,7 @@ public class EndPoints {
     public static final String TRANSACTION = VERSION + "/transaction";
     public static final String LEAVE = VERSION + "/leave";
     public static final String COMMENT = VERSION + "/comment";
-    public static final String ADDCOMMENT = VERSION + "/addcomment";
+    public static final String ADDCOMMENT = "/addcomment";
     public static final String REGISTER = "/register";
     public static final String LOGIN = "/login";
     public static final String UPDATE = "/update";
