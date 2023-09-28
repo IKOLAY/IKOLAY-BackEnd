@@ -8,7 +8,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 public class UserServiceSecurityConfig {
-    private static final String[] WHITELIST = {"/swagger-ui/**", "/v3/api-docs/**", "/api/v1/user/register", "/api/v1/user/**"};
+    private static final String[] WHITELIST = {"/swagger-ui/**", "/v3/api-docs/**", "/api/v1/user/register", "/api/v1/user/**", "/api/v1/shift/**"};
 
     @Bean
     JwtTokenFilter getJwtTokenFilter() {

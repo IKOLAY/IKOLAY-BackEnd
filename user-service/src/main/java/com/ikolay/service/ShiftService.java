@@ -1,9 +1,9 @@
 package com.ikolay.service;
 
 import com.ikolay.dto.requests.CreateShiftRequestDto;
+import com.ikolay.dto.response.FindShiftByCompanyIdResponseDto;
 import com.ikolay.exception.ErrorType;
 import com.ikolay.exception.UserManagerException;
-import com.ikolay.manager.ICompanyManager;
 import com.ikolay.mapper.IShiftMapper;
 import com.ikolay.repository.IShiftRepository;
 import com.ikolay.repository.entity.Shift;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -59,5 +60,10 @@ public class ShiftService extends ServiceManager<Shift, Long> {
         save(Shift.builder().shiftName("Gece Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("01:00")).endTime(LocalTime.parse("09:00")).build());
     }
 
+    public List<FindShiftByCompanyIdResponseDto> findShiftsByCompanyId(Long companyId) {
+        List<Shift> shiftsByCompanyId = shiftRepository.findShiftsByCompanyId(companyId);
+        return IShiftMapper.INSTANCE.toFindShiftsByCompanyId(shiftsByCompanyId);
+
+    }
 }
 
