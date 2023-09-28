@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.ikolay.constant.EndPoints.REGISTER;
+import static com.ikolay.constant.EndPoints.*;
 
 @FeignClient(url = "http://localhost:7072/api/v1/user",decode404 = true,name = "auth-user")
 public interface IUserManager {
@@ -13,9 +13,9 @@ public interface IUserManager {
     @PostMapping(REGISTER)
     ResponseEntity<Boolean> register(@RequestBody RegisterRequestDto dto, @RequestHeader("Authorization") String token);
 
-    @DeleteMapping("/deletewithauthid") //test için yazıldı düzenlenecek.
+    @DeleteMapping(DELETEFROMCONFIRMATION)
     ResponseEntity<Boolean> deleteFromConfirmation(@RequestParam Long authId);
 
-    @PostMapping("/confirmuser") //test için eklendi düzenlenmeli.
+    @PostMapping(CONFIRMATION) //test için eklendi düzenlenmeli.
     ResponseEntity<Boolean> confirmation(@RequestParam Long authId);
 }
