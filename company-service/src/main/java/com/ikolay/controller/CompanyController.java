@@ -45,7 +45,7 @@ public class CompanyController {
     }
 
     @PutMapping(UPDATE) // Manager tarafından güncellenen bilgileri database aktarmak için yapıldı.
-    public ResponseEntity<Company> updateCompany(UpdateCompanyRequestDto dto) {
+    public ResponseEntity<Company> updateCompany(@RequestBody UpdateCompanyRequestDto dto) {
         return ResponseEntity.ok(companyService.updateCompany(dto));
     }
 
