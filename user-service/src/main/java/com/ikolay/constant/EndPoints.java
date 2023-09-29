@@ -9,7 +9,7 @@ public class EndPoints {
     public static final String UPDATE = "/update";
     public static final String FINDSHIFTBYID = "/findshift/{id}";
     public static final String DELETEFROMCONFIRMATION = "/deletewithauthid";
-    public static final String CONFIRMATION = "/confirmuser";
+    public static final String CONFIRMATION = "/confirmation";
     public static final String GETUSERINFORMATION = "/loggeduser";
     public static final String PERSONELLIST = "/getallpersonelwithcompanyid";
     public static final String FINDIDBYEMAIL = "/finduseridbyemail/{email}";

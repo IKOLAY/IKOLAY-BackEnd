@@ -35,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping(APPROVE) //Admin sayfasından gelen hazır bilgiye göre onay/red işlemleri için hazırlandı.
-    public ResponseEntity<RegisterResponseDto> decideRegisterRequest(@RequestBody  AdminApproveRequestDto dto){
+    public ResponseEntity<RegisterResponseDto> decideRegisterRequest(@RequestBody AdminApproveRequestDto dto){
         return ResponseEntity.ok(authService.confirmation(dto));
     }
 
