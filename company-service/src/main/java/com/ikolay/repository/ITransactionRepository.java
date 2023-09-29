@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ITransactionRepository extends JpaRepository<FinancialTransaction, Long> {
@@ -22,6 +23,10 @@ public interface ITransactionRepository extends JpaRepository<FinancialTransacti
 
     @Query("select new com.ikolay.dto.response.AllExpensesResponseDto(f.name as name, SUM(f.transactionAmount)) from FinancialTransaction f where f.companyId=?1 and f.type='OUTCOME' and f.isPaid=true group by f.name")
     List<AllExpensesResponseDto> findAllExpenses(Long companyId);
+
+
+    Optional<FinancialTransaction> findByNameAndCompanyId(String name,Long companyId);
+
 
 
 }

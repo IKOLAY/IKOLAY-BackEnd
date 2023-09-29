@@ -163,5 +163,9 @@ public class UserService extends ServiceManager<User, Long> {
             throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Önyüzden gelen veride problem mevcut.");
         return IUserMapper.INSTANCE.toGetUserFirstnameAndLastnameResponseDto(user.get());
     }
+
+    public Long findTotalEmployeeSalary(Long companyId){
+        return userRepository.findTotalEmployeeSalary(companyId);
+    }
 }
 

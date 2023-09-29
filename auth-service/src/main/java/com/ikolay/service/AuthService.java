@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -65,10 +66,11 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     @Transactional
     private RegisterResponseDto saveManager(RegisterRequestDto dto) {
-        if (dto.getTaxNo() == null || dto.getCompanyName() == null)
+        if (dto.getTaxNo() == null || dto.getCompanyName() == null || dto.getCompanyName().equals("") || dto.getTaxNo().equals(""))
             throw new AuthManagerException(ErrorType.COMPANY_NOT_CREATED);
         dto.setStatus(EStatus.PENDING);
         dto.setCompanyEmail(dto.getEmail());
+        dto.setCompanyName(dto.getCompanyName().toUpperCase());
         Auth auth = save(IAuthMapper.INSTANCE.toAuth(dto));
         dto.setAuthId(auth.getId());
         String token = "Bearer " + jwtTokenManager.createToken(auth.getId()).get();
@@ -116,13 +118,13 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
     private String generateEmailAddressForEmployee(RegisterRequestDto dto) {
 
-        String multiName = Arrays.stream(dto.getFirstname().toLowerCase().split(" ")).collect(Collectors.joining("."));
+        String multiName = Arrays.stream(dto.getFirstname().toLowerCase(Locale.ENGLISH).split(" ")).collect(Collectors.joining("."));
         String companyName = companyManager.findCompanyNameById(dto.getCompanyId()).getBody();
         if (companyName == null)
             throw new AuthManagerException(ErrorType.INTERNAL_ERROR_SERVER, "Database Firma-Yönetim tutarsızlığı");
         companyName = companyName.split(" ")[0].toLowerCase();
         List<Auth> auths = authRepository.findByFirstnameIgnoreCaseAndLastnameIgnoreCase(dto.getFirstname(), dto.getLastname());
-        return auths.isEmpty() ? multiName + "." + dto.getLastname().toLowerCase() + "@" + companyName + ".com" : multiName + "." + dto.getLastname().toLowerCase() + auths.size() + "@" + companyName + ".com";
+        return auths.isEmpty() ? multiName + "." + dto.getLastname().toLowerCase(Locale.ENGLISH) + "@" + companyName + ".com" : multiName + "." + dto.getLastname().toLowerCase(Locale.ENGLISH) + auths.size() + "@" + companyName + ".com";
        // return auths.isEmpty() ? dto.getFirstname().toLowerCase() + "." + dto.getLastname().toLowerCase() + "@ikolay.com" : dto.getFirstname().toLowerCase() + "." + dto.getLastname().toLowerCase() + auths.size() + "@ikolay.com";
     }
 
