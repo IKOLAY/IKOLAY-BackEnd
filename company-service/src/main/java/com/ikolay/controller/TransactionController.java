@@ -48,5 +48,4 @@ public class TransactionController {
        return ResponseEntity.ok(transactionService.findAllExpenses(companyId));
    }
 
-
 }
