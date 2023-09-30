@@ -17,6 +17,7 @@ public class EndPoints {
     public static final String SETSHIFTTOUSER = "/setshift";
     public static final String COMPANYINFOFORCONFIRMATION = "/getcompanynameandtaxno";
     public static final String GETFIRSTANDLASTNAMEWITHID = "/getusersfirstandlastname/{id}";
+    public static final String DELETE = "/delete";
 
 
 }

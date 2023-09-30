@@ -57,29 +57,28 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
     public void createMonthlyEmployeeSalary(Long companyId) {
         LocalDate now = LocalDate.now();
         Long companysTotal = userManager.findTotalEmployeeSalary(companyId).getBody();
-
-        Optional<FinancialTransaction> transaction = transactionRepository.findByNameAndCompanyId("Toplam Personel Maaşı - " + now.getMonth() + "-" + now.getYear(), companyId);
         if (companysTotal != null && companysTotal > 0) {
-            companysTotal*=-1;
-            if (now.getDayOfMonth() == 15) {
+            companysTotal *= -1;
+            if (now.getDayOfMonth() > 15) {
                 createNextMonthsTotalSalaryPayment(companyId, companysTotal);
-            }
-            if (transaction.isEmpty()) {
-                save(FinancialTransaction.builder()
-                        .name("Toplam Personel Maaşı - " + now.getMonth() + "-" + now.getYear())
-                        .companyId(companyId)
-                        .transactionAmount(companysTotal)
-                        .transactionDate(LocalDate.of(now.getYear(), now.getMonth(), 15))
-                        .isPaid(false)
-                        .type(ETransactionType.OUTCOME)
-                        .build());
-            } else if (!transaction.get().getTransactionAmount().equals(companysTotal)) {
-                transaction.get().setTransactionAmount(companysTotal);
-                update(transaction.get());
+            } else {
+                Optional<FinancialTransaction> transaction = transactionRepository.findByNameAndCompanyId("Toplam Personel Maaşı - " + now.getMonth() + "-" + now.getYear(), companyId);
+                if (transaction.isEmpty()) {
+                    save(FinancialTransaction.builder()
+                            .name("Toplam Personel Maaşı - " + now.getMonth() + "-" + now.getYear())
+                            .companyId(companyId)
+                            .transactionAmount(companysTotal)
+                            .transactionDate(LocalDate.of(now.getYear(), now.getMonth(), 15))
+                            .isPaid(false)
+                            .type(ETransactionType.OUTCOME)
+                            .build());
+                } else if (!transaction.get().getTransactionAmount().equals(companysTotal)) {
+                    transaction.get().setTransactionAmount(companysTotal);
+                    update(transaction.get());
+                }
             }
         }
     }
-
 
 
     private void createNextMonthsTotalSalaryPayment(Long companyId, Long companysTotal) {
@@ -91,7 +90,7 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
                     .name("Toplam Personel Maaşı - " + oneMonthLater.getMonth() + "-" + oneMonthLater.getYear())
                     .companyId(companyId)
                     .transactionAmount(companysTotal)
-                    .transactionDate(oneMonthLater)
+                    .transactionDate(LocalDate.of(oneMonthLater.getYear(), oneMonthLater.getMonth(), 15))
                     .isPaid(false)
                     .type(ETransactionType.OUTCOME)
                     .build());
