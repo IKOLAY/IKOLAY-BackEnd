@@ -1,8 +1,10 @@
 package com.ikolay.controller;
 
 import static com.ikolay.constant.EndPoints.*;
+import static com.ikolay.constant.EndPoints.DELETE;
 
 import com.ikolay.dto.requests.AddShiftToEmployeeRequestDto;
+import com.ikolay.dto.requests.DeleteEmployeeRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
 import com.ikolay.dto.requests.UpdateUserRequestDto;
 import com.ikolay.dto.response.*;
@@ -76,5 +78,10 @@ public class UserController {
     ResponseEntity<Long> findTotalEmployeeSalary(@PathVariable Long companyId){
         System.out.println(userService.findTotalEmployeeSalary(companyId));
         return ResponseEntity.ok(userService.findTotalEmployeeSalary(companyId));
+    }
+
+    @DeleteMapping(DELETE)
+    ResponseEntity<Boolean> deleteEmployee(@RequestBody DeleteEmployeeRequestDto dto){
+        return ResponseEntity.ok(userService.deleteEmployee(dto));
     }
 }

@@ -125,7 +125,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         companyName = companyName.split(" ")[0].toLowerCase();
         List<Auth> auths = authRepository.findByFirstnameIgnoreCaseAndLastnameIgnoreCase(dto.getFirstname(), dto.getLastname());
         return auths.isEmpty() ? multiName + "." + dto.getLastname().toLowerCase(Locale.ENGLISH) + "@" + companyName + ".com" : multiName + "." + dto.getLastname().toLowerCase(Locale.ENGLISH) + auths.size() + "@" + companyName + ".com";
-       // return auths.isEmpty() ? dto.getFirstname().toLowerCase() + "." + dto.getLastname().toLowerCase() + "@ikolay.com" : dto.getFirstname().toLowerCase() + "." + dto.getLastname().toLowerCase() + auths.size() + "@ikolay.com";
+        // return auths.isEmpty() ? dto.getFirstname().toLowerCase() + "." + dto.getLastname().toLowerCase() + "@ikolay.com" : dto.getFirstname().toLowerCase() + "." + dto.getLastname().toLowerCase() + auths.size() + "@ikolay.com";
     }
 
     public DoLoginResponseDto doLogin(DoLoginRequestDto dto) {
@@ -164,14 +164,14 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return RegisterResponseDto.builder().message("Hesabınız aktive edildi!").build();
     }
 
-    public RegisterResponseDto confirmation(AdminApproveRequestDto dto){
+    public RegisterResponseDto confirmation(AdminApproveRequestDto dto) {
         RegisterResponseDto message = null;
         Optional<Auth> auth = authRepository.findByEmail(dto.getEmail());
         if (auth.isEmpty())
             throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
-        if(!auth.get().getStatus().equals(EStatus.PENDING))
+        if (!auth.get().getStatus().equals(EStatus.PENDING))
             throw new AuthManagerException(ErrorType.MANAGER_ALREADY_CONFIRMED);
-        if(dto.getIsAccepted()){
+        if (dto.getIsAccepted()) {
             auth.get().setStatus(EStatus.ACTIVE);
             userManager.confirmation(auth.get().getId());
             update(auth.get());
@@ -185,9 +185,10 @@ public class AuthService extends ServiceManager<Auth, Long> {
         mailProducer.sendMail(MailModel.builder().isAccepted(dto.getIsAccepted()).content(dto.getContent()).email(dto.getEmail()).role(ERole.MANAGER).build());
         return message;
     }
+
     @PostConstruct
-    private void addDefaultAdmin(){
-        if (!authRepository.existsByEmail("admin@admin.com")){
+    private void addDefaultAdmin() {
+        if (!authRepository.existsByEmail("admin@admin.com")) {
             save(Auth.builder()
                     .email("admin@admin.com")
                     .companyEmail("admin@admin.com")
@@ -219,5 +220,13 @@ public class AuthService extends ServiceManager<Auth, Long> {
         update(auth.get());
         return true;
 
+    }
+
+    public Boolean deleteEmployee(Long id) {
+        Optional<Auth> auth = authRepository.findById(id);
+        if (auth.isEmpty())
+            throw new AuthManagerException(ErrorType.BAD_REQUEST, "Lütfen girilen bilgilerin doğruluğunu kontrol edin.");
+        deleteById(auth.get().getId());
+        return true;
     }
 }

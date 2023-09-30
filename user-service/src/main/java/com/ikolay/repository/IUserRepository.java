@@ -26,6 +26,7 @@ public interface IUserRepository extends JpaRepository<User,Long> {
     List<User> findAllByStatusAndRole(EStatus eStatus, ERole eRole);
 
     Optional<User> findByIdAndEmail(Long id, String email);
+    Optional<User> findByCompanyIdAndEmail(Long companyId, String email);
 
     @Query("select sum(u.salary) from User u where u.companyId=?1 and u.role='EMPLOYEE'")
     Long findTotalEmployeeSalary(Long companyId);

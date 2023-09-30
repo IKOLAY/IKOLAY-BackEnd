@@ -2,10 +2,7 @@ package com.ikolay.controller;
 
 import static com.ikolay.constant.EndPoints.*;
 
-import com.ikolay.dto.requests.AdminApproveRequestDto;
-import com.ikolay.dto.requests.DoLoginRequestDto;
-import com.ikolay.dto.requests.RegisterRequestDto;
-import com.ikolay.dto.requests.UpdateUserRequestDto;
+import com.ikolay.dto.requests.*;
 import com.ikolay.dto.response.DoLoginResponseDto;
 import com.ikolay.dto.response.RegisterResponseDto;
 import com.ikolay.service.AuthService;
@@ -42,5 +39,10 @@ public class AuthController {
     @PostMapping(UPDATE) //user-service içindeki "user" güncellemelerinin buraya da taşınması için kullanıldı. (FEIGN)
     public ResponseEntity<Boolean> updateAuthInfo(@RequestBody UpdateUserRequestDto dto){
         return ResponseEntity.ok(authService.updateAuthInfo(dto));
+    }
+
+    @DeleteMapping(DELETE+"/{id}")
+    ResponseEntity<Boolean> deleteEmployee(@PathVariable Long id){
+        return ResponseEntity.ok(authService.deleteEmployee(id));
     }
 }

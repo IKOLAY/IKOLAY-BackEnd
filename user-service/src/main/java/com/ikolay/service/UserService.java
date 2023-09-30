@@ -1,6 +1,7 @@
 package com.ikolay.service;
 
 import com.ikolay.dto.requests.AddShiftToEmployeeRequestDto;
+import com.ikolay.dto.requests.DeleteEmployeeRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
 import com.ikolay.dto.requests.UpdateUserRequestDto;
 import com.ikolay.dto.response.*;
@@ -166,6 +167,20 @@ public class UserService extends ServiceManager<User, Long> {
 
     public Long findTotalEmployeeSalary(Long companyId){
         return userRepository.findTotalEmployeeSalary(companyId);
+    }
+
+    public Boolean deleteEmployee(DeleteEmployeeRequestDto dto) {
+        System.out.println(dto);
+        Optional<User> user = userRepository.findByCompanyIdAndEmail(dto.getCompanyId(), dto.getEmail());
+        if(user.isEmpty())
+            throw new UserManagerException(ErrorType.USER_NOT_FOUND,"Girilen e-mail adresini kontrol edin.");
+        try {
+            authManager.deleteEmployee(user.get().getAuthId());
+        } catch (Exception e) {
+            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Data bütünlüğü bozulmuş ya da Önyüzden gelen bilgiler hatalı olabilir. Lütfen kontrol ediniz.");
+        }
+        deleteById(user.get().getId());
+        return true;
     }
 }
 
