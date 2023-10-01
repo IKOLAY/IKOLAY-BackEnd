@@ -15,4 +15,5 @@ public class GetTop5ForCompanyResponseDto {
     private String address;
     private String companyName;
     private String about;
+    private String phone;
 }
