@@ -45,12 +45,12 @@ public class CompanyService extends ServiceManager<Company, Long> {
 
     @PostConstruct
     private void addDefaultCompany() {
-        save(Company.builder().companyName("dummyCorp").logo("3.jpg").phone("4440444").address("somewhereonearth").about("weworkin").taxNo("123123").build());
-        save(Company.builder().companyName("ikolay").logo("2.jpg").phone("4441444").address("somewhereonearth").about("kalpsizler").taxNo("3333").build());
-        save(Company.builder().companyName("tokinan a.ş").logo("4.jpg").phone("4442444").address("letsgo").about("basliyoruuz").taxNo("44444").build());
-        save(Company.builder().companyName("gülnihal a.ş").logo("5.jpg").phone("4443444").address("hi").about("seskes").taxNo("55555").build());
-        save(Company.builder().companyName("martlı a.ş").logo("6.jpg").phone("4444444").address("guerillamountain").about("armed").taxNo("66666").build());
-        save(Company.builder().companyName("adanedhel a.ş").logo("7.jpg").phone("4445444").address("middle-earth").about("rivendale").taxNo("88888").build());
+        save(Company.builder().companyName("Dummy Corp.").logo("https://bcassetcdn.com/social/o5jw7zottz/preview.png").phone("+17343971529").address("29488 Brown Ct Garden City Michigan 48135 USA").about("Managed Analyzing Interface").taxNo("742735410").build());
+        save(Company.builder().companyName("Bilge Adam").logo("https://yt3.googleusercontent.com/hLgrER-vDs2svsoBUgU53G_y_3iJ8jUv7kUbFJzwQfLKcn0_LHBCWG66WFyFJkxadzMEF-0cDw=s900-c-k-c0x00ffffff-no-rj").phone("+908502016000").address("Reşitpaşa Mah. Katar Cad. İTÜ Teknokent Arı 3 No:4 B3 Sarıyer / İSTANBUL").about("BilgeAdam Teknoloji; 1997’de İstanbul’da kurulmuş, global operasyonlarını İngiltere ve Avrupa üzerinden yaygınlaştıran bir yazılım şirketidir.").taxNo("534459629").build());
+        save(Company.builder().companyName("Tokinan Inc.").logo("https://bcassetcdn.com/social/chm5gip2m2/preview.png").phone("+12129951107").address("53 E 8th St Manhattan North Dakota 10003 USA").about("Visionary Zeroadministration Database").taxNo("133511473").build());
+        save(Company.builder().companyName("Gülnihal Inc.").logo("https://bcassetcdn.com/social/h9qi7fxc4w/preview.png").phone("+18136851909").address("333 N Falkenburg Rd Tampa Florida 33619 USA").about("Realigned Background Firmware").taxNo("336107911").build());
+        save(Company.builder().companyName("Martlı Inc.").logo("https://bcassetcdn.com/social/fg1coht6y0/preview.png").phone("+17342130017").address("170 Enterprise Dr Ann Arbor Michigan 48103 USA").about("Cloned Interactive Synergy").taxNo("070936704").build());
+        save(Company.builder().companyName("Adanedhel Inc.").logo("https://bcassetcdn.com/social/ybmnhv0fs6/preview.png").phone("+15128649911").address("2425 Williams Dr Georgetown Texas 78633 USA").about("Self-Enabling Contextually-Based Encoding").taxNo("067624320").build());
     }
 
     public Company getCompanyInformation(Long id) {

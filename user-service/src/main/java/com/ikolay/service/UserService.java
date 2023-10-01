@@ -64,12 +64,15 @@ public class UserService extends ServiceManager<User, Long> {
     private void addDefaultAdmin() {
         if (!userRepository.existsByEmail("admin@admin.com")) {
             save(User.builder()
+                    .firstname("Admin")
+                    .lastname("Admin")
                     .email("admin@admin.com")
                     .companyEmail("admin@admin.com")
                     .authId(1L)
                     .password("admin")
                     .role(ERole.ADMIN)
                     .status(EStatus.ACTIVE)
+                    .photoUrl("https://cdn-icons-png.flaticon.com/512/2304/2304226.png")
                     .build());
         }
         testDefaultEmployees();
@@ -83,12 +86,12 @@ public class UserService extends ServiceManager<User, Long> {
         return IUserMapper.INSTANCE.toUserInformationResponseDto(user.get());
     }
     private void testDefaultEmployees() {
-        save(User.builder().authId(2L).salary(30000L).email("doruk@gmail.com").shiftId(1L).firstname("drk").lastname("drk").address("ANKARA").password("123").companyEmail("drk.drk@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(3L).salary(40000L).email("frkn@gmail.com").shiftId(2L).firstname("frk").lastname("frk").address("ISTANBUL").password("123").companyEmail("frk.frk@ikolay.com").phone("412224241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(4L).salary(50000L).email("slm@gmail.com").shiftId(3L).firstname("slm").lastname("slm").address("HAWAI").password("123").companyEmail("slm.slm@ikolay.com").phone("412423341").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(5L).salary(60000L).email("hly@gmail.com").shiftId(1L).firstname("hly").lastname("hly").address("TOKYO").password("123").companyEmail("hly.hly@ikolay.com").phone("4124241").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).build());
-        save(User.builder().authId(6L).salary(20000L).email("aktas@gmail.com").shiftId(1L).firstname("akt").lastname("akt").address("ISTANBUL").password("123").companyEmail("akt.akt@ikolay.com").phone("4124241").role(ERole.MANAGER).companyId(1L).status(EStatus.ACTIVE).build());
-        save(User.builder().authId(7L).email("emrsfa@gmail.com").firstname("emr").lastname("emr").password("123").companyEmail("emrsfa@gmail.com").phone("4124241").role(ERole.VISITOR).status(EStatus.ACTIVE).build());
+        save(User.builder().authId(2L).salary(30000L).email("doruk@gmail.com").shiftId(1L).firstname("Doruk").lastname("Tokinan").address("Mumtaz Zeytinoglu Bulvari, No. 13 Eskişehir Ankara").password("123").companyEmail("drk.drk@dummycorp.com").phone("+905329701501").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/2.webp").build());
+        save(User.builder().authId(3L).salary(40000L).email("frkn@gmail.com").shiftId(2L).firstname("Furkan").lastname("Gülnihal").address("Selahaddin Eyyubi Mh. 1538 Sk. No: 43 - 45 Esenyurt İstanbul").password("123").companyEmail("frk.frk@ikolay.com").phone("+905329736481").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/1.webp").companyId(1L).build());
+        save(User.builder().authId(4L).salary(50000L).email("slm@gmail.com").shiftId(3L).firstname("Selim").lastname("Gülnihal").address("15 Temmuz Mah. Bahar Cad. No 37 Bağcılar İstanbul").password("123").companyEmail("slm.slm@dummycorp.com").phone("+905329599979").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/8.webp").build());
+        save(User.builder().authId(5L).salary(60000L).email("hly@gmail.com").shiftId(1L).firstname("Hülya").lastname("Martlı").address("Celtikler Mah. Soganlik Sok. No:45 Geyve Sakarya").password("123").companyEmail("hly.hly@dummycorp.com").phone("+905323262590").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/4.webp").build());
+        save(User.builder().authId(6L).salary(200000L).email("aktas@gmail.com").shiftId(1L).firstname("Aktaş").lastname("Sabancı").address("Halkali Caddesi No.198/200 Küçükçekmece İstanbul").password("123").companyEmail("akt.akt@dummycorp.com").phone("+905321333667").role(ERole.MANAGER).companyId(1L).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/22.webp").build());
+        save(User.builder().authId(7L).email("emrsfa@gmail.com").firstname("Emre").lastname("Sefa").password("123").companyEmail("emrsfa@gmail.com").phone("+905320436761").role(ERole.VISITOR).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/23.webp").build());
     }
 
     public List<FindAllCompanyEmployeesResponseDto> personelList(Long companyId) {
