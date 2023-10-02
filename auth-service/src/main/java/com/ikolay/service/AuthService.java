@@ -201,12 +201,12 @@ public class AuthService extends ServiceManager<Auth, Long> {
     }
 
     private void testDefaultEmployees() {
-        save(Auth.builder().email("doruk@gmail.com").firstname("drk").lastname("drk").password("123").companyEmail("drk.drk@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
-        save(Auth.builder().email("frkn@gmail.com").firstname("frk").lastname("frk").password("123").companyEmail("frk.frk@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
-        save(Auth.builder().email("slm@gmail.com").firstname("slm").lastname("slm").password("123").companyEmail("slm.slm@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
-        save(Auth.builder().email("hly@gmail.com").firstname("hly").lastname("hly").password("123").companyEmail("hly.hly@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
-        save(Auth.builder().email("aktas@gmail.com").firstname("akt").lastname("akt").password("123").companyEmail("akt.akt@ikolay.com").role(ERole.MANAGER).status(EStatus.ACTIVE).build());
-        save(Auth.builder().email("emrsfa@gmail.com").firstname("emr").lastname("emr").password("123").companyEmail("emrsfa@gmail.com").role(ERole.VISITOR).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("doruk@gmail.com").firstname("Doruk").lastname("Tokinan").password("123").companyEmail("drk.drk@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("frkn@gmail.com").firstname("Furkan").lastname("Gülnihal").password("123").companyEmail("frk.frk@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("slm@gmail.com").firstname("Selim").lastname("Gülnihal").password("123").companyEmail("slm.slm@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("hly@gmail.com").firstname("Hülya").lastname("Martlı").password("123").companyEmail("hly.hly@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("aktas@gmail.com").firstname("Aktaş").lastname("Sabancı").password("123").companyEmail("akt.akt@ikolay.com").role(ERole.MANAGER).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("emrsfa@gmail.com").firstname("Emre").lastname("Sefa").password("123").companyEmail("emrsfa@gmail.com").role(ERole.VISITOR).status(EStatus.ACTIVE).build());
     }
 
     public Boolean updateAuthInfo(UpdateUserRequestDto dto) {
