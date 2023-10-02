@@ -75,7 +75,7 @@ public class UserController {
     }
 
     @GetMapping("/monthlyemployeesalary/{companyId}")
-    ResponseEntity<Long> findTotalEmployeeSalary(@PathVariable Long companyId){
+    ResponseEntity<Double> findTotalEmployeeSalary(@PathVariable Long companyId){
         System.out.println(userService.findTotalEmployeeSalary(companyId));
         return ResponseEntity.ok(userService.findTotalEmployeeSalary(companyId));
     }

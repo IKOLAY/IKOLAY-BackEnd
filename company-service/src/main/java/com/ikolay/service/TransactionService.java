@@ -8,12 +8,14 @@ import com.ikolay.manager.IUserManager;
 import com.ikolay.mapper.ITransactionMapper;
 import com.ikolay.repository.ITransactionRepository;
 import com.ikolay.repository.entity.FinancialTransaction;
-import com.ikolay.repository.enums.ETransactionType;
+import com.ikolay.repository.enums.*;
 import com.ikolay.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +45,7 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
 
     public List<FinancialTransaction> incomingPayments(Long companyId) {
         createMonthlyEmployeeSalary(companyId);
-        return transactionRepository.findAllByTransactionDateBetweenAndIsPaidAndTypeAndCompanyId(LocalDate.now(), LocalDate.now().plusDays(15), false, ETransactionType.OUTCOME, companyId);
+        return transactionRepository.findAllByTransactionDateBetweenAndIsPaidAndTypeAndCompanyIdAndStatus(LocalDate.now(), LocalDate.now().plusDays(15), false, ETransactionType.OUTCOME, companyId,ETransactionStatus.ACCEPTED);
     }
 
     public List<AnnualProfitLossResponseDto> annualProfitLoss(AnnualProfitLossRequestDto dto) {
@@ -56,7 +58,7 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
 
     public void createMonthlyEmployeeSalary(Long companyId) {
         LocalDate now = LocalDate.now();
-        Long companysTotal = userManager.findTotalEmployeeSalary(companyId).getBody();
+        Double companysTotal = userManager.findTotalEmployeeSalary(companyId).getBody();
         if (companysTotal != null && companysTotal > 0) {
             companysTotal *= -1;
             if (now.getDayOfMonth() > 15) {
@@ -69,7 +71,11 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
                             .companyId(companyId)
                             .transactionAmount(companysTotal)
                             .transactionDate(LocalDate.of(now.getYear(), now.getMonth(), 15))
+                            .currencyType(ECurrencyType.TL)
+                            .status(ETransactionStatus.ACCEPTED)
+                            .confirmationDate(now)
                             .isPaid(false)
+                            .expenseType(EExpenseType.MANAGER)
                             .type(ETransactionType.OUTCOME)
                             .build());
                 } else if (!transaction.get().getTransactionAmount().equals(companysTotal)) {
@@ -81,7 +87,7 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
     }
 
 
-    private void createNextMonthsTotalSalaryPayment(Long companyId, Long companysTotal) {
+    private void createNextMonthsTotalSalaryPayment(Long companyId, Double companysTotal) {
         LocalDate oneMonthLater = LocalDate.now().plusMonths(1);
         Optional<FinancialTransaction> transaction = transactionRepository.findByNameAndCompanyId("Toplam Personel Maaşı - " + oneMonthLater.getMonth() + "-" + oneMonthLater.getYear(), companyId);
 
@@ -91,12 +97,42 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
                     .companyId(companyId)
                     .transactionAmount(companysTotal)
                     .transactionDate(LocalDate.of(oneMonthLater.getYear(), oneMonthLater.getMonth(), 15))
+                    .currencyType(ECurrencyType.TL)
+                    .status(ETransactionStatus.ACCEPTED)
+                    .confirmationDate(LocalDate.now())
                     .isPaid(false)
+                    .expenseType(EExpenseType.MANAGER)
                     .type(ETransactionType.OUTCOME)
                     .build());
         } else if (!transaction.get().getTransactionAmount().equals(companysTotal)) {
             transaction.get().setTransactionAmount(companysTotal);
             update(transaction.get());
         }
+    }
+
+    @PostConstruct
+    public void testData(){
+        LocalDate testDate = LocalDate.now().plusDays(14);
+        save(FinancialTransaction.builder()
+                .name("Test Payment")
+                .companyId(1L)
+                .transactionAmount(-101100d)
+                .transactionDate(testDate)
+                .confirmationDate(LocalDate.now())
+                .expenseType(EExpenseType.MANAGER)
+                .currencyType(ECurrencyType.DOLAR)
+                .status(ETransactionStatus.ACCEPTED)
+                .isPaid(false)
+                .currencyMultiplier(20.22)
+                .type(ETransactionType.OUTCOME)
+                .build());
+    }
+
+    public List<String> getAllCurrencyList() {
+        return Arrays.stream(ECurrencyType.values()).map(x -> x.name()).toList();
+    }
+
+    public List<String> getExpenseTypesForEmployee() {
+        return Arrays.stream(EExpenseType.values()).filter(x->!x.name().equals("MANAGER")).map(y->y.name()).toList();
     }
 }

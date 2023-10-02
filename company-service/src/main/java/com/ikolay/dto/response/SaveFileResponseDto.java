@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data //@Getter @Setter @ToString hepsini kapsıyor.
 @Builder
-public class AllExpensesResponseDto {
-    String name;
-    Double totalCost;
+public class SaveFileResponseDto {
+    private String confirmMessage;
 }
