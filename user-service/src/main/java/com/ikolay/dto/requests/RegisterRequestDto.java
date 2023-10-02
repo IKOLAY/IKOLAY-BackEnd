@@ -34,5 +34,5 @@ public class RegisterRequestDto {
 
     private Long companyId;
     private Long authId;
-    private Long salary;
+    private Double salary;
 }

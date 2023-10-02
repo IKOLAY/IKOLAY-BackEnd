@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AnnualProfitLossResponseDto {
     Integer year;
-    Long yearsTotal;
+    Double yearsTotal;
 }

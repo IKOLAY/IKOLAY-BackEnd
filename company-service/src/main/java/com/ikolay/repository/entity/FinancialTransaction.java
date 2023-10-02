@@ -1,6 +1,6 @@
 package com.ikolay.repository.entity;
 
-import com.ikolay.repository.enums.ETransactionType;
+import com.ikolay.repository.enums.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,10 +22,22 @@ public class FinancialTransaction extends BaseEntity {
     private Long id;
     private String name;
     private Long companyId;
+    private Long employeeId;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate transactionDate;
-    private Long transactionAmount;
+    private LocalDate confirmationDate;
+    private Double transactionAmount;
     private Boolean isPaid;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) //Gelir-Gider bilgisi
     private ETransactionType type;
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private ECurrencyType currencyType = ECurrencyType.TL;
+    @Enumerated(EnumType.STRING)
+    private ETransactionStatus status;
+    @Builder.Default
+    private Double currencyMultiplier = 1d;
+    @Enumerated(EnumType.STRING)
+    private EExpenseType expenseType;
+    private String fileId;
 }

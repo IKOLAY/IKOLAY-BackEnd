@@ -9,7 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data //@Getter @Setter @ToString hepsini kapsıyor.
 @Builder
-public class AllExpensesResponseDto {
-    String name;
-    Double totalCost;
+public class FileResponse {
+    private String id;
+    private String name;
+    private Long size;
+    private String url;
+    private String contentType;
+
 }

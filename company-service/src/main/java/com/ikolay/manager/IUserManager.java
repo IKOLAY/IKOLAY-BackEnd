@@ -16,5 +16,5 @@ public interface IUserManager {
 
 
     @GetMapping("/monthlyemployeesalary/{companyId}")
-    ResponseEntity<Long> findTotalEmployeeSalary(@PathVariable Long companyId);
+    ResponseEntity<Double> findTotalEmployeeSalary(@PathVariable Long companyId);
 }

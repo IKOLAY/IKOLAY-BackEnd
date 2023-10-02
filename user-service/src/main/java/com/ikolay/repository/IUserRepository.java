@@ -29,5 +29,5 @@ public interface IUserRepository extends JpaRepository<User,Long> {
     Optional<User> findByCompanyIdAndEmail(Long companyId, String email);
 
     @Query("select sum(u.salary) from User u where u.companyId=?1 and u.role='EMPLOYEE'")
-    Long findTotalEmployeeSalary(Long companyId);
+    Double findTotalEmployeeSalary(Long companyId);
 }

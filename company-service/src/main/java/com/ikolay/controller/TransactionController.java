@@ -7,10 +7,13 @@ import com.ikolay.dto.response.AllExpensesResponseDto;
 import com.ikolay.dto.response.AnnualProfitLossResponseDto;
 import com.ikolay.repository.entity.FinancialTransaction;
 import com.ikolay.service.CompanyService;
+import com.ikolay.service.FileService;
 import com.ikolay.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,11 +25,11 @@ import static com.ikolay.constant.EndPoints.*;
 @RequestMapping(TRANSACTION)
 public class TransactionController {
     private final TransactionService transactionService;
-
    @PostMapping(ADD) //Manager sayfasındaki işlem ekleme için hazırlandı.
     public ResponseEntity<FinancialTransaction> addTransaction(@RequestBody AddTransactionRequestDto dto){
        return ResponseEntity.ok(transactionService.add(dto));
    }
+
 
    @GetMapping(FINDALL) //Test için yazıldı kaldırılacak.
     public ResponseEntity<List<FinancialTransaction>> findAll(){
@@ -48,4 +51,13 @@ public class TransactionController {
        return ResponseEntity.ok(transactionService.findAllExpenses(companyId));
    }
 
+   @GetMapping("/getcurrencies")
+    public ResponseEntity<List<String>> getAllCurrencyList(){
+       return ResponseEntity.ok(transactionService.getAllCurrencyList());
+   }
+
+   @GetMapping("/getexpensetypes")
+   public ResponseEntity<List<String>> getExpenseTypesForEmployee(){
+       return ResponseEntity.ok(transactionService.getExpenseTypesForEmployee());
+   }
 }

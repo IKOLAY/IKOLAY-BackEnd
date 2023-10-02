@@ -22,6 +22,11 @@ spring:
     password: root
     url: jdbc:postgresql://localhost:5432/ikolayCompanyDb
   jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
     hibernate:
       ddl-auto: create
     show-sql: true
