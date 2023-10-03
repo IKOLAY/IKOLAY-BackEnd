@@ -1,6 +1,5 @@
 package com.ikolay.dto.requests;
 
-import com.ikolay.repository.enums.ELeaveStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,9 +13,9 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Data //@Getter @Setter @ToString hepsini kapsıyor.
 @Builder
-public class CreateLeaveRequestDto {
+public class EmployeeLeaveRequestDto {
     @NotBlank(message = "Lütfen tatil adını giriniz!")
     @Size(min = 4 ,message = "En kısa tatil adı 4 karakter olabilir!")
     private String leaveName;
@@ -25,7 +24,6 @@ public class CreateLeaveRequestDto {
     private LocalDate startingDate;
     @NotNull(message = "Lütfen geçerli bir tatil süresi giriniz!")
     private Integer duration;
-    private String email;
     private Long userId;
     private Long companyId;
 }
