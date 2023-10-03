@@ -29,5 +29,9 @@ public interface ITransactionRepository extends JpaRepository<FinancialTransacti
     Optional<FinancialTransaction> findByNameAndCompanyId(String name,Long companyId);
 
 
+    List<FinancialTransaction> findByEmployeeId(Long id);
 
+    List<FinancialTransaction> findByCompanyIdAndStatus(Long companyId, ETransactionStatus eTransactionStatus);
+
+    Optional<FinancialTransaction> findByIdAndStatus(Long id,ETransactionStatus status);
 }

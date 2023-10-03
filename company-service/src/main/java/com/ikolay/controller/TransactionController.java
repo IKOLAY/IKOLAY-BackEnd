@@ -5,7 +5,10 @@ import com.ikolay.dto.requests.AnnualProfitLossRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
 import com.ikolay.dto.response.AllExpensesResponseDto;
 import com.ikolay.dto.response.AnnualProfitLossResponseDto;
+import com.ikolay.dto.response.FindMyExpensesResponseDto;
+import com.ikolay.dto.response.GetCompanysPendingPaymentsResponseDto;
 import com.ikolay.repository.entity.FinancialTransaction;
+import com.ikolay.repository.enums.ETransactionStatus;
 import com.ikolay.service.CompanyService;
 import com.ikolay.service.FileService;
 import com.ikolay.service.TransactionService;
@@ -51,13 +54,33 @@ public class TransactionController {
        return ResponseEntity.ok(transactionService.findAllExpenses(companyId));
    }
 
-   @GetMapping("/getcurrencies")
+   @GetMapping("/getcurrencies") //Enum listesi döndürüyor ve Önyüz dropdown için hazırlandı.
     public ResponseEntity<List<String>> getAllCurrencyList(){
        return ResponseEntity.ok(transactionService.getAllCurrencyList());
    }
 
-   @GetMapping("/getexpensetypes")
+   @GetMapping("/getexpensetypes") //Enum listesi döndürüyor ve Önyüz dropdown için hazırlandı.
    public ResponseEntity<List<String>> getExpenseTypesForEmployee(){
        return ResponseEntity.ok(transactionService.getExpenseTypesForEmployee());
    }
+
+    @GetMapping("/findmyexpenserequests/{id}") //Personel sayfasındaki personel tarafından oluşturulan harcamaları getirmek için hazırlandı.
+    public ResponseEntity<List<FindMyExpensesResponseDto>> findEmployeesExpenses(@PathVariable Long id){
+        return ResponseEntity.ok(transactionService.findEmployeesExpenses(id));
+    }
+
+    @GetMapping("/getcompanyspendingpayments/{companyId}") //Manager sayfasındaki personelin oluşturduğu ödemeleri görebilmek için hazırlandı.
+    public ResponseEntity<List<GetCompanysPendingPaymentsResponseDto>> findCompanysPendingPayments(@PathVariable Long companyId){
+       return ResponseEntity.ok(transactionService.findByCompanyIdAndStatus(companyId, ETransactionStatus.PENDING));
+    }
+
+    @GetMapping("/confirmpayment/{id}") //Personel harcama isteğini onaylamak için hazırlandı.
+    public ResponseEntity<Boolean> confirmPayment(@PathVariable Long id){
+       return ResponseEntity.ok(transactionService.confirmPayment(id));
+    }
+
+    @GetMapping("/rejectpayment/{id}") //Personel harcama isteğini reddetmek için hazırlandı.
+    public ResponseEntity<Boolean> rejectPayment(@PathVariable Long id){
+        return ResponseEntity.ok(transactionService.rejectPayment(id));
+    }
 }
