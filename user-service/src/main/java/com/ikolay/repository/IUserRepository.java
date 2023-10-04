@@ -19,7 +19,7 @@ public interface IUserRepository extends JpaRepository<User,Long> {
 
     Optional<User> findByAuthId(Long authId); //test için eklendi düzenlenmeli.
 
-    List<User> findByCompanyIdAndRole(Long companyId, ERole eRole);
+    List<User> findByCompanyIdAndRoleOrderByFirstname(Long companyId, ERole eRole);
 
     Optional<User> findByEmail(String email);
 
@@ -30,4 +30,6 @@ public interface IUserRepository extends JpaRepository<User,Long> {
 
     @Query("select sum(u.salary) from User u where u.companyId=?1 and u.role='EMPLOYEE'")
     Double findTotalEmployeeSalary(Long companyId);
+
+    Optional<User> findByIdAndCompanyId(Long id, Long companyId);
 }

@@ -3,10 +3,7 @@ package com.ikolay.controller;
 import static com.ikolay.constant.EndPoints.*;
 import static com.ikolay.constant.EndPoints.DELETE;
 
-import com.ikolay.dto.requests.AddShiftToEmployeeRequestDto;
-import com.ikolay.dto.requests.DeleteEmployeeRequestDto;
-import com.ikolay.dto.requests.RegisterRequestDto;
-import com.ikolay.dto.requests.UpdateUserRequestDto;
+import com.ikolay.dto.requests.*;
 import com.ikolay.dto.response.*;
 import com.ikolay.repository.entity.User;
 import com.ikolay.service.UserService;
@@ -83,5 +80,10 @@ public class UserController {
     @DeleteMapping(DELETE)
     ResponseEntity<Boolean> deleteEmployee(@RequestBody DeleteEmployeeRequestDto dto){
         return ResponseEntity.ok(userService.deleteEmployee(dto));
+    }
+
+    @PutMapping("/updatesalary")
+    ResponseEntity<Boolean> updateSalary(@RequestBody UpdateSalaryRequestDto dto){
+        return ResponseEntity.ok(userService.updateSalary(dto));
     }
 }

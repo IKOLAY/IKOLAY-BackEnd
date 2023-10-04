@@ -69,4 +69,17 @@ public class FilesController {
                 .contentType(MediaType.valueOf(fileEntity.getContentType()))
                 .body(fileEntity.getData());
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteFile(@PathVariable String id) {
+        Optional<FileEntity> fileEntityOptional = fileService.getFile(id);
+
+        if (!fileEntityOptional.isPresent()) {
+            return ResponseEntity.notFound()
+                    .build();
+        }
+
+       fileService.delete(fileEntityOptional.get());
+        return ResponseEntity.ok().build();
+    }
 }
