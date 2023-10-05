@@ -55,9 +55,17 @@ public class ShiftService extends ServiceManager<Shift, Long> {
 
     @PostConstruct
     public void defaultShift(){
-        save(Shift.builder().shiftName("Sabah Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("09:00")).endTime(LocalTime.parse("17:00")).build());
-        save(Shift.builder().shiftName("Akşam Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("17:00")).endTime(LocalTime.parse("01:00")).build());
-        save(Shift.builder().shiftName("Gece Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("01:00")).endTime(LocalTime.parse("09:00")).build());
+        Optional<Shift> shift = shiftRepository.findById(1L);
+        if(shift.isEmpty()) {
+            save(Shift.builder().shiftName("Sabah Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("09:00")).endTime(LocalTime.parse("17:00")).build());
+            save(Shift.builder().shiftName("Akşam Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("17:00")).endTime(LocalTime.parse("01:00")).build());
+            save(Shift.builder().shiftName("Gece Vardiyası").breakTime(2L).companyId(1L).startTime(LocalTime.parse("01:00")).endTime(LocalTime.parse("09:00")).build());
+            save(Shift.builder().shiftName("Sabah Vardiyası").breakTime(2L).companyId(2L).startTime(LocalTime.parse("09:00")).endTime(LocalTime.parse("17:00")).build());
+            save(Shift.builder().shiftName("Sabah Vardiyası").breakTime(2L).companyId(3L).startTime(LocalTime.parse("09:00")).endTime(LocalTime.parse("17:00")).build());
+            save(Shift.builder().shiftName("Sabah Vardiyası").breakTime(2L).companyId(4L).startTime(LocalTime.parse("09:00")).endTime(LocalTime.parse("17:00")).build());
+            save(Shift.builder().shiftName("Sabah Vardiyası").breakTime(2L).companyId(5L).startTime(LocalTime.parse("09:00")).endTime(LocalTime.parse("17:00")).build());
+            save(Shift.builder().shiftName("Sabah Vardiyası").breakTime(2L).companyId(6L).startTime(LocalTime.parse("09:00")).endTime(LocalTime.parse("17:00")).build());
+        }
     }
 
     public List<FindShiftByCompanyIdResponseDto> findShiftsByCompanyId(Long companyId) {

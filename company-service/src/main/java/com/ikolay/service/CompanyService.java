@@ -45,12 +45,15 @@ public class CompanyService extends ServiceManager<Company, Long> {
 
     @PostConstruct
     private void addDefaultCompany() {
-        save(Company.builder().companyName("Dummy Corp.").logo("https://bcassetcdn.com/social/o5jw7zottz/preview.png").phone("+17343971529").address("29488 Brown Ct Garden City Michigan 48135 USA").about("Managed Analyzing Interface").taxNo("742735410").build());
-        save(Company.builder().companyName("Bilge Adam").logo("https://cdn.cloudwises.com/ba-assets/genel/icon.svg").phone("+908502016000").address("Reşitpaşa Mah. Katar Cad. İTÜ Teknokent Arı 3 No:4 B3 Sarıyer / İSTANBUL").about("BilgeAdam Teknoloji; 1997’de İstanbul’da kurulmuş, global operasyonlarını İngiltere ve Avrupa üzerinden yaygınlaştıran bir yazılım şirketidir.").taxNo("534459629").build());
-        save(Company.builder().companyName("Tokinan Inc.").logo("https://bcassetcdn.com/social/chm5gip2m2/preview.png").phone("+12129951107").address("53 E 8th St Manhattan North Dakota 10003 USA").about("Visionary Zeroadministration Database").taxNo("133511473").build());
-        save(Company.builder().companyName("Gülnihal Inc.").logo("https://bcassetcdn.com/social/h9qi7fxc4w/preview.png").phone("+18136851909").address("333 N Falkenburg Rd Tampa Florida 33619 USA").about("Realigned Background Firmware").taxNo("336107911").build());
-        save(Company.builder().companyName("Martlı Inc.").logo("https://bcassetcdn.com/social/fg1coht6y0/preview.png").phone("+17342130017").address("170 Enterprise Dr Ann Arbor Michigan 48103 USA").about("Cloned Interactive Synergy").taxNo("070936704").build());
-        save(Company.builder().companyName("Adanedhel Inc.").logo("https://bcassetcdn.com/social/ybmnhv0fs6/preview.png").phone("+15128649911").address("2425 Williams Dr Georgetown Texas 78633 USA").about("Self-Enabling Contextually-Based Encoding").taxNo("067624320").build());
+        Optional<Company> company = companyRepository.findById(1L);
+        if (company.isEmpty()) {
+            save(Company.builder().companyName("DUMMY CORP.").logo("https://bcassetcdn.com/social/o5jw7zottz/preview.png").phone("+17343971529").address("29488 Brown Ct Garden City Michigan 48135 USA").about("Managed Analyzing Interface").taxNo("742735410").build());
+            save(Company.builder().companyName("BİLGE ADAM").logo("https://cdn.cloudwises.com/ba-assets/genel/icon.svg").phone("+908502016000").address("Reşitpaşa Mah. Katar Cad. İTÜ Teknokent Arı 3 No:4 B3 Sarıyer / İSTANBUL").about("BilgeAdam Teknoloji; 1997’de İstanbul’da kurulmuş, global operasyonlarını İngiltere ve Avrupa üzerinden yaygınlaştıran bir yazılım şirketidir.").taxNo("534459629").build());
+            save(Company.builder().companyName("TOKİNAN INC.").logo("https://bcassetcdn.com/social/chm5gip2m2/preview.png").phone("+12129951107").address("53 E 8th St Manhattan North Dakota 10003 USA").about("Visionary Zeroadministration Database").taxNo("133511473").build());
+            save(Company.builder().companyName("GÜLNİHAL INC.").logo("https://bcassetcdn.com/social/h9qi7fxc4w/preview.png").phone("+18136851909").address("333 N Falkenburg Rd Tampa Florida 33619 USA").about("Realigned Background Firmware").taxNo("336107911").build());
+            save(Company.builder().companyName("MARTLI INC.").logo("https://bcassetcdn.com/social/fg1coht6y0/preview.png").phone("+17342130017").address("170 Enterprise Dr Ann Arbor Michigan 48103 USA").about("Cloned Interactive Synergy").taxNo("070936704").build());
+            save(Company.builder().companyName("ADANEDHEL INC.").logo("https://bcassetcdn.com/social/ybmnhv0fs6/preview.png").phone("+15128649911").address("2425 Williams Dr Georgetown Texas 78633 USA").about("Self-Enabling Contextually-Based Encoding").taxNo("067624320").build());
+        }
     }
 
     public Company getCompanyInformation(Long id) {
@@ -77,11 +80,17 @@ public class CompanyService extends ServiceManager<Company, Long> {
     }
 
     public List<GetTop5ForCompanyResponseDto> findByCompanyNameTop5() {
-        Sort sort= Sort.by(Sort.Direction.fromString("ASC"), "companyName");
-        Pageable pageable = PageRequest.of(0,5,sort);
+        Sort sort = Sort.by(Sort.Direction.fromString("ASC"), "companyName");
+        Pageable pageable = PageRequest.of(0, 5, sort);
         Page<Company> companies = companyRepository.findAll(pageable);
         List<Company> companyList = companies.get().toList();
 
         return ICompanyMapper.INSTANCE.toGetTop5ForCompanyResponseDto(companyList);
+    }
+
+    public List<Company> findBySearchValue(String searchValue){
+        if(searchValue.equals(""))
+            throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND);
+        return companyRepository.findByCompanyNameContaining(searchValue.toUpperCase());
     }
 }

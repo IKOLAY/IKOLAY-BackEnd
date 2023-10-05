@@ -51,12 +51,16 @@ public class LeaveService extends ServiceManager<Leave, Long> {
 
     @PostConstruct
     public void defaultTatilBilgileri() {
-        save(Leave.builder().leaveName("23 Nisan Ulusal Egemenlik ve Çocuk Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2023-04-23")).build());
-        save(Leave.builder().leaveName("19 Mayıs Gençlik ve Spor Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2023-05-19")).build());
-        save(Leave.builder().leaveName("30 Ağustos Zafer Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2023-08-30")).build());
-        save(Leave.builder().leaveName("23 Nisan Ulusal Egemenlik ve Çocuk Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2024-04-23")).build());
-        save(Leave.builder().leaveName("19 Mayıs Gençlik ve Spor Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2024-05-19")).build());
-        save(Leave.builder().leaveName("30 Ağustos Zafer Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2024-08-30")).build());
+        Optional<Leave> leave = leaveRepository.findById(1L);
+        if (leave.isEmpty()){
+            save(Leave.builder().leaveName("23 Nisan Ulusal Egemenlik ve Çocuk Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2023-04-23")).build());
+            save(Leave.builder().leaveName("19 Mayıs Gençlik ve Spor Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2023-05-19")).build());
+            save(Leave.builder().leaveName("30 Ağustos Zafer Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2023-08-30")).build());
+            save(Leave.builder().leaveName("23 Nisan Ulusal Egemenlik ve Çocuk Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2024-04-23")).build());
+            save(Leave.builder().leaveName("19 Mayıs Gençlik ve Spor Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2024-05-19")).build());
+            save(Leave.builder().leaveName("30 Ağustos Zafer Bayramı").companyId(1L).duration(1).startingDate(LocalDate.parse("2024-08-30")).build());
+        }
+
     }
 
     public List<GetCompanyLeavesResponseDto> findCompanyLeaves(Long companyId) {
