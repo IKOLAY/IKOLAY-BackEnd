@@ -1,4 +1,4 @@
-package com.ikolay.dto.response;
+package com.ikolay.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,12 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data //@Getter @Setter @ToString hepsini kapsıyor.
 @Builder
-public class FindAllCompanyEmployeesResponseDto {
+public class UpdateSalaryRequestDto {
     private Long id;
-    private String email;
-    private String firstname;
-    private String lastname;
-    private String phone;
-    private String photoUrl;
     private Double salary;
 }

@@ -44,4 +44,8 @@ public class FileService {
     public List<FileEntity> getAllFiles() {
         return fileRepository.findAll();
     }
+
+    public void delete(FileEntity file){
+        fileRepository.delete(file);
+    }
 }

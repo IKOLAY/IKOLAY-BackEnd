@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Data //@Getter @Setter @ToString hepsini kapsıyor.
 @Builder
 public class DeleteEmployeeRequestDto {
-    String email;
     Long companyId;
+    Long id;
 }

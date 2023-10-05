@@ -1,9 +1,6 @@
 package com.ikolay.service;
 
-import com.ikolay.dto.requests.AddShiftToEmployeeRequestDto;
-import com.ikolay.dto.requests.DeleteEmployeeRequestDto;
-import com.ikolay.dto.requests.RegisterRequestDto;
-import com.ikolay.dto.requests.UpdateUserRequestDto;
+import com.ikolay.dto.requests.*;
 import com.ikolay.dto.response.*;
 import com.ikolay.exception.ErrorType;
 import com.ikolay.exception.UserManagerException;
@@ -101,7 +98,7 @@ public class UserService extends ServiceManager<User, Long> {
     }
 
     public List<FindAllCompanyEmployeesResponseDto> personelList(Long companyId) {
-        return IUserMapper.INSTANCE.toListFindAllCompanyEmployeesResponseDto(userRepository.findByCompanyIdAndRole(companyId, ERole.EMPLOYEE));
+        return IUserMapper.INSTANCE.toListFindAllCompanyEmployeesResponseDto(userRepository.findByCompanyIdAndRoleOrderByFirstname(companyId, ERole.EMPLOYEE));
     }
 
     public Long findIdByEmail(String email) {
@@ -179,16 +176,24 @@ public class UserService extends ServiceManager<User, Long> {
     }
 
     public Boolean deleteEmployee(DeleteEmployeeRequestDto dto) {
-        System.out.println(dto);
-        Optional<User> user = userRepository.findByCompanyIdAndEmail(dto.getCompanyId(), dto.getEmail());
+        Optional<User> user = userRepository.findByIdAndCompanyId(dto.getId(),dto.getCompanyId());
         if(user.isEmpty())
-            throw new UserManagerException(ErrorType.USER_NOT_FOUND,"Girilen e-mail adresini kontrol edin.");
+            throw new UserManagerException(ErrorType.USER_NOT_FOUND,"Önyüzden gelen veriyi kontrol edin!");
         try {
             authManager.deleteEmployee(user.get().getAuthId());
         } catch (Exception e) {
             throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Data bütünlüğü bozulmuş ya da Önyüzden gelen bilgiler hatalı olabilir. Lütfen kontrol ediniz.");
         }
         deleteById(user.get().getId());
+        return true;
+    }
+
+    public Boolean updateSalary(UpdateSalaryRequestDto dto) {
+        Optional<User> user = findById(dto.getId());
+        if(user.isEmpty())
+            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Önyüzden gelen veriyi kontrol edin.");
+        user.get().setSalary(dto.getSalary());
+        update(user.get());
         return true;
     }
 }
