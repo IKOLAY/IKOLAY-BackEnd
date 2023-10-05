@@ -59,4 +59,9 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.findByCompanyNameTop5());
     }
 
+    @GetMapping("/findbysearchvalue")
+    public  ResponseEntity<List<Company>> findBySearchValue(String searchValue){
+        return ResponseEntity.ok(companyService.findBySearchValue(searchValue));
+    }
+
 }
