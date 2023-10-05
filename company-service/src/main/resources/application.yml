@@ -58,7 +58,6 @@
 ##  logback:
 ##    rollingpolicy:
 ##      max-file-size: 10MB
-
 spring:
   cloud:
     config:

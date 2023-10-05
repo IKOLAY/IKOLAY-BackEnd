@@ -74,8 +74,9 @@ public class UserService extends ServiceManager<User, Long> {
                     .status(EStatus.ACTIVE)
                     .photoUrl("https://cdn-icons-png.flaticon.com/512/2304/2304226.png")
                     .build());
+            testDefaultEmployees();
         }
-        testDefaultEmployees();
+
     }
 
     public UserInformationResponseDto getUserInformation(String token) {
@@ -91,7 +92,12 @@ public class UserService extends ServiceManager<User, Long> {
         save(User.builder().authId(4L).salary(50000d).email("slm@gmail.com").shiftId(3L).firstname("Selim").lastname("Gülnihal").address("15 Temmuz Mah. Bahar Cad. No 37 Bağcılar İstanbul").password("123").companyEmail("slm.slm@ikolay.com").phone("+905329599979").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/8.webp").build());
         save(User.builder().authId(5L).salary(60000d).email("hly@gmail.com").shiftId(1L).firstname("Hülya").lastname("Martlı").address("Celtikler Mah. Soganlik Sok. No:45 Geyve Sakarya").password("123").companyEmail("hly.hly@ikolay.com").phone("+905323262590").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/4.webp").build());
         save(User.builder().authId(6L).salary(200000d).email("aktas@gmail.com").shiftId(1L).firstname("Aktaş").lastname("Sabancı").address("Halkali Caddesi No.198/200 Küçükçekmece İstanbul").password("123").companyEmail("akt.akt@ikolay.com").phone("+905321333667").role(ERole.MANAGER).companyId(1L).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/22.webp").build());
-        save(User.builder().authId(7L).email("emrsfa@gmail.com").firstname("Emre").lastname("Sefa").password("123").companyEmail("emrsfa@gmail.com").phone("+905320436761").role(ERole.VISITOR).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/23.webp").build());
+        save(User.builder().authId(7L).salary(200000d).email("bilge@gmail.com").shiftId(4L).firstname("Bilge").lastname("Adam").address("Selçuklu Mah. Kardelen Sok. No:27 Çankaya Ankara").password("123").companyEmail("bilg.bilg@ikolay.com").phone("+905321234567").role(ERole.MANAGER).companyId(2L).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/3.webp").build());
+        save(User.builder().authId(8L).salary(200000d).email("ertan@gmail.com").shiftId(5L).firstname("Ertan").lastname("Tokinan").address("Göztepe Cad. Ergenekon Sk. No:12 Kadıköy İstanbul").password("123").companyEmail("ert.ert@ikolay.com").phone("+905432345678").role(ERole.MANAGER).companyId(3L).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/25.webp").build());
+        save(User.builder().authId(9L).salary(200000d).email("ecem@gmail.com").shiftId(6L).firstname("Ecem").lastname("Gülnihal").address("Fatih Mah. Çınar Cad. No:9 Osmangazi Bursa").password("123").companyEmail("ecem.ecem@ikolay.com").phone("+905543456789").role(ERole.MANAGER).companyId(4L).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/6.webp").build());
+        save(User.builder().authId(10L).salary(200000d).email("nihal@gmail.com").shiftId(7L).firstname("Nihal").lastname("Martlı").address("Karadeniz Cad. Zambak Sk. No:3 Samsun Samsun").password("123").companyEmail("nhl.nhl@ikolay.com").phone("+905654567890").role(ERole.MANAGER).companyId(5L).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/18.webp").build());
+        save(User.builder().authId(11L).salary(200000d).email("kadriye@gmail.com").shiftId(8L).firstname("Kadriye").lastname("Gülnihal").address("Akasya Sok. Meşe Mah. No:8 Nilüfer Bursa").password("123").companyEmail("kdr.kdr@ikolay.com").phone("+905765678901").role(ERole.MANAGER).companyId(6L).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/17.webp").build());
+        save(User.builder().authId(12L).email("emrsfa@gmail.com").firstname("Emre").lastname("Sefa").password("123").companyEmail("emrsfa@gmail.com").phone("+905320436761").role(ERole.VISITOR).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/23.webp").build());
     }
 
     public List<FindAllCompanyEmployeesResponseDto> personelList(Long companyId) {

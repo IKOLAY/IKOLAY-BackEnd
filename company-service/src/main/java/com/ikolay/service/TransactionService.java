@@ -115,24 +115,6 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
         }
     }
 
-    @PostConstruct
-    public void testData(){
-        LocalDate testDate = LocalDate.now().plusDays(14);
-        save(FinancialTransaction.builder()
-                .name("Test Payment")
-                .companyId(1L)
-                .transactionAmount(-101100d)
-                .transactionDate(testDate)
-                .confirmationDate(LocalDate.now())
-                .expenseType(EExpenseType.MANAGER)
-                .currencyType(ECurrencyType.DOLAR)
-                .status(ETransactionStatus.ACCEPTED)
-                .isPaid(false)
-                .currencyMultiplier(20.22)
-                .type(ETransactionType.OUTCOME)
-                .build());
-    }
-
     public List<String> getAllCurrencyList() {
         return Arrays.stream(ECurrencyType.values()).map(x -> x.name()).toList();
     }
