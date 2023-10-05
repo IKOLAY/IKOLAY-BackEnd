@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static com.ikolay.constant.EndPoints.*;
-
-@FeignClient(url = "http://localhost:7072/api/v1/user",decode404 = true,name = "auth-user")
+@FeignClient(url = "${feign.user}",decode404 = true,name = "auth-user")
 public interface IUserManager {
 
     @PostMapping(REGISTER)
@@ -18,4 +17,5 @@ public interface IUserManager {
 
     @PostMapping(CONFIRMATION) //test için eklendi düzenlenmeli.
     ResponseEntity<Boolean> confirmation(@RequestParam Long authId);
+
 }

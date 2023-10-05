@@ -2,9 +2,10 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$versions.springBoot")
     }
+
 }
 
 dependencies {
-    implementation libs.springBootMailSender
-    implementation libs.springCloudConfigClient
+    implementation  libs.springCloudConfigServer
+    implementation libs.springCloudConfigStarter
 }

@@ -5,12 +5,14 @@ import static com.ikolay.constant.EndPoints.*;
 import com.ikolay.dto.requests.*;
 import com.ikolay.dto.response.DoLoginResponseDto;
 import com.ikolay.dto.response.RegisterResponseDto;
+import com.ikolay.repository.entity.Auth;
 import com.ikolay.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,4 +47,6 @@ public class AuthController {
     ResponseEntity<Boolean> deleteEmployee(@PathVariable Long id){
         return ResponseEntity.ok(authService.deleteEmployee(id));
     }
+
+
 }

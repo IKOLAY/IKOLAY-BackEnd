@@ -53,7 +53,7 @@ public class JwtTokenManager {
                     .withAudience(audience)
                     .withIssuer(issuer)
                     .withClaim("id", id)
-                    .withClaim("role",role.toString())
+                    .withClaim("role", role.toString())
                     .withIssuedAt(Instant.now())
                     .withExpiresAt(date)
                     .sign(Algorithm.HMAC512(secretKey));
@@ -64,38 +64,39 @@ public class JwtTokenManager {
         return Optional.ofNullable(token);
     }
 
-    public Optional<Long> getIdFromToken(String token){
-        try{
+    public Optional<Long> getIdFromToken(String token) {
+        try {
             Algorithm algorithm = Algorithm.HMAC512(secretKey);
             JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
             DecodedJWT decodedJWT = verifier.verify(token);
-            if(decodedJWT==null)
+            if (decodedJWT == null)
                 throw new AuthManagerException(ErrorType.INVALID_TOKEN);
             Long id = decodedJWT.getClaim("id").asLong();
             return Optional.of(id);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             throw new AuthManagerException(ErrorType.INVALID_TOKEN);
         }
 
     }
-    public Optional<String> getRoleFromToken(String token){
-        try{
+
+    public Optional<String> getRoleFromToken(String token) {
+        try {
             Algorithm algorithm = Algorithm.HMAC512(secretKey);
             JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
             DecodedJWT decodedJWT = verifier.verify(token);
-            if(decodedJWT==null)
+            if (decodedJWT == null)
                 throw new AuthManagerException(ErrorType.INVALID_TOKEN);
             String role = decodedJWT.getClaim("role").asString();
             return Optional.of(role);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             throw new AuthManagerException(ErrorType.INVALID_TOKEN);
         }
 
     }
 
-    public Optional<String> createMailToken(Long id,String activationCode) {
+    public Optional<String> createMailToken(Long id, String activationCode) {
 
         String token = null;
         try {
@@ -103,7 +104,7 @@ public class JwtTokenManager {
                     .withAudience(audience)
                     .withIssuer(issuer)
                     .withClaim("id", id)
-                    .withClaim("code",activationCode)
+                    .withClaim("code", activationCode)
                     .withIssuedAt(new Date())
                     .sign(Algorithm.HMAC512(secretKey));
 
@@ -113,17 +114,17 @@ public class JwtTokenManager {
         return Optional.ofNullable(token);
     }
 
-    public Optional<ActivationRequestDto> getIdAndCodeFromToken(String token){
-        try{
+    public Optional<ActivationRequestDto> getIdAndCodeFromToken(String token) {
+        try {
             Algorithm algorithm = Algorithm.HMAC512(secretKey);
             JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
             DecodedJWT decodedJWT = verifier.verify(token);
-            if(decodedJWT==null)
+            if (decodedJWT == null)
                 throw new AuthManagerException(ErrorType.INVALID_TOKEN);
             Long id = decodedJWT.getClaim("id").asLong();
             String code = decodedJWT.getClaim("code").asString();
             return Optional.of(ActivationRequestDto.builder().id(id).activationCode(code).build());
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             throw new AuthManagerException(ErrorType.INVALID_TOKEN);
         }

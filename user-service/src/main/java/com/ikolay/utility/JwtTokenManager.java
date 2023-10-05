@@ -52,7 +52,7 @@ public class JwtTokenManager {
             return  Optional.of(id);
         }catch (Exception e){
             System.out.println(e.toString());
-            throw  new UserManagerException(ErrorType.INVALID_TOKEN);
+            throw new UserManagerException(ErrorType.INVALID_TOKEN);
         }
     }
 
