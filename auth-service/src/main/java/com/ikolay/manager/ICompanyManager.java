@@ -6,8 +6,7 @@ import com.ikolay.dto.requests.RegisterRequestDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-@FeignClient(url = "http://localhost:7073/api/v1/company",decode404 = true,name = "auth-company")
+@FeignClient(url = "${feign.company}",decode404 = true,name = "auth-company")
 public interface ICompanyManager {
 
     @PostMapping(REGISTER)

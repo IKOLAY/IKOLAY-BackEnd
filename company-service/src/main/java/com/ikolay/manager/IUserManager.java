@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import static com.ikolay.constant.EndPoints.FINDIDBYEMAIL;
 
-
-@FeignClient(url = "http://localhost:7072/api/v1/user",decode404 = true,name = "company-user")
+@FeignClient(url = "${feign.user}",decode404 = true,name = "company-user")
 public interface IUserManager {
 
     @GetMapping(FINDIDBYEMAIL)

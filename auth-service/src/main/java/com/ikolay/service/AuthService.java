@@ -221,7 +221,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return true;
 
     }
-
     public Boolean deleteEmployee(Long id) {
         Optional<Auth> auth = authRepository.findById(id);
         if (auth.isEmpty())
@@ -229,4 +228,5 @@ public class AuthService extends ServiceManager<Auth, Long> {
         deleteById(auth.get().getId());
         return true;
     }
+
 }
