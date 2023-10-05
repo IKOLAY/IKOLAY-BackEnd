@@ -1,0 +1,20 @@
+server:
+  port: 9290
+
+spring:
+  zipkin:
+    enabled: true
+    base-url: ${ZIPKIN_URL}
+    service:
+      name: config-server-git
+  application:
+    name: config-server-git
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/IKOLAY/IKolay-Config.git #githubtaki config'in oldugu ayarlar bölümü
+          default-label: master
+          skip-ssl-validation: true
+          username: IKOLAY # ???
+          password: ${GIT_IKOLAY_CONFIGKEY} # ???

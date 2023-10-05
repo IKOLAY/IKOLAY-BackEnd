@@ -196,8 +196,9 @@ public class AuthService extends ServiceManager<Auth, Long> {
                     .role(ERole.ADMIN)
                     .status(EStatus.ACTIVE)
                     .build());
+
+            testDefaultEmployees();
         }
-        testDefaultEmployees();
     }
 
     private void testDefaultEmployees() {
@@ -206,6 +207,11 @@ public class AuthService extends ServiceManager<Auth, Long> {
         save(Auth.builder().email("slm@gmail.com").firstname("Selim").lastname("Gülnihal").password("123").companyEmail("slm.slm@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
         save(Auth.builder().email("hly@gmail.com").firstname("Hülya").lastname("Martlı").password("123").companyEmail("hly.hly@ikolay.com").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).build());
         save(Auth.builder().email("aktas@gmail.com").firstname("Aktaş").lastname("Sabancı").password("123").companyEmail("akt.akt@ikolay.com").role(ERole.MANAGER).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("bilge@gmail.com").firstname("Bilge").lastname("Adam").password("123").companyEmail("bilg.bilg@ikolay.com").role(ERole.MANAGER).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("ertan@gmail.com").firstname("Ertan").lastname("Tokinan").password("123").companyEmail("ert.ert@ikolay.com").role(ERole.MANAGER).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("ecem@gmail.com").firstname("Ecem").lastname("Gülnihal").password("123").companyEmail("ecem.ecem@ikolay.com").role(ERole.MANAGER).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("nihal@gmail.com").firstname("Nihal").lastname("Martlı").password("123").companyEmail("nhl.nhl@ikolay.com").role(ERole.MANAGER).status(EStatus.ACTIVE).build());
+        save(Auth.builder().email("kadriye@gmail.com").firstname("Kadriye").lastname("Gülnihal").password("123").companyEmail("kdr.kdr@ikolay.com").role(ERole.MANAGER).status(EStatus.ACTIVE).build());
         save(Auth.builder().email("emrsfa@gmail.com").firstname("Emre").lastname("Sefa").password("123").companyEmail("emrsfa@gmail.com").role(ERole.VISITOR).status(EStatus.ACTIVE).build());
     }
 
@@ -221,7 +227,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
         return true;
 
     }
-
     public Boolean deleteEmployee(Long id) {
         Optional<Auth> auth = authRepository.findById(id);
         if (auth.isEmpty())
@@ -229,4 +234,5 @@ public class AuthService extends ServiceManager<Auth, Long> {
         deleteById(auth.get().getId());
         return true;
     }
+
 }

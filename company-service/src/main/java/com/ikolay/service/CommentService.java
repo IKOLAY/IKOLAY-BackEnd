@@ -56,11 +56,13 @@ public class CommentService extends ServiceManager<Comment,Long> {
 
     @PostConstruct
     public void defaultComments(){
-
-        save(Comment.builder().companyId(1l).commentType(ECommentType.PENDING).content("Dummy Corp'ta çalışmak harika bir deneyim! Esneklik ve işbirliği burada ön planda. Çalışanlar için harika fırsatlar sunuyorlar.").userId(2l).build());
-        save(Comment.builder().companyId(1l).commentType(ECommentType.ACCEPTED).content("Dummy Corp, endüstride liderlik ediyor, ancak iş yükü yüksek olabilir. Sektör deneyimi kazanmak isteyenler için ideal bir seçenek.").userId(3l).build());
-        save(Comment.builder().companyId(1l).commentType(ECommentType.ACCEPTED).content("Dummy Corp'ta çalışmak hızlı tempoyu sevenler için mükemmel. Rekabetçi bir ortam ve büyüme potansiyeli sunuyor.").userId(4l).build());
-        save(Comment.builder().companyId(1l).commentType(ECommentType.REJECTED).content("Dummy Corp'un teknolojiye olan bağlılığı heyecan verici. Zorlayıcı liderlik tarzıyla geleceğe yatırım yapmak için büyük bir fırsat.").userId(5l).build());
+        Optional<Comment> comment = commentRepository.findById(1L);
+        if (comment.isEmpty()) {
+            save(Comment.builder().companyId(1l).commentType(ECommentType.PENDING).content("Dummy Corp'ta çalışmak harika bir deneyim! Esneklik ve işbirliği burada ön planda. Çalışanlar için harika fırsatlar sunuyorlar.").userId(2l).build());
+            save(Comment.builder().companyId(1l).commentType(ECommentType.ACCEPTED).content("Dummy Corp, endüstride liderlik ediyor, ancak iş yükü yüksek olabilir. Sektör deneyimi kazanmak isteyenler için ideal bir seçenek.").userId(3l).build());
+            save(Comment.builder().companyId(1l).commentType(ECommentType.ACCEPTED).content("Dummy Corp'ta çalışmak hızlı tempoyu sevenler için mükemmel. Rekabetçi bir ortam ve büyüme potansiyeli sunuyor.").userId(4l).build());
+            save(Comment.builder().companyId(1l).commentType(ECommentType.REJECTED).content("Dummy Corp'un teknolojiye olan bağlılığı heyecan verici. Zorlayıcı liderlik tarzıyla geleceğe yatırım yapmak için büyük bir fırsat.").userId(5l).build());
+        }
 
     }
 

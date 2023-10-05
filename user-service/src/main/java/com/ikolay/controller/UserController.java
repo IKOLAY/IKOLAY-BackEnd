@@ -86,4 +86,5 @@ public class UserController {
     ResponseEntity<Boolean> updateSalary(@RequestBody UpdateSalaryRequestDto dto){
         return ResponseEntity.ok(userService.updateSalary(dto));
     }
+
 }
