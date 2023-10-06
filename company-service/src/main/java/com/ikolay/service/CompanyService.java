@@ -93,4 +93,8 @@ public class CompanyService extends ServiceManager<Company, Long> {
             throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND);
         return companyRepository.findByCompanyNameContaining(searchValue.toUpperCase());
     }
+
+    public List<Company> findAll(){
+        return companyRepository.findAll();
+    }
 }

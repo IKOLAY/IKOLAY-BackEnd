@@ -64,4 +64,9 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.findBySearchValue(searchValue));
     }
 
+    @GetMapping(FINDALL)
+    public ResponseEntity<List<Company>> findAll(){
+        return ResponseEntity.ok(companyService.findAll());
+    }
+
 }
