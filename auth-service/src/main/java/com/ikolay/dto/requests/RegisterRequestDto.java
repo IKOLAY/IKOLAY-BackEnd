@@ -45,4 +45,6 @@ public class RegisterRequestDto {
     private Long companyId;
     // EMPLOYEE KAYDI SIRASINDA ALINACAK
     private Double salary;
+
+    private Long membershipId;
 }

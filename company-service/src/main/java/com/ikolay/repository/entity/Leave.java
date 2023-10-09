@@ -26,6 +26,7 @@ public class Leave extends BaseEntity{
     private Integer duration;
     private Long userId;
     private Long companyId;
+    @Enumerated(EnumType.STRING)
     private ELeaveStatus status;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate confirmationDate;
