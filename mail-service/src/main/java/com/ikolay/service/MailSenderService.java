@@ -113,7 +113,7 @@ public class MailSenderService {
                     "        <div\n" +
                     "            style=\"text-align: center;background-color: #5CE1E6; width: 70%; max-height: 50% ;border: 1px solid black; padding: 20px;border-radius: 20px; max-width: 800px; margin: auto;\">\n" +
                     "            <h2>Aramıza Hoşgeldin!</h2>\n" +
-                    "            <p style=\"margin-bottom: 40px;\">Yapmış olduğunuz başvurunun olumlu olarak sonuçlandığını size bildirmekten mutluluk duyarız! IKolay olarak sizi aramızda görmek çok güzel! Hesabınıza <a href=\"https://www.google.com\">giriş</a> yapıp, sizler için hazırlamış olduğumuz sistemden faydalanabilirsiniz!</p>\n" +
+                    "            <p style=\"margin-bottom: 40px;\">Yapmış olduğunuz başvurunun olumlu olarak sonuçlandığını size bildirmekten mutluluk duyarız! IKolay olarak sizi aramızda görmek çok güzel! Hesabınıza <a href=\"http://ikolay.great-site.net/login\">giriş</a> yapıp, sizler için hazırlamış olduğumuz sistemden faydalanabilirsiniz!</p>\n" +
                     "        \n" +
                     "        </div>\n" +
                     "    </div>", true);
