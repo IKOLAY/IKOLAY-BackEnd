@@ -30,3 +30,4 @@ rabbitmq:
 
 mail-service:
   company: ${company_mail}
+  url: "http://localhost:5173/redirect?token="

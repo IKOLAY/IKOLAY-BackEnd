@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -28,5 +29,9 @@ public class Company extends BaseEntity{
     private String companyName;
     @Column(unique = true)
     private String taxNo;
+
+    private Long membershipId;
+    private LocalDate membershipStarted;
+    private LocalDate membershipExpiration;
 
 }
