@@ -43,6 +43,7 @@ rabbitmq:
 feign:
   auth: http://localhost:7071/api/v1/auth
   company: http://localhost:7073/api/v1/company
+  transaction: http://localhost:7073/api/v1/transaction
 
 #redis:
 #  host: localhost
