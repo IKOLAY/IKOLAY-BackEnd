@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @SuperBuilder
 @Data
@@ -20,6 +21,7 @@ public class Advance extends BaseEntity{
     private Long userId;
     private String description;
     private Double advanceAmount;
+    private LocalDate confirmationDate;
     @Enumerated(EnumType.STRING)
     private EAdvanceStatus advanceStatus;
 }
