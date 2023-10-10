@@ -112,7 +112,8 @@ public class MembershipService extends ServiceManager<Membership, Long> {
 
     @PostConstruct
     public void defaultMemberShips(){
-        save(Membership.builder().name("Test").membershipDuration(30L).currencyType(ECurrencyType.TL).currencyMultiplier(1d).price(25000d).status(EMembershipStatus.ACTIVE).build());
-        save(Membership.builder().name("Test2").membershipDuration(30L).currencyType(ECurrencyType.TL).currencyMultiplier(1d).price(30000d).status(EMembershipStatus.ACTIVE).build());
+        save(Membership.builder().name("Bronz").membershipDuration(30L).currencyType(ECurrencyType.TL).currencyMultiplier(1d).price(5000d).status(EMembershipStatus.ACTIVE).build());
+        save(Membership.builder().name("Gümüş").membershipDuration(90L).currencyType(ECurrencyType.TL).currencyMultiplier(1d).price(13500d).status(EMembershipStatus.ACTIVE).build());
+        save(Membership.builder().name("Altın").membershipDuration(360L).currencyType(ECurrencyType.TL).currencyMultiplier(1d).price(48000d).status(EMembershipStatus.ACTIVE).build());
     }
 }

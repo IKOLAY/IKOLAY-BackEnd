@@ -16,27 +16,27 @@ import static com.ikolay.constant.EndPoints.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/membership")
+@RequestMapping(MEMBERSHIP)
 public class MembershipController {
 
     private final MembershipService membershipService;
 
-    @PostMapping("/createmembership") //Adminin istediği gibi membership üretebilmesi için.
+    @PostMapping(CREATE) //Adminin istediği gibi membership üretebilmesi için.
     public ResponseEntity<Membership> createMembership(@RequestBody CreateMembershipRequestDto dto){
         return ResponseEntity.ok(membershipService.create(dto));
     }
 
-    @GetMapping("/getactivememberships")
+    @GetMapping(GETMEMBERSHIPS) // Kullanıcıya listelenecek metodlar
     public ResponseEntity<List<Membership>> getActiveMemberships(){
         return ResponseEntity.ok(membershipService.getActiveMemberships());
     }
 
-    @GetMapping("/setmembershipstatuspassive")
+    @GetMapping(SETPASSIVE) // Adminin sonlandırmak istediği membershipler için kullanacağı metod
     public ResponseEntity<Boolean> setMembershipToPassive(Long id){
         return ResponseEntity.ok(membershipService.setMembershipToPassive(id));
     }
 
-    @PostMapping("/setselectedmembership")
+    @PostMapping("/setselectedmembership") // Kullanıcıya seçimini eklemek için
     public  ResponseEntity<Boolean> setSelectedMembership(@RequestBody ChangeMyMembershipRequestDto dto){
         return ResponseEntity.ok(membershipService.setCompanysMembership(dto));
     }

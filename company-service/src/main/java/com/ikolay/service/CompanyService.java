@@ -56,7 +56,7 @@ public class CompanyService extends ServiceManager<Company, Long> {
         Company company = ICompanyMapper.INSTANCE.toCompany(dto);
         Optional<Membership> membership = membershipRepository.findById(dto.getMembershipId());
         company.setMembershipStarted(LocalDate.now());
-        company.setMembershipExpiration(LocalDate.now().plusDays(membership.get().getMembershipDuration()));
+        company.setMembershipExpiration(LocalDate.now().plusDays(membership.get().getMembershipDuration()+30));
         save(company);
         if (membership.get().getPrice() > 0) {
             Long time = System.currentTimeMillis();
