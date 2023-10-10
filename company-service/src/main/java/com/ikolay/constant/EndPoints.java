@@ -5,6 +5,7 @@ public class EndPoints {
     public static final String VERSION = "api/v1";
     public static final String COMPANY = VERSION + "/company";
     public static final String TRANSACTION = VERSION + "/transaction";
+    public static final String MEMBERSHIP = VERSION + "/membership";
     public static final String LEAVE = VERSION + "/leave";
     public static final String COMMENT = VERSION + "/comment";
     public static final String ADDCOMMENT = "/addcomment";
@@ -28,6 +29,9 @@ public class EndPoints {
     public static final String REJECTCOMMENT  = "/rejectcomment/{id}";
     public static final String GETUSERSCOMMENT  = "/finduserscomment/{userId}";
     public static final String FINDCOMPANYLEAVES  = "/getcompanyleaves";
+    public static final String SETPASSIVE  = "/setmembershipstatuspassive";
+    public static final String GETMEMBERSHIPS  = "/getactivememberships";
+
 
 
 }
