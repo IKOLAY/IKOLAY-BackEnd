@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.ikolay.constant.EndPoints.*;
@@ -22,7 +23,7 @@ public class MembershipController {
     private final MembershipService membershipService;
 
     @PostMapping(CREATE) //Adminin istediği gibi membership üretebilmesi için.
-    public ResponseEntity<Membership> createMembership(@RequestBody CreateMembershipRequestDto dto){
+    public ResponseEntity<Membership> createMembership(@RequestBody @Valid CreateMembershipRequestDto dto){
         return ResponseEntity.ok(membershipService.create(dto));
     }
 

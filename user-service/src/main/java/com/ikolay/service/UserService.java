@@ -7,8 +7,11 @@ import com.ikolay.exception.UserManagerException;
 import com.ikolay.manager.IAuthManager;
 import com.ikolay.manager.ICompanyManager;
 import com.ikolay.mapper.IUserMapper;
+import com.ikolay.repository.IAdvanceRepository;
 import com.ikolay.repository.IUserRepository;
+import com.ikolay.repository.entity.Advance;
 import com.ikolay.repository.entity.User;
+import com.ikolay.repository.enums.EAdvanceStatus;
 import com.ikolay.repository.enums.ERole;
 import com.ikolay.repository.enums.EStatus;
 import com.ikolay.utility.JwtTokenManager;
@@ -16,6 +19,7 @@ import com.ikolay.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,13 +33,16 @@ public class UserService extends ServiceManager<User, Long> {
 
     private final IAuthManager authManager;
 
-    public UserService(IUserRepository userRepository, JwtTokenManager tokenManager, ICompanyManager companyManager, ShiftService shiftService, IAuthManager authManager) {
+    private final IAdvanceRepository advanceRepository;
+
+    public UserService(IUserRepository userRepository, JwtTokenManager tokenManager, ICompanyManager companyManager, ShiftService shiftService, IAuthManager authManager, IAdvanceRepository advanceRepository) {
         super(userRepository);
         this.userRepository = userRepository;
         this.tokenManager = tokenManager;
         this.companyManager = companyManager;
         this.shiftService = shiftService;
         this.authManager = authManager;
+        this.advanceRepository = advanceRepository;
     }
 
     public Boolean register(RegisterRequestDto dto) {
@@ -83,6 +90,7 @@ public class UserService extends ServiceManager<User, Long> {
             throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER, "Database'de User-Auth uyumsuzluğu mevcut.");
         return IUserMapper.INSTANCE.toUserInformationResponseDto(user.get());
     }
+
     private void testDefaultEmployees() {
         save(User.builder().authId(2L).salary(30000d).email("doruk@gmail.com").shiftId(1L).firstname("Doruk").lastname("Tokinan").address("Mumtaz Zeytinoglu Bulvari, No. 13 Eskişehir Ankara").password("123").companyEmail("drk.drk@ikolay.com").phone("5329701501").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).companyId(1L).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/2.webp").build());
         save(User.builder().authId(3L).salary(40000d).email("frkn@gmail.com").shiftId(2L).firstname("Furkan").lastname("Gülnihal").address("Selahaddin Eyyubi Mh. 1538 Sk. No: 43 - 45 Esenyurt İstanbul").password("123").companyEmail("frk.frk@ikolay.com").phone("5329736481").role(ERole.EMPLOYEE).status(EStatus.ACTIVE).photoUrl("https://mdbcdn.b-cdn.net/img/new/avatars/1.webp").companyId(1L).build());
@@ -138,8 +146,8 @@ public class UserService extends ServiceManager<User, Long> {
 
     public UserInformationResponseDto updateUser(UpdateUserRequestDto dto) {
         Optional<User> optionalUser = userRepository.findByIdAndEmail(dto.getId(), dto.getEmail());
-        if(optionalUser.isEmpty() && userRepository.existsByEmail(dto.getEmail()))
-            throw new UserManagerException(ErrorType.BAD_REQUEST,"Email adresi zaten mevcut.");
+        if (optionalUser.isEmpty() && userRepository.existsByEmail(dto.getEmail()))
+            throw new UserManagerException(ErrorType.BAD_REQUEST, "Email adresi zaten mevcut.");
         else if (optionalUser.isEmpty()) {
             Optional<User> user = findById(dto.getId());
             dto.setAuthId(user.get().getAuthId());
@@ -151,8 +159,7 @@ public class UserService extends ServiceManager<User, Long> {
             user.get().setPhotoUrl(dto.getPhotoUrl());
             authManager.updateAuthInfo(dto);
             return IUserMapper.INSTANCE.toUserInformationResponseDto(update(user.get()));
-        }
-        else {
+        } else {
             dto.setAuthId(optionalUser.get().getAuthId());
             optionalUser.get().setFirstname(dto.getFirstname());
             optionalUser.get().setLastname(dto.getLastname());
@@ -167,31 +174,66 @@ public class UserService extends ServiceManager<User, Long> {
     public GetUserFirstnameAndLastnameResponseDto getFirstAndLastnameWithId(Long id) {
         Optional<User> user = findById(id);
         if (user.isEmpty())
-            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Önyüzden gelen veride problem mevcut.");
+            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER, "Önyüzden gelen veride problem mevcut.");
         return IUserMapper.INSTANCE.toGetUserFirstnameAndLastnameResponseDto(user.get());
     }
 
-    public Double findTotalEmployeeSalary(Long companyId){
-        return userRepository.findTotalEmployeeSalary(companyId);
+    public Double findTotalEmployeeSalary(Long companyId) {
+        LocalDate now = LocalDate.now();
+        Double totalAdvance = null;
+        Double totalEmployeeSalary = userRepository.findTotalEmployeeSalary(companyId);
+        if (now.getDayOfMonth() >= 15) {
+            totalAdvance = advanceRepository.findMonthlyTotalAdvance(
+                    LocalDate.of(now.getYear(), now.getMonth(), 15),
+                    LocalDate.of(now.plusMonths(1).getYear(), now.plusMonths(1).getMonth(), 14), companyId, EAdvanceStatus.ACCEPTED);
+
+        } else {
+            totalAdvance = advanceRepository.findMonthlyTotalAdvance(
+                    LocalDate.of(now.minusMonths(1).getYear(), now.minusMonths(1).getMonth(), 15),
+                    LocalDate.of(now.getYear(), now.getMonth(), 14), companyId, EAdvanceStatus.ACCEPTED);
+
+        }
+        if (totalAdvance != null)
+            return totalEmployeeSalary - totalAdvance;
+        return totalEmployeeSalary;
     }
 
     public Boolean deleteEmployee(DeleteEmployeeRequestDto dto) {
-        Optional<User> user = userRepository.findByIdAndCompanyId(dto.getId(),dto.getCompanyId());
-        if(user.isEmpty())
-            throw new UserManagerException(ErrorType.USER_NOT_FOUND,"Önyüzden gelen veriyi kontrol edin!");
+        LocalDate now = LocalDate.now();
+        Optional<User> user = userRepository.findByIdAndCompanyId(dto.getId(), dto.getCompanyId());
+        if (user.isEmpty())
+            throw new UserManagerException(ErrorType.USER_NOT_FOUND, "Önyüzden gelen veriyi kontrol edin!");
         try {
             authManager.deleteEmployee(user.get().getAuthId());
         } catch (Exception e) {
-            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Data bütünlüğü bozulmuş ya da Önyüzden gelen bilgiler hatalı olabilir. Lütfen kontrol ediniz.");
+            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER, "Data bütünlüğü bozulmuş ya da Önyüzden gelen bilgiler hatalı olabilir. Lütfen kontrol ediniz.");
         }
+        Optional< Advance> advance = null;
+        if (now.getDayOfMonth() >= 15) {
+           advance= advanceRepository.findByConfirmationDateBetweenAndUserIdAndAdvanceStatus(
+                    LocalDate.of(now.getYear(), now.getMonth(), 15),
+                    LocalDate.of(now.plusMonths(1).getYear(), now.plusMonths(1).getMonth(), 14),user.get().getId(),EAdvanceStatus.ACCEPTED);
+
+        } else {
+           advance =  advanceRepository.findByConfirmationDateBetweenAndUserIdAndAdvanceStatus(
+                    LocalDate.of(now.minusMonths(1).getYear(), now.minusMonths(1).getMonth(), 15),
+                    LocalDate.of(now.getYear(), now.getMonth(), 14), user.get().getId(),EAdvanceStatus.ACCEPTED);
+
+        }
+        if(advance.isPresent()){
+            advance.get().setAdvanceStatus(EAdvanceStatus.IGNORED);
+            advance.get().setUpdateDate(System.currentTimeMillis());
+            advanceRepository.save(advance.get());
+        }
+
         deleteById(user.get().getId());
         return true;
     }
 
     public Boolean updateSalary(UpdateSalaryRequestDto dto) {
         Optional<User> user = findById(dto.getId());
-        if(user.isEmpty())
-            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER,"Önyüzden gelen veriyi kontrol edin.");
+        if (user.isEmpty())
+            throw new UserManagerException(ErrorType.INTERNAL_ERROR_SERVER, "Önyüzden gelen veriyi kontrol edin.");
         user.get().setSalary(dto.getSalary());
         update(user.get());
         return true;

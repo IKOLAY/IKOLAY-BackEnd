@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Builder
 @Data
@@ -44,6 +45,7 @@ public class RegisterRequestDto {
     // EMPLOYEE KAYDI YAPARKEN MANAGER'IN COMPANY ID'SI KULLANILACAK.
     private Long companyId;
     // EMPLOYEE KAYDI SIRASINDA ALINACAK
+    @Positive(message = "Çalışan ücreti 0 ya da negatif olamaz!")
     private Double salary;
 
     private Long membershipId;

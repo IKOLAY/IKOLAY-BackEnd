@@ -1,6 +1,7 @@
 package com.ikolay.mapper;
 
 import com.ikolay.dto.requests.AddTransactionRequestDto;
+import com.ikolay.dto.requests.AdvancePaymentRequestDto;
 import com.ikolay.dto.response.FindMyExpensesResponseDto;
 import com.ikolay.dto.response.GetCompanysPendingPaymentsResponseDto;
 import com.ikolay.repository.entity.FinancialTransaction;
@@ -19,4 +20,6 @@ public interface ITransactionMapper {
     List<FindMyExpensesResponseDto> toFindMyExpensesResponseDtos(final List<FinancialTransaction> financialTransactions);
 
     List<GetCompanysPendingPaymentsResponseDto> toGetCompanysPendingPaymentsResponseDtos(final List<FinancialTransaction> financialTransactions);
+
+    FinancialTransaction toFinancialTransaction(final AdvancePaymentRequestDto dto);
 }

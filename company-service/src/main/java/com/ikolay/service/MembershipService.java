@@ -39,6 +39,8 @@ public class MembershipService extends ServiceManager<Membership, Long> {
         Membership membership = IMembershipMapper.INSTANCE.toMembership(dto);
         membership.setStatus(EMembershipStatus.ACTIVE);
         membership.setActiveUserCount(0L);
+        if(membership.getCurrencyMultiplier()==0)
+            membership.setCurrencyMultiplier(1d);
         if (!membership.getCurrencyType().equals(ECurrencyType.TL))
             membership.setPrice(membership.getPrice() * dto.getCurrencyMultiplier());
         return save(membership);
@@ -112,8 +114,8 @@ public class MembershipService extends ServiceManager<Membership, Long> {
 
     @PostConstruct
     public void defaultMemberShips(){
-        save(Membership.builder().name("Bronz").membershipDuration(30L).currencyType(ECurrencyType.TL).currencyMultiplier(1d).price(5000d).status(EMembershipStatus.ACTIVE).build());
-        save(Membership.builder().name("Gümüş").membershipDuration(90L).currencyType(ECurrencyType.TL).currencyMultiplier(1d).price(13500d).status(EMembershipStatus.ACTIVE).build());
-        save(Membership.builder().name("Altın").membershipDuration(360L).currencyType(ECurrencyType.TL).currencyMultiplier(1d).price(48000d).status(EMembershipStatus.ACTIVE).build());
+        save(Membership.builder().name("Bronz").membershipDuration(30L).currencyType(ECurrencyType.TL).description("30 gün boyunca öncelikli müşteri desteği, özel içerikler ve indirimler").currencyMultiplier(1d).price(5000d).status(EMembershipStatus.ACTIVE).build());
+        save(Membership.builder().name("Gümüş").membershipDuration(90L).currencyType(ECurrencyType.TL).description("90 gün süresince daha fazla indirim ve özel içerik erişimi.").currencyMultiplier(1d).price(13500d).status(EMembershipStatus.ACTIVE).build());
+        save(Membership.builder().name("Altın").membershipDuration(360L).currencyType(ECurrencyType.TL).description("360 gün boyunca en geniş indirimler ve özel içerikler.").currencyMultiplier(1d).price(48000d).status(EMembershipStatus.ACTIVE).build());
     }
 }

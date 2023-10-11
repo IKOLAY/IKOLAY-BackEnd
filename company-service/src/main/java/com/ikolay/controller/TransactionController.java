@@ -1,6 +1,7 @@
 package com.ikolay.controller;
 
 import com.ikolay.dto.requests.AddTransactionRequestDto;
+import com.ikolay.dto.requests.AdvancePaymentRequestDto;
 import com.ikolay.dto.requests.AnnualProfitLossRequestDto;
 import com.ikolay.dto.requests.RegisterRequestDto;
 import com.ikolay.dto.response.AllExpensesResponseDto;
@@ -31,6 +32,11 @@ public class TransactionController {
    @PostMapping(ADD) //Manager sayfasındaki işlem ekleme için hazırlandı.
     public ResponseEntity<FinancialTransaction> addTransaction(@RequestBody AddTransactionRequestDto dto){
        return ResponseEntity.ok(transactionService.add(dto));
+   }
+
+   @PostMapping("/addadvancepayment") //Onaylanan ya da reddedilen avansların harcama olarak gösterilmesini sağlayan metod (FEIGN)
+   public ResponseEntity<Boolean> addAdvancePayment(@RequestBody AdvancePaymentRequestDto dto){
+    return ResponseEntity.ok(transactionService.addAdvancePayment(dto));
    }
 
 

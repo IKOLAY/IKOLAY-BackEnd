@@ -1,6 +1,7 @@
 package com.ikolay.service;
 
 import com.ikolay.dto.requests.AddTransactionRequestDto;
+import com.ikolay.dto.requests.AdvancePaymentRequestDto;
 import com.ikolay.dto.requests.AnnualProfitLossRequestDto;
 import com.ikolay.dto.response.AllExpensesResponseDto;
 import com.ikolay.dto.response.AnnualProfitLossResponseDto;
@@ -149,6 +150,21 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
         transaction.get().setStatus(ETransactionStatus.REJECTED);
         transaction.get().setConfirmationDate(LocalDate.now());
         update(transaction.get());
+        return true;
+    }
+
+    public Boolean addAdvancePayment(AdvancePaymentRequestDto dto) {
+        if(!dto.getStatus().equals(ETransactionStatus.ACCEPTED))
+            throw new CompanyManagerException(ErrorType.INTERNAL_ERROR_SERVER);
+        FinancialTransaction transaction = ITransactionMapper.INSTANCE.toFinancialTransaction(dto);
+        transaction.setTransactionAmount(transaction.getTransactionAmount()*-1);
+        transaction.setTransactionDate(transaction.getConfirmationDate());
+        transaction.setIsPaid(transaction.getStatus().equals(ETransactionStatus.ACCEPTED));
+        transaction.setType(ETransactionType.OUTCOME);
+        transaction.setCurrencyType(ECurrencyType.TL);
+        transaction.setCurrencyMultiplier(1d);
+        transaction.setExpenseType(EExpenseType.MANAGER);
+        save(transaction);
         return true;
     }
 }
