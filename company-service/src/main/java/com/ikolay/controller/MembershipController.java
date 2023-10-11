@@ -41,6 +41,11 @@ public class MembershipController {
         return ResponseEntity.ok(membershipService.setCompanysMembership(dto));
     }
 
+    @GetMapping(FINDALL)
+    public ResponseEntity<List<Membership>> findAll(){
+        return ResponseEntity.ok(membershipService.findAll());
+    }
+
 
 
 }
