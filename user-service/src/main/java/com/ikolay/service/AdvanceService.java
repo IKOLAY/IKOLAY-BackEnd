@@ -63,10 +63,10 @@ public class AdvanceService extends ServiceManager<Advance, Long> {
 
         Advance requestAdvance = IAdvanceMapper.INSTANCE.toAdvance(dto);
         requestAdvance.setAdvanceStatus(EAdvanceStatus.PENDING);
-        save(requestAdvance);
-        return EmployeeAdvanceAddResponseDto.builder()
-                .systemMessage("Talebiniz Yönetici Kontrolüne Yollandı!!")
-                .build();
+        requestAdvance.setDescription(user.get().getFirstname()+" "+user.get().getLastname()+" - "+requestAdvance.getDescription());
+        EmployeeAdvanceAddResponseDto respDto = IAdvanceMapper.INSTANCE.toEmployeeAdvanceAddResponseDto(save(requestAdvance));
+        respDto.setSystemMessage("Talebiniz Yönetici Kontrolüne Yollandı!!");
+        return respDto;
     }
 
     public List<Advance> getEmployeesAdvances(Long companyId, Long userId) {

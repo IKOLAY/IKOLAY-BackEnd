@@ -64,7 +64,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
     }
 
-    @Transactional
+    @Transactional()
     private RegisterResponseDto saveManager(RegisterRequestDto dto) {
         if (dto.getTaxNo() == null || dto.getCompanyName() == null || dto.getCompanyName().equals("") || dto.getTaxNo().equals(""))
             throw new AuthManagerException(ErrorType.COMPANY_NOT_CREATED);
@@ -72,9 +72,16 @@ public class AuthService extends ServiceManager<Auth, Long> {
         dto.setCompanyEmail(dto.getEmail());
         dto.setCompanyName(dto.getCompanyName().toUpperCase());
         Auth auth = save(IAuthMapper.INSTANCE.toAuth(dto));
+        ResponseEntity<Long> companyId = null;
         dto.setAuthId(auth.getId());
         String token = "Bearer " + jwtTokenManager.createToken(auth.getId()).get();
-        ResponseEntity<Long> companyId = companyManager.register(dto, token);
+        try {
+           companyId = companyManager.register(dto, token);
+        }catch (Exception e){
+            deleteById(auth.getId());
+            throw new AuthManagerException(ErrorType.BAD_REQUEST,"Lütfen firma bilgilerini kontrol edin.");
+        }
+
         dto.setCompanyId(companyId.getBody());
         userManager.register(dto, token);
         return RegisterResponseDto.builder()
