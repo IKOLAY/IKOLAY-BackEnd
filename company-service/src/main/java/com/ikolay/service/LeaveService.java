@@ -42,6 +42,9 @@ public class LeaveService extends ServiceManager<Leave, Long> {
             }
             dto.setUserId(userId);
         }
+
+        if(dto.getStartingDate().isBefore(LocalDate.now()))
+            throw new CompanyManagerException(ErrorType.BAD_REQUEST,"Tatil/İzin başlangıç tarihi mevcut günden önce olamaz.");
         Leave leave = ILeaveMapper.INSTANCE.toLeave(dto);
         leave.setConfirmationDate(LocalDate.now());
         leave.setStatus(ELeaveStatus.ACCEPTED);

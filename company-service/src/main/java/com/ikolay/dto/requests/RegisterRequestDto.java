@@ -30,6 +30,5 @@ public class RegisterRequestDto {
     private String companyName;
     private String taxNo;
 
-    private Long companyId;
     private Long membershipId;
 }

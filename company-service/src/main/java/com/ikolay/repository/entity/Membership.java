@@ -24,6 +24,7 @@ public class Membership extends BaseEntity{
     private String name;
     private Long membershipDuration;
     private Double price;
+    private String description;
     @Enumerated(EnumType.STRING)
     private EMembershipStatus status;
     @Builder.Default
