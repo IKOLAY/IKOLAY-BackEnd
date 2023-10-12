@@ -34,7 +34,7 @@ public class AddTransactionRequestDto {
     private ETransactionType type;
     @Enumerated(EnumType.STRING)
     private EExpenseType expenseType;
-
+    @Positive(message = "Negatif veya 0'dan küçük değer girilemez !!")
     private Double currencyMultiplier;
     @Enumerated(EnumType.STRING)
     private ECurrencyType currencyType;
