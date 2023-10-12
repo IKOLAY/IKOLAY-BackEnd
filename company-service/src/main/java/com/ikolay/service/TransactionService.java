@@ -41,11 +41,16 @@ public class TransactionService extends ServiceManager<FinancialTransaction, Lon
 
 
     public FinancialTransaction add(AddTransactionRequestDto dto) {
+        if(dto.getTransactionAmount()<0)
+            throw new CompanyManagerException(ErrorType.BAD_REQUEST,"Negatif ödeme eklenemez!");
+        if(dto.getCurrencyMultiplier()==0)
+            dto.setCurrencyMultiplier(1d);
         if (dto.getType().equals(ETransactionType.OUTCOME))
             dto.setTransactionAmount(dto.getTransactionAmount() * -1);
         dto.setTransactionAmount(dto.getCurrencyMultiplier()* dto.getTransactionAmount());
-//        if (companyService.findById(dto.getCompanyId()).isEmpty())
-//            throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND);   test için kapatıldı açılacak.
+        if (companyService.findById(dto.getCompanyId()).isEmpty())
+            throw new CompanyManagerException(ErrorType.COMPANY_NOT_FOUND,"Üzerinde işlem gerçekleştrilmeye çalışılan firma bilgilerinde bir sorun mevcut. Lütfen admin ile iletişime geçin.");
+
         return super.save(ITransactionMapper.INSTANCE.toFinancialTransaction(dto));
     }
 

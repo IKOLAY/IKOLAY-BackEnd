@@ -27,7 +27,7 @@ public class LeaveController {
         return ResponseEntity.ok(leaveService.createLeave(dto));
     }
 
-    @GetMapping(FINDCOMPANYLEAVES) // Firmaya ait tatil listesini döndürmek için hazırlandı.
+    @GetMapping(FINDCOMPANYLEAVES) // Firmaya ait resmi tatil listesini döndürmek için hazırlandı.
     ResponseEntity<List<GetCompanyLeavesResponseDto>> findCompanyLeaves(Long companyId) {
         return ResponseEntity.ok(leaveService.findCompanyLeaves(companyId));
     }

@@ -33,6 +33,7 @@ public class CreateMembershipRequestDto {
     @Enumerated(EnumType.STRING)
     private ECurrencyType currencyType;
     @Builder.Default
+    @Positive(message = "Negatif ve 0'dan küçük değer girilemez!!")
     private Double currencyMultiplier=1d;
 
 }

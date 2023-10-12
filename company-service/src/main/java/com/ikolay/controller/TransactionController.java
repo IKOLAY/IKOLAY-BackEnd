@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import static com.ikolay.constant.EndPoints.*;
 public class TransactionController {
     private final TransactionService transactionService;
    @PostMapping(ADD) //Manager sayfasındaki işlem ekleme için hazırlandı.
-    public ResponseEntity<FinancialTransaction> addTransaction(@RequestBody AddTransactionRequestDto dto){
+    public ResponseEntity<FinancialTransaction> addTransaction(@RequestBody @Valid AddTransactionRequestDto dto){
        return ResponseEntity.ok(transactionService.add(dto));
    }
 
