@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class AdvanceController {
     private final AdvanceService advanceService;
 
     @PostMapping(ADVANCEREQUEST) //Employee sayfasında avans talebi oluşturulabilmesi için hazırlanmış metod.
-    ResponseEntity<EmployeeAdvanceAddResponseDto> createAdvance(@RequestBody CreateAdvanceRequestDto dto){
+    ResponseEntity<EmployeeAdvanceAddResponseDto> createAdvance(@RequestBody @Valid CreateAdvanceRequestDto dto){
         return ResponseEntity.ok(advanceService.createEmployeeAdvanceRequest(dto));
     }
 

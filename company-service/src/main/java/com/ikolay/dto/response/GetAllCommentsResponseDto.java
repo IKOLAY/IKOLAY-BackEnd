@@ -13,4 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class GetAllCommentsResponseDto {
     private String content;
+    private Long updateDate;
 }

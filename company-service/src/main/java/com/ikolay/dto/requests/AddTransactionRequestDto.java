@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -26,13 +27,14 @@ public class AddTransactionRequestDto {
     private Long employeeId=null;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate transactionDate;
+    @Positive(message = "İşlem değeri 0 ya da negatif olamaz!")
     private Double transactionAmount;
     private Boolean isPaid;
     @Enumerated(EnumType.STRING)
     private ETransactionType type;
     @Enumerated(EnumType.STRING)
     private EExpenseType expenseType;
-    @Enumerated(EnumType.STRING)
+
     private Double currencyMultiplier;
     @Enumerated(EnumType.STRING)
     private ECurrencyType currencyType;
