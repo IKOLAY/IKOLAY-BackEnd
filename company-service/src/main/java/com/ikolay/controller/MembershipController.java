@@ -27,7 +27,7 @@ public class MembershipController {
         return ResponseEntity.ok(membershipService.create(dto));
     }
 
-    @GetMapping(GETMEMBERSHIPS) // Kullanıcıya listelenecek metodlar
+    @GetMapping(GETMEMBERSHIPS) // Kullanıcıya listelenecek üyelikleri toplam fiyata göre sıralayıp döndürür.
     public ResponseEntity<List<Membership>> getActiveMemberships(){
         return ResponseEntity.ok(membershipService.getActiveMemberships());
     }
